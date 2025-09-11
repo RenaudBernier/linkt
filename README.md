@@ -119,8 +119,8 @@ This platform enables students to browse events, save them to their personal cal
       <td></td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td>Thomas Ballard</td>
+      <td>40263348</td>
       <td></td>
     </tr>
     <tr>
