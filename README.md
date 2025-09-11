@@ -114,8 +114,8 @@ This platform enables students to browse events, save them to their personal cal
       <td></td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td> Darcy Loane-Billings </td>
+      <td> 40310186 </td>
       <td></td>
     </tr>
     <tr>
