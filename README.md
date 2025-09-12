@@ -109,8 +109,8 @@ This platform enables students to browse events, save them to their personal cal
       <td></td>
     </tr>
     <tr>
-      <td>Levon</td>
-      <td>Kadehjian</td>
+      <td>Levon Kadehjian</td>
+      <td>40268535</td>
       <td></td>
     </tr>
     <tr>
