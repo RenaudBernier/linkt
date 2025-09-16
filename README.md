@@ -1,4 +1,3 @@
-# Cool Feature
 # Linkt - Campus Events & Ticketing Web Application
 
 A comprehensive web application designed to help students discover, organize, and attend events on campus. The system streamlines event management, improves student engagement, and provides valuable insights for both organizers and campus administration.
