@@ -124,8 +124,8 @@ This platform enables students to browse events, save them to their personal cal
       <td></td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td>Daniel Buta</td>
+      <td>40300680</td>
       <td></td>
     </tr>
     <tr>
