@@ -133,8 +133,8 @@ This platform enables students to browse events, save them to their personal cal
       <td></td>
     </tr>
     <tr>
-      <td></td>
-      <td></td>
+      <td>Renaud Bernier</td>
+      <td>40212192</td>
       <td></td>
     </tr>
   </tbody>
