@@ -99,6 +99,7 @@ This platform enables students to browse events, save them to their personal cal
       <th align="left">Name</th>
       <th align="center">Student ID</th>
       <th align="left">Role</th>
+      <th align="left">GitHub User Name</th>
     </tr>
   </thead>
   <tbody>
@@ -106,33 +107,40 @@ This platform enables students to browse events, save them to their personal cal
       <td>Thomas Ballard</td>
       <td>40263348</td>
       <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Levon Kadehjian</td>
       <td>40268535</td>
       <td></td>
+      <td>Levon-Kadehjian</td>
     </tr>
     <tr>
       <td> Darcy Loane-Billings </td>
       <td> 40310186 </td>
+      <td></td>
       <td></td>
     </tr>
     <tr>
       <td>Peter Fitopoulos</td>
       <td>40316056</td>
       <td></td>
+      <td></td>
     </tr>
     <tr>
       <td>Daniel Buta</td>
       <td>40300680</td>
       <td></td>
+`      <td></td>
     </tr>
     <tr>
       <td>Maximilian Ingram</td>
       <td>40329376</td>
       <td></td>
+      <td></td>
     </tr>
     <tr>
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
