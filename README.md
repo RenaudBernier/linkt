@@ -106,25 +106,25 @@ This platform enables students to browse events, save them to their personal cal
     <tr>
       <td>Thomas Ballard</td>
       <td>40263348</td>
-      <td></td>
+      <td> Full-Stack </td>
       <td>thomasballarddev</td>
     </tr>
     <tr>
       <td>Levon Kadehjian</td>
       <td>40268535</td>
-      <td></td>
+      <td> Full-Stack </td>
       <td>Levon-Kadehjian</td>
     </tr>
     <tr>
       <td> Darcy Loane-Billings </td>
       <td> 40310186 </td>
-      <td></td>
+      <td> Full-Stack </td>
       <td>DudeNamedDarcy</td>
     </tr>
     <tr>
       <td>Peter Fitopoulos</td>
       <td>40316056</td>
-      <td></td>
+      <td> Full-Stack </td>
       <td>mvpete1</td>
     </tr>
     <tr>
@@ -136,13 +136,13 @@ This platform enables students to browse events, save them to their personal cal
     <tr>
       <td>Maximilian Ingram</td>
       <td>40329376</td>
-      <td></td>
+      <td> Full-Stack </td>
       <td>MaxIngram05</td>
     </tr>
     <tr>
       <td>Renaud Bernier</td>
       <td>40212192</td>
-      <td></td>
+      <td> Scrum Master and Full-Stack </td>
       <td>RenaudBernier</td>
     </tr>
   </tbody>
