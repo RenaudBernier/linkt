@@ -130,7 +130,7 @@ This platform enables students to browse events, save them to their personal cal
     <tr>
       <td>Daniel Buta</td>
       <td>40300680</td>
-      <td></td>
+      <td> Full-Stack </td>
      <td>daniel-buta</td>
     </tr>
     <tr>
