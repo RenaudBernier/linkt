@@ -18,6 +18,7 @@ const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,7 +39,6 @@ const Header: React.FC = () => {
 
   return (
     <AppBar
-      position="static"
       sx={{
         backgroundColor: "var(--charcoal)",
         boxShadow: "none",
@@ -47,11 +47,9 @@ const Header: React.FC = () => {
     >
       <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
         {/* Logo */}
+        {/* sx = applies CUSTOM STYLES to stuff */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={logo}
-            alt="Logo"
-            style={{ height: "40px", width: "auto" }}
+          <img src={logo} alt="Logo" style={{ height: "60px", width: "auto" }}
           />
         </Box>
 
