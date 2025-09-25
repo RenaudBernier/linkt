@@ -49,7 +49,7 @@ const Header: React.FC = () => {
         {/* Logo */}
         {/* sx = applies CUSTOM STYLES to stuff */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img src={logo} alt="Logo" style={{ height: "60px", width: "auto" }}
+          <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
           />
         </Box>
 
@@ -136,7 +136,47 @@ const Header: React.FC = () => {
                 },
               }}
             >
+              Dark Mode
+            </MenuItem>
+            <MenuItem
+              onClick={handleSettings}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--fluorescent-cyan-10)",
+                },
+              }}
+            >
+              My Events
+            </MenuItem>
+            <MenuItem
+              onClick={handleSettings}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--fluorescent-cyan-10)",
+                },
+              }}
+            >
+              Add Events
+            </MenuItem>
+            <MenuItem
+              onClick={handleSettings}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--fluorescent-cyan-10)",
+                },
+              }}
+            >
               Settings
+            </MenuItem>
+            <MenuItem
+              onClick={handleSettings}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "var(--fluorescent-cyan-10)",
+                },
+              }}
+            >
+              Saved
             </MenuItem>
             <MenuItem
               onClick={handleLogout}
