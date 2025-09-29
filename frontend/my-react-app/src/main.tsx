@@ -1,14 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import Header from './components/Header.tsx'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import Header from "./components/Header.tsx";
+import "./index.css";
+import App from "./App.tsx";
+import { Toolbar } from "@mui/material";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <div style = {{minHeight: '0vh', width: '100%'}}>
     <Header />
+    <Toolbar />
     <App />
-    </div>
-  </StrictMode>,
-)
+  </StrictMode>
+);
