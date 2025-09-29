@@ -7,11 +7,11 @@ class Event {
     date: Date;
     location: string;
 
-    constructor(id: number, name: string, description: string, image: string, price: number, date: Date, location: string) {
+    constructor(id: number, name: string, description: string, image: string[], price: number, date: Date, location: string) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.image = image;
+        this.images = image;
         this.price = price;
         this.date = date;
         this.location = location
@@ -24,8 +24,8 @@ class Event {
     public getDescription(): string {
         return this.description;
     }
-    public getImage(): string {
-        return this.image;
+    public getFirstImage(): string {
+        return this.images[0];
     }
     public getPrice(): number {
         return this.price;
@@ -55,9 +55,6 @@ class Event {
     // Setters
     public setDescription(description: string): void {
         this.description = description;
-    }
-    public setImage(image: string): void {
-        this.image = image;
     }
     public setPrice(price: number): void {
         this.price = price;
