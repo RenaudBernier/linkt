@@ -2,7 +2,7 @@ class Event {
     readonly id: number;
     readonly name: string;
     description: string;
-    image: string;
+    images: string[];
     price: number;
     date: Date;
     location: string;
