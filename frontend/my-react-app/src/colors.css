@@ -1,0 +1,55 @@
+:root {
+  /* Primary Color Palette */
+  --fluorescent-cyan: #2aefe6;
+  --light-orange: #fcdebe;
+  --amaranth-purple: #a63a50;
+  --charcoal: #373f51;
+  --celestial-blue: #008dd5;
+
+  /* HSL Variants */
+  --fluorescent-cyan-hsl: hsla(177, 86%, 55%, 1);
+  --light-orange-hsl: hsla(31, 91%, 87%, 1);
+  --amaranth-purple-hsl: hsla(348, 48%, 44%, 1);
+  --charcoal-hsl: hsla(222, 19%, 27%, 1);
+  --celestial-blue-hsl: hsla(200, 100%, 42%, 1);
+
+  /* RGB Variants */
+  --fluorescent-cyan-rgb: rgba(42, 239, 230, 1);
+  --light-orange-rgb: rgba(252, 222, 190, 1);
+  --amaranth-purple-rgb: rgba(166, 58, 80, 1);
+  --charcoal-rgb: rgba(55, 63, 81, 1);
+  --celestial-blue-rgb: rgba(0, 141, 213, 1);
+
+  /* Alpha Variants (with transparency) */
+  --fluorescent-cyan-50: rgba(42, 239, 230, 0.5);
+  --light-orange-50: rgba(252, 222, 190, 0.5);
+  --amaranth-purple-50: rgba(166, 58, 80, 0.5);
+  --charcoal-50: rgba(55, 63, 81, 0.5);
+  --celestial-blue-50: rgba(0, 141, 213, 0.5);
+
+  --fluorescent-cyan-25: rgba(42, 239, 230, 0.25);
+  --light-orange-25: rgba(252, 222, 190, 0.25);
+  --amaranth-purple-25: rgba(166, 58, 80, 0.25);
+  --charcoal-25: rgba(55, 63, 81, 0.25);
+  --celestial-blue-25: rgba(0, 141, 213, 0.25);
+
+  --fluorescent-cyan-10: rgba(42, 239, 230, 0.1);
+  --light-orange-10: rgba(252, 222, 190, 0.1);
+  --amaranth-purple-10: rgba(166, 58, 80, 0.1);
+  --charcoal-10: rgba(55, 63, 81, 0.1);
+  --celestial-blue-10: rgba(0, 141, 213, 0.1);
+
+  /* Gradient Utilities */
+  --gradient-horizontal: linear-gradient(90deg, var(--fluorescent-cyan), var(--light-orange), var(--amaranth-purple), var(--charcoal), var(--celestial-blue));
+  --gradient-vertical: linear-gradient(180deg, var(--fluorescent-cyan), var(--light-orange), var(--amaranth-purple), var(--charcoal), var(--celestial-blue));
+  --gradient-diagonal: linear-gradient(45deg, var(--fluorescent-cyan), var(--light-orange), var(--amaranth-purple), var(--charcoal), var(--celestial-blue));
+  --gradient-radial: radial-gradient(var(--fluorescent-cyan), var(--light-orange), var(--amaranth-purple), var(--charcoal), var(--celestial-blue));
+
+  /* Semantic Color Assignments */
+  --primary: var(--fluorescent-cyan);
+  --secondary: var(--celestial-blue);
+  --accent: var(--amaranth-purple);
+  --background: var(--light-orange);
+  --text: var(--charcoal);
+  --surface: var(--light-orange-10);
+}
