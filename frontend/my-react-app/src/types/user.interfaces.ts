@@ -19,4 +19,11 @@ interface Ticket{
 }
 
 
+interface Student extends User {
 
+    savedEvent() : boolean;
+    claimTicket(): Ticket ;
+    viewTickets() : Ticket[] ;
+
+    //viewEvents
+}
