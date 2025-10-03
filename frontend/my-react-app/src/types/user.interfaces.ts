@@ -9,6 +9,14 @@ interface User {
     logout(): void
 }
 
+interface Ticket{
+    ticketID : number;
+    eventID : number;
+    qrCode : string;
+
+    generateQRCode() : string;
+    validateQRCode() : boolean;
+}
 
 
 
