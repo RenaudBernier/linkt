@@ -11,10 +11,7 @@ interface User {
     logout(): void
 }
 
-
-
 interface Student extends User {
-
     // to be discussed list of ID or tickets
     tickets : Ticket[];
     savedEvents : Event[];
@@ -22,13 +19,12 @@ interface Student extends User {
     savedEvent() : boolean;
     claimTicket(): Ticket ;
     viewTickets() : Ticket[] ;
-
     //viewEvents
 }
 
 interface Organizer extends User {
     isApproved : boolean;
-    organizationName : string;
+    organizationName?: string; // optional
 
     createEvent(): Event;
     updateEvent() : void;
