@@ -25,3 +25,13 @@ interface Student extends User {
 
     //viewEvents
 }
+
+interface Organizer extends User {
+    isApproved : boolean;
+    organizationName : string;
+
+    createEvent(): Event;
+    updateEvent() : void;
+    deleteEvent() : void;
+    exportAttendeeList(eventID: number): string; // CSV
+}
