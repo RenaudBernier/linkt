@@ -10,5 +10,4 @@ interface Event {
     location: string;
     capacity: number;
 
-
 }
