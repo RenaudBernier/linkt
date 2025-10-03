@@ -21,6 +21,10 @@ interface Ticket{
 
 interface Student extends User {
 
+    // to be discussed list of ID or tickets
+    tickets : Ticket[];
+    savedEvents : Event[];
+
     savedEvent() : boolean;
     claimTicket(): Ticket ;
     viewTickets() : Ticket[] ;
