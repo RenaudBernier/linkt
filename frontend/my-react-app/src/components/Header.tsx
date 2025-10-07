@@ -142,63 +142,64 @@ const Header: React.FC = () => {
               },
             }}
           >
-            {isAuthenticated ? (
-              <>
-                <MenuItem
-                  onClick={handleSettings}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--fluorescent-cyan-10)",
-                    },
-                  }}
-                >
-                  Settings
-                </MenuItem>
-                <MenuItem
-                  onClick={handleSettings}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--fluorescent-cyan-10)",
-                    },
-                  }}
-                >
-                  My Tickets
-                </MenuItem>
-                <MenuItem
-                  onClick={handleLogout}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--amaranth-purple-10)",
-                    },
-                  }}
-                >
-                  Log Out
-                </MenuItem>
-              </>
-            ) : (
-              <>
-                <MenuItem
-                  onClick={handleLogin}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--fluorescent-cyan-10)",
-                    },
-                  }}
-                >
-                  Log In
-                </MenuItem>
-                <MenuItem
-                  onClick={handleSignUp}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--fluorescent-cyan-10)",
-                    },
-                  }}
-                >
-                  Sign Up
-                </MenuItem>
-              </>
-            )}
+            {isAuthenticated ? [
+              <MenuItem
+                key="settings"
+                onClick={handleSettings}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Settings
+              </MenuItem>,
+              <MenuItem
+                key="tickets"
+                onClick={handleSettings}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                My Tickets
+              </MenuItem>,
+              <MenuItem
+                key="logout"
+                onClick={handleLogout}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--amaranth-purple-10)",
+                  },
+                }}
+              >
+                Log Out
+              </MenuItem>
+            ] : [
+              <MenuItem
+                key="login"
+                onClick={handleLogin}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Log In
+              </MenuItem>,
+              <MenuItem
+                key="signup"
+                onClick={handleSignUp}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Sign Up
+              </MenuItem>
+            ]}
           </Menu>
         </Box>
       </Toolbar>
