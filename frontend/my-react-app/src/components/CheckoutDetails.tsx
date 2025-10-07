@@ -16,6 +16,10 @@ function CheckoutDetails() {
         if (!/[0-9]/.test(e.key)) e.preventDefault();
     };
 
+    const preventNumeric = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (!/^[a-zA-Z]$/.test(e.key)) e.preventDefault();
+    };
+
     // handling the date format and validation
     const handleDate = (e: React.FormEvent<HTMLInputElement>) => {
         let value = e.currentTarget.value.replace(/\D/g, "");
@@ -55,6 +59,7 @@ function CheckoutDetails() {
                     required
                     type="text"
                     placeholder="John Smith"
+                    onKeyPress={preventNumeric}
                 />
 
                 <label className="checkoutPage-label">Credit Card Number</label>
