@@ -73,7 +73,8 @@
 .checkoutPage-submit {
     display: block;
     width: 100%;
-    background-color: #2aefe6;
+    /*background-color: #2aefe6;*/
+    background-color: #008CBA;
     color: white;
     padding: 12px;
     margin: 8px 0;
