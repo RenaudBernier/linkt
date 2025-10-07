@@ -6,13 +6,16 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import Header from "./components/Header.tsx";
 import { Toolbar } from "@mui/material";
+import { AuthProvider } from './contexts/AuthContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <BrowserRouter>
-          <Header />
-          <Toolbar />
-          <App />
+          <AuthProvider>
+              <Header />
+              <Toolbar />
+              <App />
+          </AuthProvider>
       </BrowserRouter>
   </StrictMode>,
 )

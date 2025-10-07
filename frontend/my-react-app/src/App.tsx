@@ -6,7 +6,6 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
-import { AuthProvider } from './contexts/AuthContext';
 
 function Home() {
     const [count, setCount] = useState(0);
@@ -46,13 +45,11 @@ function Home() {
 
 function App() {
     return (
-        <AuthProvider>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/login" element={<Login />} />
-            </Routes>
-        </AuthProvider>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+        </Routes>
     );
 }
 
