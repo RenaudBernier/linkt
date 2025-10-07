@@ -1,0 +1,144 @@
+.checkout-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    box-sizing: border-box;
+    min-height: 97vh;
+    overflow: hidden;
+}
+
+
+.checkout {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-width: 500px;
+    min-height: 465px;
+}
+
+.checkout h2, .ticket-container h2 {
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.75rem;
+}
+
+.ticket-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
+    max-width: 500px;
+    min-height: 466px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    margin-bottom: 20px;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 16px;
+}
+
+button[type=submit] {
+    display: block;
+    width: 100%;
+    background-color: #2aefe6;
+    color: white;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+button[type=button] {
+    display: block;
+    width: 100%;
+    background-color: gray;
+    color: white;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.row input[type="month"] {
+    width: 150px;
+    font-size: 16px;
+}
+
+#cvv-box{
+    width: 120px;
+    font-size: 16px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.row-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.row-item label {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.row-item input {
+    margin-bottom: 0;
+}
+
+/* Remove arrows from numeric inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.actions{
+    margin-top: 1rem;
+    width: 100%;
+}
+
+#ticket-img{
+    display: block;
+    height: 150px;
+}
+
+#event-price{
+    color: gray;
+}
