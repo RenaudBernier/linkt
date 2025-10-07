@@ -1,11 +1,13 @@
 import type { Event } from "../types/event.interface";
+import eventImg from "../assets/mock-event-image.png";
 
 const mockEvent: Event = {
+
     eventID: 1,
     title: "Tech Talk",
     description: "Shaping the Future of Technology",
     category: "Technology",
-    image: ["../public/mock-event-image.webp"],
+    image: [eventImg],
     price: 10,
     startDate: new Date("2025-10-15T17:00:00"),
     endDate: new Date("2025-10-15T20:00:00"),
