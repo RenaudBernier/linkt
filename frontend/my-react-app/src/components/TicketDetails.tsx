@@ -1,4 +1,4 @@
-import type {Event} from "../types/event.interface";
+import type { Event } from "../types/event.interface";
 
 const mockEvent: Event = {
     eventID: 1,
@@ -15,29 +15,30 @@ const mockEvent: Event = {
 
 function TicketDetails() {
     return (
-        <div className="ticket-container">
+        <div className="checkoutPage-ticket">
             <h2>Ticket Details</h2>
 
-
-            <div className="ticket">
-
+            <div className="checkoutPage-ticketContent">
                 <img
-                    id="ticket-img"
-                    src={mockEvent.image[0]}>
-                </img>
-                <h3 id="event-name">{mockEvent.title}</h3>
-                <p id="event-description">{mockEvent.description}</p>
-                <p id="event-price">{(mockEvent.price == 0 ? "Free" : "$" + mockEvent.price)}</p>
-                <p id="event-date">{
-                    mockEvent.startDate.toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })
-                }</p>
-                <p id="event-location">{mockEvent.location}</p>
+                    className="checkoutPage-img"
+                    src={mockEvent.image[0]}
+                    alt={mockEvent.title}
+                />
+                <h3 className="checkoutPage-eventName">{mockEvent.title}</h3>
+                <p className="checkoutPage-eventDescription">{mockEvent.description}</p>
+                <p className="checkoutPage-price">
+                    {mockEvent.price === 0 ? "Free" : "$" + mockEvent.price}
+                </p>
+                <p className="checkoutPage-eventDate">
+                    {mockEvent.startDate.toLocaleString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    })}
+                </p>
+                <p className="checkoutPage-eventLocation">{mockEvent.location}</p>
             </div>
         </div>
     );
