@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 
 
 function CheckoutDetails() {
@@ -45,16 +45,21 @@ function CheckoutDetails() {
 
     return (
         // Checkout Info
-        <div className="checkout">
+        <div className="checkoutPage-form">
             <h2>Checkout Information</h2>
 
             <form>
-                <label>Name on Card</label>
-                <input required type="text" placeholder="John Smith"/>
-
-                <label> Credit card number</label>
-
+                <label className="checkoutPage-label">Name on Card</label>
                 <input
+                    className="checkoutPage-input"
+                    required
+                    type="text"
+                    placeholder="John Smith"
+                />
+
+                <label className="checkoutPage-label">Credit Card Number</label>
+                <input
+                    className="checkoutPage-input"
                     required
                     type="text"
                     inputMode="numeric"
@@ -64,25 +69,23 @@ function CheckoutDetails() {
                     onKeyPress={preventCharacter}
                 />
 
-
-                {/*Row Containing the expiration and CVV*/}
-                <div className="row">
-
-                    {/*Row Containing the expiration*/}
-                    <div className="row-item">
-                        <label>Expiration</label>
+                {/* Row containing expiration and CVV */}
+                <div className="checkoutPage-row">
+                    {/* Expiration */}
+                    <div className="checkoutPage-rowItem">
+                        <label className="checkoutPage-label">Expiration</label>
                         <input
+                            className="checkoutPage-input"
                             required
-                            id="expiration-box"
                             placeholder="05/2028"
                             maxLength={7}
                             value={expirationDate}
                             onChange={handleDate}
                             onKeyPress={preventCharacter}
-                            style={{borderColor: error ? "red" : ""}}
+                            style={{ borderColor: error ? "red" : "" }}
                         />
                         {error && (
-                            <p style={{color: "red", fontSize: "0.85rem"}}>{error}</p>
+                            <p style={{ color: "red", fontSize: "0.85rem" }}>{error}</p>
                         )}
                     </div>
 
@@ -92,7 +95,6 @@ function CheckoutDetails() {
                         <input
                             className="checkoutPage-input checkoutPage-cvv"
                             required
-                            id="cvv-box"
                             type="text"
                             inputMode="numeric"
                             pattern="\d{3}"
@@ -112,6 +114,7 @@ function CheckoutDetails() {
                 </div>
             </form>
         </div>
-    )
+    );
 }
-export default CheckoutDetails
+
+export default CheckoutDetails;
