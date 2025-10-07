@@ -1,3 +1,18 @@
+import type {Event} from "../types/event.interface";
+
+const mockEvent: Event = {
+    eventID: 1,
+    title: "Tech Talk",
+    description: "Shaping the Future of Technology",
+    category: "Technology",
+    image: ["../public/mock-event-image.webp"],
+    price: 10,
+    startDate: new Date("2025-10-15T17:00:00"),
+    endDate: new Date("2025-10-15T20:00:00"),
+    location: "123 Rue Guy, Montreal, QC H1A 1A1, Canada",
+    capacity: 100
+};
+
 function TicketDetails() {
     return (
         <div className="ticket-container">
