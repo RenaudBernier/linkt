@@ -2,6 +2,11 @@ import * as React from "react";
 
 function CheckoutDetails() {
 
+    // Reset all inputs
+    const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.form?.reset();
+    };
+
 
     return (
         /*Checkout Info*/
@@ -52,13 +57,16 @@ function CheckoutDetails() {
                 </div>
 
 
+                // form action buttons
+                <div className="actions">
+                    <button type="submit">Submit</button>
+                    <button type="button" onClick={handleCancel}>Cancel</button>
+                </div>
+
 
             </form>
-
         </div>
-
     )
-
 }
 
 export default CheckoutDetails
