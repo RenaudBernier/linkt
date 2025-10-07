@@ -12,11 +12,15 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/logo.png";
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const { isAuthenticated, logout } = useAuth();
 
   {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,7 +37,17 @@ const Header: React.FC = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logout clicked");
+    logout();
+    handleClose();
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+    handleClose();
+  };
+
+  const handleSignUp = () => {
+    navigate('/signup');
     handleClose();
   };
 
@@ -128,66 +142,63 @@ const Header: React.FC = () => {
               },
             }}
           >
-            <MenuItem
-              onClick={handleSettings}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--fluorescent-cyan-10)",
-                },
-              }}
-            >
-              Dark Mode
-            </MenuItem>
-            <MenuItem
-              onClick={handleSettings}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--fluorescent-cyan-10)",
-                },
-              }}
-            >
-              My Events
-            </MenuItem>
-            <MenuItem
-              onClick={handleSettings}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--fluorescent-cyan-10)",
-                },
-              }}
-            >
-              Add Events
-            </MenuItem>
-            <MenuItem
-              onClick={handleSettings}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--fluorescent-cyan-10)",
-                },
-              }}
-            >
-              Settings
-            </MenuItem>
-            <MenuItem
-              onClick={handleSettings}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--fluorescent-cyan-10)",
-                },
-              }}
-            >
-              Saved
-            </MenuItem>
-            <MenuItem
-              onClick={handleLogout}
-              sx={{
-                "&:hover": {
-                  backgroundColor: "var(--amaranth-purple-10)",
-                },
-              }}
-            >
-              Log Out
-            </MenuItem>
+            {isAuthenticated ? (
+              <>
+                <MenuItem
+                  onClick={handleSettings}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Settings
+                </MenuItem>
+                <MenuItem
+                  onClick={handleSettings}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  My Tickets
+                </MenuItem>
+                <MenuItem
+                  onClick={handleLogout}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--amaranth-purple-10)",
+                    },
+                  }}
+                >
+                  Log Out
+                </MenuItem>
+              </>
+            ) : (
+              <>
+                <MenuItem
+                  onClick={handleLogin}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Log In
+                </MenuItem>
+                <MenuItem
+                  onClick={handleSignUp}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Sign Up
+                </MenuItem>
+              </>
+            )}
           </Menu>
         </Box>
       </Toolbar>
