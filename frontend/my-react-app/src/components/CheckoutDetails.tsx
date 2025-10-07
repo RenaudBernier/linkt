@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState } from "react";
 
 
@@ -68,7 +67,7 @@ function CheckoutDetails() {
                     required
                     type="text"
                     inputMode="numeric"
-                    placeholder="1111-2222-3333-4444"
+                    placeholder="1111222233334444"
                     pattern="\d{16}"
                     maxLength={16}
                     onKeyPress={preventCharacter}
