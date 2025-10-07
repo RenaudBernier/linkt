@@ -44,7 +44,7 @@ function CheckoutDetails() {
     };
 
     return (
-        /*Checkout Info*/
+        // Checkout Info
         <div className="checkout">
             <h2>Checkout Information</h2>
 
@@ -65,10 +65,10 @@ function CheckoutDetails() {
                 />
 
 
-                // Row Containing the expiration and CVV
+                {/*Row Containing the expiration and CVV*/}
                 <div className="row">
 
-                    // Row Containing the expiration
+                    {/*Row Containing the expiration*/}
                     <div className="row-item">
                         <label>Expiration</label>
                         <input
@@ -86,7 +86,7 @@ function CheckoutDetails() {
                         )}
                     </div>
 
-                    // Row Containing the CVV/
+                    {/*Row Containing the CVV/*/}
                     <div className="row-item">
                         <label> CVV</label>
                         <input
@@ -102,7 +102,7 @@ function CheckoutDetails() {
                     </div>
                 </div>
 
-                // Action buttons
+               {/*Action buttons*/}
                 <div className="actions">
                     <button type="submit">Submit</button>
                     <button type="button" onClick={handleCancel}>Cancel</button>
