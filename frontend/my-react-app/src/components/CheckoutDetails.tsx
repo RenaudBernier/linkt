@@ -103,10 +103,11 @@ function CheckoutDetails() {
                     </div>
                 </div>
 
-               {/*Action buttons*/}
-                <div className="actions">
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={handleCancel}>Cancel</button>
+                {/* Action buttons */}
+                <div className="checkoutPage-actions">
+                    <button className="checkoutPage-submit" type="submit">Submit</button>
+                    <button className="checkoutPage-cancel" type="button" onClick={handleCancel}>
+                        Cancel
                     </button>
                 </div>
             </form>
