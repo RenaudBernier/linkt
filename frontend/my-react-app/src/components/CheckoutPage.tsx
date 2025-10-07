@@ -4,7 +4,7 @@ import TicketDetails from "./TicketDetails";
 
 function CheckoutPage() {
     return (
-        <div className="checkout-container">
+        <div className="checkoutPage-container">
             <CheckoutDetails />
             <TicketDetails />
         </div>
