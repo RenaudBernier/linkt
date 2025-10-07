@@ -26,6 +26,33 @@ function CheckoutDetails() {
                 />
 
 
+                <div className="row">
+                    <div className="row-item">
+                        <label>Expiration</label>
+                        <input
+                            required
+                            id="expiration-box"
+                            placeholder="05/2028"
+                            maxLength={7}
+                        />
+                    </div>
+
+                    <div className="row-item">
+                        <label> CVV</label>
+                        <input
+                            required
+                            id="cvv-box"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="\d{3}"
+                            maxLength={3}
+                            placeholder="111"
+                        />
+                    </div>
+                </div>
+
+
+
             </form>
 
         </div>
