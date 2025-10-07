@@ -86,10 +86,11 @@ function CheckoutDetails() {
                         )}
                     </div>
 
-                    {/*Row Containing the CVV/*/}
-                    <div className="row-item">
-                        <label> CVV</label>
+                    {/* CVV */}
+                    <div className="checkoutPage-rowItem">
+                        <label className="checkoutPage-label">CVV</label>
                         <input
+                            className="checkoutPage-input checkoutPage-cvv"
                             required
                             id="cvv-box"
                             type="text"
@@ -106,6 +107,7 @@ function CheckoutDetails() {
                 <div className="actions">
                     <button type="submit">Submit</button>
                     <button type="button" onClick={handleCancel}>Cancel</button>
+                    </button>
                 </div>
             </form>
         </div>
