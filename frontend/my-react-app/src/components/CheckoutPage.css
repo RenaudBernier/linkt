@@ -3,16 +3,16 @@
     flex-wrap: wrap;
     font-family: sans-serif;
     font-size: 16px;
-    margin: 0;
-    padding: 4rem 2rem;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    margin-top: 50px;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     gap: 2rem;
     box-sizing: border-box;
-    min-height: 97vh;
+    height: 100%;
     overflow: hidden;
 }
+
+
 
 .checkoutPage-form {
     display: flex;
@@ -31,6 +31,7 @@
     margin-bottom: 1.5rem;
     border-bottom: 2px solid #e2e8f0;
     padding-bottom: 0.75rem;
+    text-align: left;
 }
 
 .checkoutPage-ticket {
@@ -43,6 +44,8 @@
     min-width: 300px;
     max-width: 500px;
     min-height: 466px;
+    text-align: left;
+
 }
 
 .checkoutPage-label {
@@ -50,17 +53,21 @@
     margin-bottom: 5px;
     font-size: 16px;
     font-weight: 500;
+    text-align: left;
 }
 
 .checkoutPage-input {
     display: block;
     margin-bottom: 20px;
-    width: 300px;
+    width: 100%;
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding-left: 10px;
     font-size: 16px;
+    box-sizing: border-box;
+
+
 }
 
 .checkoutPage-submit {
@@ -97,7 +104,7 @@
 }
 
 .checkoutPage-cvv {
-    width: 120px;
+    width: 100%;
     font-size: 16px;
 }
 
@@ -122,8 +129,8 @@
 }
 
 /* Remove arrows from numeric inputs */
-.checkoutPage-input[type=number]::-webkit-inner-spin-button,
-.checkoutPage-input[type=number]::-webkit-outer-spin-button {
+ .checkoutPage-input[type=number]::-webkit-inner-spin-button,
+ .checkoutPage-input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -131,6 +138,7 @@
 .checkoutPage-actions {
     margin-top: 1rem;
     width: 100%;
+
 }
 
 .checkoutPage-img {
