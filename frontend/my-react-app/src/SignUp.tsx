@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
     const [name, setName] = useState('');
-    //const [lastName, setLastName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
@@ -24,6 +24,15 @@ export default function SignUp() {
                         type="text"
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div style={{marginTop: 10}}>
+                    <label>Last Name:</label><br/>
+                    <input
+                        type="text"
+                        value={lastName}
+                        onChange={e => setLastName(e.target.value)}
                         required
                     />
                 </div>
