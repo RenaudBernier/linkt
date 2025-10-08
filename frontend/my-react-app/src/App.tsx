@@ -1,8 +1,5 @@
 // src/App.tsx
-import { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -17,9 +14,29 @@ import {
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
+import CheckoutPage from "./components/CheckoutPage.tsx";
+import Header from "./components/Header.tsx";
+
+function MainLayout() {
+    return (
+        <>
+            <Header/>
+            <Toolbar/>
+            <Outlet />
+        </>
+    );
+}
+
+function BlankLayout() {
+    return (
+        <main>
+            <Outlet />
+        </main>
+    );
+}
+
 
 function Home() {
-    const [count, setCount] = useState(0);
     const navigate = useNavigate();
 
     return (
@@ -80,18 +97,29 @@ function Home() {
                 <button onClick={() => navigate('/login')}>
                     Go to Login
                 </button>
+                <button onClick={() => navigate('/checkoutpage')}>
+                    Go to Checkout
+                </button>
       </Box>
         </>
     );
 }
 
+
 function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-        </Routes>
+
+            <Routes>
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<Home />} />
+                </Route>
+
+                <Route element={<BlankLayout/>}>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/checkoutpage" element={<CheckoutPage/>}/>
+                </Route>
+            </Routes>
     );
 }
 
