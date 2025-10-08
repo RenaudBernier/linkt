@@ -1,8 +1,16 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;  
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* Optional: Set a min-height for the body to ensure it spans the whole viewport */
+  min-height: 100vh;
 }
 
 .logo {

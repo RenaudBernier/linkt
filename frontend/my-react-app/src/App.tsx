@@ -26,7 +26,7 @@ function Home() {
         <>
             
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#008dd5', color: 'white', border: '5px white'}}>
-        <h1> Linkdt </h1>
+        <h1> Linkt </h1>
         <p> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
           We allow students to easily discover and search for events using comprehensive filters, save them to their personal calendar, and claim digital, QR-coded
           tickets (free or mock paid) for check-in! If you are an organizer, then you are welcome too! Organizers benefit from the ability to create, manage, 
@@ -55,6 +55,12 @@ function Home() {
       <img src = "src\images\swag-slayer-dd2EOQBycJY-unsplash.jpg"  alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
       <h2> DJ Night </h2>
       <p> The EDM Club is organizing an all-night dance festival on the 22nd of October! Click for more details! </p>
+      <br></br>
+      <img src = "src\images\willian-justen-de-vasconcellos-_krHI5-8yA4-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
+      <h2> Campus Museum Tour</h2>
+      <p> Join us for a tour of the campus museum where you can browse artifacts of some of the school's greatest alumni! </p>
+      {/* With this, the "Top Events" container is forced to extend its height to contain the floated images*/}
+      <Box sx={{ clear: 'both' }}></Box>
       </Box>
 
 
