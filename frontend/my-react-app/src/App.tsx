@@ -1,9 +1,30 @@
 // src/App.tsx
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
+import Header from "./components/Header.tsx";
+import {Toolbar} from "@mui/material";
+
+function MainLayout() {
+    return (
+        <>
+            <Header/>
+            <Toolbar/>
+            <Outlet />
+        </>
+    );
+}
+
+function BlankLayout() {
+    return (
+        <main>
+            <Outlet />
+        </main>
+    );
+}
+
 
 function Home() {
     const navigate = useNavigate();
@@ -26,14 +47,21 @@ function Home() {
     );
 }
 
+
 function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/checkoutpage" element={<CheckoutPage/>}/>
-        </Routes>
+
+            <Routes>
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<Home />} />
+                </Route>
+
+                <Route element={<BlankLayout/>}>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/checkoutpage" element={<CheckoutPage/>}/>
+                </Route>
+            </Routes>
     );
 }
 
