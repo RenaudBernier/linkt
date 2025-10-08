@@ -1,21 +1,21 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+
+import './index.css'
+import App from './App.tsx'
+import { BrowserRouter } from 'react-router-dom'
 import Header from "./components/Header.tsx";
-import "./index.css";
-
-import HomePage from "./HomePage.tsx";
 import { Toolbar } from "@mui/material";
+import { AuthProvider } from './contexts/AuthContext.tsx'
 
-import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import CheckoutPage from "./components/CheckoutPage.tsx";
-
-const router = createBrowserRouter([
-    {path: '/',element:<HomePage/>},
-    {path: '/checkoutpage',element:<CheckoutPage/>}
-]);
-
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
-   <RouterProvider router={router} />
-  </StrictMode>
-);
+      <BrowserRouter>
+          <AuthProvider>
+              <Header />
+              <Toolbar />
+              <App />
+          </AuthProvider>
+      </BrowserRouter>
+  </StrictMode>,
+)
