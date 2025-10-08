@@ -30,16 +30,32 @@ function CheckoutDetails() {
             const [monthStr, yearStr] = value.split("/");
             const month = parseInt(monthStr);
             const year = parseInt(yearStr);
+            const today = new Date();
+            const expDate = new Date(year, month - 1, 1);
+            expDate.setMonth(expDate.getMonth() + 1);
+
+            if (month < 1 || month > 12 && (year > (today.getFullYear() + 6) )) {
+                setError("Invalid month and Year");
+                return;
+            }
+
             if (month < 1 || month > 12) {
                 setError("Invalid month");
                 return;
             }
 
-            const today = new Date();
-            const expDate = new Date(year, month - 1, 1);
-            expDate.setMonth(expDate.getMonth() + 1);
-
             if (expDate < today) setError("Card expired");
+
+            if (year > (today.getFullYear() + 6) ) {
+                setError("Invalid Year should be less than " + (today.getFullYear() + 10));
+                return;
+            }
+
+            if (year > (today.getFullYear() + 6) ) {
+                setError("Invalid Year should be less than " + (today.getFullYear() + 10));
+                return;
+            }
+
             else setError("");
         } else {
             setError("");
