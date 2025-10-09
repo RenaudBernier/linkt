@@ -63,8 +63,10 @@ const Header: React.FC = () => {
         {/* Logo */}
         {/* sx = applies CUSTOM STYLES to stuff */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
+          <a href = "https://github.com/RenaudBernier/linkt">
           <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
           />
+          </a>
         </Box>
 
         {/* Search Bar */}
