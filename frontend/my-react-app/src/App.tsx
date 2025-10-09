@@ -10,7 +10,9 @@ import {
   Menu,
   MenuItem,
   Avatar,
+  Typography,
 } from "@mui/material";
+//import '@fontsource-variable/cabin';
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
@@ -43,13 +45,14 @@ function Home() {
         <>
             
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#008dd5', color: 'white', border: '5px white'}}>
-        <h1> Linkt </h1>
-        <p> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
+        <br></br>
+        <Typography variant = "h2"> Linkt </Typography>
+        <Typography variant = "body1"> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
           We allow students to easily discover and search for events using comprehensive filters, save them to their personal calendar, and claim digital, QR-coded
           tickets (free or mock paid) for check-in! If you are an organizer, then you are welcome too! Organizers benefit from the ability to create, manage, 
           and track attendance for their events. They can also gain valuable insights for their events via our analytics dashboards. We are also welcoming 
           campus administrators, who can oversee organizations and moderate all content. Linkt is our brand-new system that connects students with campus life 
-          while providing essential tools for hosting and administrating events! </p>
+          while providing essential tools for hosting and administrating events! </Typography> 
       </Box>
 
       
@@ -63,26 +66,26 @@ function Home() {
                 <img src={reactLogo} className="logo react" alt="React logo" />
       </a>
         */}
-      <h1> Top Events </h1>
-      <h3> Backend for this hasn't been implemented yet! </h3>
+      <Typography variant = "h2"> Top Events </Typography>
+      <Typography variant = "h4"> Backend for this hasn't been implemented yet! </Typography>
       <img src = "src\images\samantha-gades-fIHozNWfcvs-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <h2> Frosh Night </h2>
-      <p> New to school and don't know where to start? Have some drinks, play games and meet some new people at the school's frosh night! </p>
+      <Typography variant = "h3"> Frosh Night </Typography>
+      <Typography variant = "body1"> New to school and don't know where to start? Have some drinks, play games and meet some new people at the school's frosh night! </Typography> 
       <br></br>
       <img src = "src\images\swag-slayer-dd2EOQBycJY-unsplash.jpg"  alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <h2> DJ Night </h2>
-      <p> The EDM Club is organizing an all-night dance festival on the 22nd of October! Click for more details! </p>
+      <Typography variant = "h3"> DJ Night </Typography>
+      <Typography variant = "body1"> The EDM Club is organizing an all-night dance festival on the 22nd of October! Click for more details! </Typography>
       <br></br>
       <img src = "src\images\willian-justen-de-vasconcellos-_krHI5-8yA4-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <h2> Campus Museum Tour</h2>
-      <p> Join us for a tour of the campus museum where you can browse artifacts of some of the school's greatest alumni! </p>
+      <Typography variant = "h3"> Campus Museum Tour</Typography>
+      <Typography variant = "body1"> Join us for a tour of the campus museum where you can browse artifacts of some of the school's greatest alumni! </Typography>
       {/* With this, the "Top Events" container is forced to extend its height to contain the floated images*/}
       <Box sx={{ clear: 'both' }}></Box>
       </Box>
 
 
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#a63a50', color: 'white', border: '5px white'}}>
-        <h2> Ready To Interact? </h2>
+        <Typography variant = "h3"> Ready To Interact? </Typography>
         {/*
         <button onClick={() => setCount((count) => count + 1)}>
                     count is {count}
