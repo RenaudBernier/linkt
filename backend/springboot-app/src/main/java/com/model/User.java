@@ -1,12 +1,31 @@
+package com.model;
+
+import jakarta.persistence.*;
+import com.model.Student;
+import com.model.Organizer;
+
 @Entity
 @Table(name = "users")
-public abstract class User 
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
+public abstract class User
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String firstName;
+
+    @Column(nullable = false)
     private String lastName;
+
     private String phoneNumber;
+
+    @Column(nullable = false)
     private String password;
 
 
@@ -47,10 +66,21 @@ public abstract class User
         return phoneNumber;
     }
     
-    public String getPassword() 
+    public String getPassword()
     {
         return password;
     }
+
+    public String getUserType()
+    {
+        if (this instanceof Student) {
+            return "student";
+        } else if (this instanceof Organizer) {
+            return "organizer";
+        }
+        return null;
+    }
+
     public void setEmail(String email) 
     {
         this.email = email;
