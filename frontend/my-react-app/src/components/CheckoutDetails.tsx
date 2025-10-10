@@ -16,7 +16,7 @@ function CheckoutDetails() {
     };
 
     const preventNumeric = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (!/^[a-zA-Z]$/.test(e.key)) e.preventDefault();
+        if (!/^[a-z A-Z]$/.test(e.key)) e.preventDefault();
     };
 
     // handling the date format and validation
@@ -34,8 +34,10 @@ function CheckoutDetails() {
             const expDate = new Date(year, month - 1, 1);
             expDate.setMonth(expDate.getMonth() + 1);
 
-            if (month < 1 || month > 12 && (year > (today.getFullYear() + 6) )) {
-                setError("Invalid month and Year");
+            if (month < 1 || month > 12 ||
+                year < today.getFullYear() || year > today.getFullYear() + 6
+            ) {
+                setError("Invalid month or year");
                 return;
             }
 
