@@ -1,8 +1,8 @@
-package com.model;
+package com.linkt.model;
 
 import jakarta.persistence.*;
-import com.model.Student;
-import com.model.Organizer;
+import com.linkt.model.Student;
+import com.linkt.model.Organizer;
 
 @Entity
 @Table(name = "users")

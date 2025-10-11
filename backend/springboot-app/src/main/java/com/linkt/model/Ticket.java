@@ -1,4 +1,4 @@
-package com.model;
+package com.linkt.model;
 
 import jakarta.persistence.*;
 import java.util.UUID;

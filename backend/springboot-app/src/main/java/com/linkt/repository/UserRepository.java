@@ -1,6 +1,6 @@
 package com.linkt.repository;
 
-import com.model.User;
+import com.linkt.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
