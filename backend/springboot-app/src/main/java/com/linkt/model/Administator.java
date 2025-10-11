@@ -21,7 +21,4 @@ public class Administrator extends User {
     public Administrator(User user) {
         this.user = user;
     }
-
-    
-
 }
