@@ -1,4 +1,5 @@
 import type { User } from '../types/user.interfaces';
+import authService, { type AuthResponse } from '../services/authService';
 
 export interface SignUpData extends User {
     password: string;
@@ -9,18 +10,31 @@ export interface SignUpData extends User {
 /**
  * Sign up a new user
  * @param data - User signup data
- * @returns Promise<boolean> - true if successful, false if error
+ * @returns Promise<AuthResponse> - Auth response with token and user data
  */
-export const signUp = async (data: SignUpData): Promise<boolean> => {
-    try {
-        // Dummy implementation - simulate API call
-        await new Promise(resolve => setTimeout(resolve, 500));
+export const signUp = async (data: SignUpData): Promise<AuthResponse> => {
+    const registerData = {
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        userType: (data.userType === 'org' ? 'organizer' : 'student') as 'student' | 'organizer',
+        organizationName: data.organizationName
+    };
 
-        // Simulate successful signup
-        console.log('Signup request:', data);
-        return true;
-    } catch (error) {
-        console.error('Signup error:', error);
-        return false;
-    }
+    const response = await authService.register(registerData);
+
+    // Store token and user data in localStorage
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('user', JSON.stringify({
+        userId: response.userId,
+        email: response.email,
+        firstName: response.firstName,
+        lastName: response.lastName,
+        phoneNumber: response.phoneNumber,
+        userType: response.userType
+    }));
+
+    return response;
 };
