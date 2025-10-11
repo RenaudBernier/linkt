@@ -1,19 +1,38 @@
-import java.util.ArrayList;
+package com.model;
 
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "events")
 public class Event {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
+
+    @Column(nullable = false)
     private String title;
+
+    @Column(length = 1000)
     private String description;
+
     private String eventType;
     private String startDateTime;
     private String endDateTime;
     private String location;
     private int capacity;
 
+    @ManyToOne
+    @JoinColumn(name = "organizer_id")
     private Organizer organizer;
-    private ArrayList<Ticket> tickets = new ArrayList<>();
-    private ArrayList<SavedEvent> savedByStudents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<Ticket> tickets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    private List<SavedEvent> savedByStudents = new ArrayList<>();
 
     public Event() {}
     public Event(String title, String description, String eventType, String startDateTime,String endDateTime, String location, int capacity) {

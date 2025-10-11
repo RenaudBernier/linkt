@@ -1,6 +1,20 @@
+package com.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "saved_events")
 public class SavedEvent {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long savedEventId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
     public SavedEvent() {}

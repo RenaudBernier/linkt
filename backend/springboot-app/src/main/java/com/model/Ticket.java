@@ -1,9 +1,24 @@
+package com.model;
+
+import jakarta.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "tickets")
 public class Ticket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
+
+    @Column(unique = true)
     private String qrCode;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
     public Ticket() {}
@@ -46,6 +61,7 @@ public class Ticket {
     }
     public String generateQRCode() {
         this.qrCode = UUID.randomUUID().toString();
+        return this.qrCode;
     }  
     public boolean validateQRCode(String code) {
         return this.qrCode.equals(code);
