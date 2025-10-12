@@ -101,7 +101,7 @@ function Home() {
                 <button onClick={() => navigate('/login')}>
                     Go to Login
                 </button>
-                <button onClick={() => navigate('/checkout')}>
+                <button onClick={() => navigate('/checkout/1')}>
                     Go to Checkout
                 </button>
                 <button onClick={() => navigate('/savedtickets')}>
@@ -125,7 +125,7 @@ function App() {
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/checkout" element={<CheckoutPage/>}/>
+                    <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>
             </Routes>
     );

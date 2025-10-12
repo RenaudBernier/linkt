@@ -1,21 +1,45 @@
 import type { Event } from "../types/event.interface";
-import eventImg from "../assets/mock-event-image.png";
+import eventImg from "../assets/event1.png";
 
-const mockEvent: Event = {
+const events: Event[] = [
+    {
+        eventID: 1,
+        title: "Event 1",
+        description: "event 1 description",
+        category: "------",
+        image: [eventImg],
+        price: 10,
+        startDate: new Date("2025-10-15T17:00:00"),
+        endDate: new Date("2025-10-15T20:00:00"),
+        location: "Hall Building (H-110), Concordia University, Montreal, QC",
+        capacity: 120
+    },
+    {
+        eventID: 2,
+        title: "Event 2",
+        description: "event 2 description",
+        category: "------",
+        image: [eventImg],
+        price: 20,
+        startDate: new Date("2025-10-22T14:00:00"),
+        endDate: new Date("2025-10-22T18:00:00"),
+        location: "EV Building, Concordia University, Montreal, QC",
+        capacity: 100
+    }
+];
 
-    eventID: 1,
-    title: "Tech Talk",
-    description: "Shaping the Future of Technology",
-    category: "Technology",
-    image: [eventImg],
-    price: 10,
-    startDate: new Date("2025-10-15T17:00:00"),
-    endDate: new Date("2025-10-15T20:00:00"),
-    location: "123 Rue Guy, Montreal, QC H1A 1A1, Canada",
-    capacity: 100
-};
+function TicketDetails({ eventId }: { eventId?: string }) {
+    const event = events.find(e => e.eventID === Number(eventId));
 
-function TicketDetails() {
+    if (!event) {
+        return (
+            <div className="checkoutPage-ticket">
+                <h2>Ticket Details</h2>
+                <p>Event not found</p>
+            </div>
+        );
+    }
+
     return (
         <div className="checkoutPage-ticket">
             <h2>Ticket Details</h2>
@@ -23,16 +47,16 @@ function TicketDetails() {
             <div className="checkoutPage-ticketContent">
                 <img
                     className="checkoutPage-img"
-                    src={mockEvent.image[0]}
-                    alt={mockEvent.title}
+                    src={event.image[0]}
+                    alt={event.title}
                 />
-                <h3 className="checkoutPage-eventName">{mockEvent.title}</h3>
-                <p className="checkoutPage-eventDescription">{mockEvent.description}</p>
+                <h3 className="checkoutPage-eventName">{event.title}</h3>
+                <p className="checkoutPage-eventDescription">{event.description}</p>
                 <p className="checkoutPage-price">
-                    {mockEvent.price === 0 ? "Free" : "$" + mockEvent.price}
+                    {event.price === 0 ? "Free" : "$" + event.price}
                 </p>
                 <p className="checkoutPage-eventDate">
-                    {mockEvent.startDate.toLocaleString("en-US", {
+                    {event.startDate.toLocaleString("en-US", {
                         month: "short",
                         day: "numeric",
                         year: "numeric",
@@ -40,7 +64,7 @@ function TicketDetails() {
                         minute: "2-digit"
                     })}
                 </p>
-                <p className="checkoutPage-eventLocation">{mockEvent.location}</p>
+                <p className="checkoutPage-eventLocation">{event.location}</p>
             </div>
         </div>
     );

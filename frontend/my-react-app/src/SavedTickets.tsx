@@ -1,6 +1,6 @@
 import type {Event} from "./types/event.interface.ts";
 import {useNavigate} from 'react-router-dom';
-import eventImg from "./assets/mock-event-image.png";
+import eventImg from "./assets/event1.png";
 import {
     Box,
     Card,
@@ -103,7 +103,7 @@ function SavedTickets() {
                 </Box>
 
                 <Button
-                    onClick={() => navigate("/checkout")}
+                    onClick={() => navigate(`/checkout/${mockEvent.eventID}`)}
                     sx={{
                         backgroundColor: "#2563eb",
                         color: "white",
