@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(scanBasePackages = "com.linkt")
-@EntityScan("com.model")
+@EntityScan("com.linkt.model")
 @EnableJpaRepositories("com.linkt.repository")
 public class LinktApplication {
 

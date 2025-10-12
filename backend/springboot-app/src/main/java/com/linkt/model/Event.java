@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "events")
+@Table(name = "event")
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long eventId;
 
     @Column(nullable = false)
@@ -17,11 +18,23 @@ public class Event {
     @Column(length = 1000)
     private String description;
 
+    @Column(name = "event_type")
     private String eventType;
+
+    @Column(name = "start_date_time")
     private String startDateTime;
+
+    @Column(name = "end_date_time")
     private String endDateTime;
+
     private String location;
+    private String coordinates;
     private int capacity;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
@@ -98,7 +111,15 @@ public Long getEventId() {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+    }
+
     public int getCapacity() {
         return capacity;
     }
@@ -106,7 +127,23 @@ public Long getEventId() {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public Organizer getOrganizer() {
         return organizer;
     }

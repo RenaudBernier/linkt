@@ -30,7 +30,7 @@ public class AdministratorService {
             throw new RuntimeException("User is already an administrator");
         }
 
-        Administrator admin = new Administrator(user);
+        Administrator admin = new Administrator();
         Administrator savedAdmin = administratorRepository.save(admin);
         return convertToDTO(savedAdmin);
     }
@@ -58,12 +58,11 @@ public class AdministratorService {
         administratorRepository.delete(admin);
     }
     private AdministratorDTO convertToDTO(Administrator admin) {
-        User user = admin.getUser();
         return new AdministratorDTO(
-                admin.getId(),
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
+                admin.getUserId(),
+                admin.getUserId(),
+                admin.getFirstName() + " " + admin.getLastName(),
+                admin.getEmail()
         );
     }
 }
