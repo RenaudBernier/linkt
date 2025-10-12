@@ -18,6 +18,7 @@ import SignUp from './SignUp';
 import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
+import Footer from "./components/Footer";
 import SavedTickets from "./SavedTickets.tsx";
 
 function MainLayout() {
@@ -26,6 +27,7 @@ function MainLayout() {
             <Header/>
             <Toolbar/>
             <Outlet />
+            <Footer />
         </>
     );
 }

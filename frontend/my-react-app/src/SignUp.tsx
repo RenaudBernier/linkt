@@ -7,6 +7,7 @@ export default function SignUp() {
     const [name, setName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
     const navigate = useNavigate();
@@ -15,27 +16,28 @@ export default function SignUp() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const success = await signUp({
-            firstName: name,
-            lastName: lastName,
-            email: email,
-            password: password,
-            phoneNumber: '', // TODO: Add phone number field to form
-            userType: userType,
-            organizationName: userType === 'org' ? '' : undefined // TODO: Add org name field
-        });
-
-        if (success) {
-            // Log the user in and redirect to homepage
-            login({
+        try {
+            const response = await signUp({
                 firstName: name,
                 lastName: lastName,
                 email: email,
-                phoneNumber: ''
+                password: password,
+                phoneNumber: phoneNumber,
+                userType: userType,
+                organizationName: userType === 'org' ? '' : undefined // TODO: Add org name field
             });
+
+            // Log the user in with token and redirect to homepage
+            login({
+                firstName: response.firstName,
+                lastName: response.lastName,
+                email: response.email,
+                phoneNumber: response.phoneNumber || ''
+            }, response.token);
+
             navigate('/');
-        } else {
-            console.error('Signup failed!');
+        } catch (error) {
+            console.error('Signup failed!', error);
             // TODO: Show error message to user
         }
     };
@@ -68,6 +70,15 @@ export default function SignUp() {
                         type="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div style={{marginTop: 10}}>
+                    <label>Phone Number:</label><br/>
+                    <input
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={e => setPhoneNumber(e.target.value)}
                         required
                     />
                 </div>
@@ -146,4 +157,6 @@ export default function SignUp() {
         </div>
 
     );
+
+
 }
