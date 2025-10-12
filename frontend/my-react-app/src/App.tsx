@@ -18,6 +18,7 @@ import SignUp from './SignUp';
 import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
+import SavedTickets from "./SavedTickets.tsx";
 
 function MainLayout() {
     return (
@@ -100,7 +101,7 @@ function Home() {
                 <button onClick={() => navigate('/login')}>
                     Go to Login
                 </button>
-                <button onClick={() => navigate('/checkoutpage')}>
+                <button onClick={() => navigate('/checkout')}>
                     Go to Checkout
                 </button>
                 <button onClick={() => navigate('/savedtickets')}>
@@ -118,12 +119,13 @@ function App() {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/savedtickets" element={<SavedTickets/>} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/checkoutpage" element={<CheckoutPage/>}/>
+                    <Route path="/checkout" element={<CheckoutPage/>}/>
                 </Route>
             </Routes>
     );
