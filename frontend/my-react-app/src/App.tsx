@@ -20,7 +20,7 @@ import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
-
+import Settings from "./components/Settings";
 function MainLayout() {
     return (
         <>
@@ -118,6 +118,7 @@ function App() {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/settings" element={<Settings/>}></Route>
                 </Route>
 
                 <Route element={<BlankLayout/>}>
