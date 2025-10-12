@@ -123,6 +123,17 @@ function SavedTickets() {
         );
     }
 
+    function List() {
+        return (
+            <Box component="ul" sx={{listStyle: "none", padding: 0, margin: 0}}>
+                {events.map((mockEvent) => (
+                    <Box component="li" key={mockEvent.eventID} sx={{listStyle: "none", padding: 0, margin: 0}}>
+                        <Ticket mockEvent={mockEvent}/>
+                    </Box>
+                ))}
+            </Box>
+        );
+    }
 
     return (
 
