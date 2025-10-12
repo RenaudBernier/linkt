@@ -136,7 +136,40 @@ function SavedTickets() {
     }
 
     return (
+        <Box
+            sx={{
+                width: "100vw", minHeight: "100vh",
+                margin: "0", padding: 0,
+                display: "flex", flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box"
+            }}
+        >
+            <Box
+                sx={{
+                    width: "100%", minWidth: "700px",
+                    display: "flex", flexDirection: "column",
+                    alignItems: "center", justifyContent: "center",
+                    padding: "20px",
+                }}
+            >
+                <List/>
+            </Box>
 
+            <Button
+                onClick={() => navigate('/')}
+                sx={{
+                    marginTop: "20px", backgroundColor: "#2563eb",
+                    color: "white", border: "none",
+                    borderRadius: "6px", padding: "10px 16px",
+                    cursor: "pointer", fontSize: "14px",
+                    '&:hover': {backgroundColor: "#1d4ed8"}
+                }}
+            >
+                Go Back
+            </Button>
+        </Box>
     );
 }
 
