@@ -103,6 +103,9 @@ function Home() {
                 <button onClick={() => navigate('/checkoutpage')}>
                     Go to Checkout
                 </button>
+                <button onClick={() => navigate('/savedtickets')}>
+                    Saved tickets
+                 </button>
       </Box>
         </>
     );
