@@ -174,5 +174,4 @@ function SavedTickets() {
         </Box>
     );
 }
-
 export default SavedTickets;
