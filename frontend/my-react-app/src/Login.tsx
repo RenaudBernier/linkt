@@ -1,33 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
+import authService from './services/authService';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
 
-        // Dummy implementation - simulate login
-        await new Promise(resolve => setTimeout(resolve, 500));
+        try {
+            const response = await authService.login({ email, password });
 
-        // For now, accept any credentials and log the user in
-        login({
-            firstName: 'Test',
-            lastName: 'User',
-            email: email,
-            phoneNumber: ''
-        });
+            // Update auth context with user data and token
+            login({
+                firstName: response.firstName,
+                lastName: response.lastName,
+                email: response.email,
+                phoneNumber: response.phoneNumber
+            }, response.token);
 
-        navigate('/');
+            navigate('/');
+        } catch (err) {
+            console.error('Login error:', err);
+            setError('Login failed. Please check your credentials.');
+        }
     };
 
     return (
         <div style={{maxWidth: 400, margin: 'auto', padding: 20}}>
             <h2>Log In</h2>
+            {error && <div style={{color: 'red', marginBottom: 10}}>{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Email:</label><br/>
