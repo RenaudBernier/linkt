@@ -1,85 +1,85 @@
 
-import React from 'react';
-import './Footer.css'; 
+import { Box, Container, Divider, Link, Stack, Typography } from '@mui/material';
 
-const Footer: React.FC = () => {
+const sections: Array<{ title: string; links: string[] }> = [
+  { title: 'Product',       links: ['Features', 'Pricing', 'Integrations', 'Documentation'] },
+  { title: 'Company',       links: ['About Us', 'Careers', 'News', 'Contact'] },
+  { title: 'For Organizers',links: ['Create Events', 'Manage Tickets', 'Check-in App', 'Analytics'] },
+  { title: 'For Students',  links: ['Browse Events', 'My Tickets', 'Calendar', 'Support'] },
+  { title: 'Resources',     links: ['Help Center', 'Community Forum', 'System Status', 'Report an Issue'] },
+];
+
+export default function Footer() {
   return (
-    <footer style={{
-      backgroundColor: '#f5f5f5',
-      color: '#333',
-      padding: '2rem 4rem',
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
-      fontSize: '0.9rem',
-    }}>
-      {/* Column 1 */}
-      <div>
-        <h4 style={{ marginBottom: '0.8rem' }}>Product</h4>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Features</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Pricing</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Integrations</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Documentation</a></li>
-        </ul>
-      </div>
+    <Box component="footer" sx={{ bgcolor: 'grey.100', color: 'text.primary', mt: 6 }}>
+      <Container sx={{ py: { xs: 4, sm: 6 } }}>
+        {/* Columns with CSS Grid */}
+        <Box
+          sx={{
+            display: 'grid',
+            gap: 4,
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+              lg: 'repeat(4, 1fr)',
+              xl: 'repeat(5, 1fr)', 
+            },
+          }}
+        >
+          {sections.map((sec) => (
+            <Box key={sec.title}>
+              <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+                {sec.title}
+              </Typography>
+              <Stack spacing={1}>
+                {sec.links.map((label) => (
+                  <Link
+                    key={label}
+                    href="#"
+                    underline="hover"
+                    color="text.secondary"
+                    sx={{ display: 'inline-block', lineHeight: 1.75, '&:hover': { color: 'text.primary' } }}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </Stack>
+            </Box>
+          ))}
+        </Box>
 
-      {/* Column 2 */}
-      <div>
-        <h4 style={{ marginBottom: '0.8rem' }}>Company</h4>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>About Us</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Careers</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>News</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Contact</a></li>
-        </ul>
-      </div>
+        <Divider sx={{ my: 4 }} />
 
-      {/* Column 3 */}
-      <div>
-        <h4 style={{ marginBottom: '0.8rem' }}>Developers</h4>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>API Docs</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Open Source</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Contribute</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>GitHub</a></li>
-        </ul>
-      </div>
+        {/* Blurb */}
+        <Stack spacing={1} sx={{ mb: 2 }}>
+          <Typography variant="h6" fontWeight={700}>
+            Linkt — Campus Events & Ticketing
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Discover and attend campus events, claim QR-coded tickets, and manage check-ins. Organizers can create events,
+            track attendance, and view analytics. Admins oversee organizations and moderate content.
+          </Typography>
+        </Stack>
 
-      {/* Column 4 */}
-      <div>
-        <h4 style={{ marginBottom: '0.8rem' }}>Support</h4>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Help Center</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Community Forum</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>System Status</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Report an Issue</a></li>
-        </ul>
-      </div>
-
-      {/* Column 5 */}
-      <div>
-        <h4 style={{ marginBottom: '0.8rem' }}>Follow Us</h4>
-        <ul style={{ listStyle: 'none', padding: 0 }}>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>Twitter</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>LinkedIn</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>GitHub</a></li>
-          <li><a href="#" style={{ textDecoration: 'none', color: '#333' }}>YouTube</a></li>
-        </ul>
-      </div>
-
-      {/* Bottom bar */}
-      <div style={{
-        width: '100%',
-        borderTop: '1px solid #ccc',
-        marginTop: '2rem',
-        paddingTop: '1rem',
-        textAlign: 'center'
-      }}>
-        <p>© 2025 Linkt. All rights reserved.</p>
-      </div>
-    </footer>
+        {/* Bottom bar */}
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography variant="body2" color="text.secondary">
+            © {new Date().getFullYear()} Linkt. All rights reserved.
+          </Typography>
+          <Stack direction="row" spacing={3}>
+            <Link href="#" color="text.secondary" underline="hover">Terms</Link>
+            <Link href="#" color="text.secondary" underline="hover">Privacy</Link>
+            <Link href="#" color="text.secondary" underline="hover">Site Map</Link>
+            <Link href="#" color="text.secondary" underline="hover">Accessibility</Link>
+          </Stack>
+        </Stack>
+      </Container>
+    </Box>
   );
-};
-
-export default Footer;
+}
