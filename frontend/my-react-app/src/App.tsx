@@ -20,6 +20,7 @@ import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
+import MyTickets from './mytickets.tsx';
 
 function MainLayout() {
     return (
@@ -118,6 +119,7 @@ function App() {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/mytickets" element={<MyTickets />} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>

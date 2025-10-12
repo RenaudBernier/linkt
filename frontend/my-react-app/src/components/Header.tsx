@@ -36,6 +36,11 @@ const Header: React.FC = () => {
     handleClose();
   };
 
+  const handleMyTickets = () => {
+    navigate('/mytickets');
+    handleClose();
+  };
+
   const handleLogout = () => {
     logout();
     handleClose();
@@ -158,7 +163,7 @@ const Header: React.FC = () => {
               </MenuItem>,
               <MenuItem
                 key="tickets"
-                onClick={handleSettings}
+                onClick={handleMyTickets}
                 sx={{
                   "&:hover": {
                     backgroundColor: "var(--fluorescent-cyan-10)",
