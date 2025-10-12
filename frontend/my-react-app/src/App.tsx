@@ -1,6 +1,7 @@
 // src/App.tsx
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import {
+
   AppBar,
   Toolbar,
   Box,
@@ -18,6 +19,7 @@ import SignUp from './SignUp';
 import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
+import Footer from "./components/Footer";
 
 function MainLayout() {
     return (
@@ -25,6 +27,7 @@ function MainLayout() {
             <Header/>
             <Toolbar/>
             <Outlet />
+            <Footer />
         </>
     );
 }
