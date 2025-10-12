@@ -1,6 +1,8 @@
 import type {Event} from "./types/event.interface.ts";
 import {useNavigate} from 'react-router-dom';
-import eventImg from "./assets/event1.png";
+import eventImg1 from "./assets/event1.png";
+import eventImg2 from "./assets/event2.png";
+
 import {
     Box,
     Card,
@@ -16,7 +18,7 @@ const events: Event[] = [
         title: "Event 1",
         description: "------",
         category: "------",
-        image: [eventImg],
+        image: [eventImg1],
         price: 10,
         startDate: new Date("2025-10-15T17:00:00"),
         endDate: new Date("2025-10-15T20:00:00"),
@@ -28,7 +30,7 @@ const events: Event[] = [
         title: "Event 2",
         description: "------",
         category: "------",
-        image: [eventImg],
+        image: [eventImg2],
         price: 20,
         startDate: new Date("2025-10-22T14:00:00"),
         endDate: new Date("2025-10-22T18:00:00"),

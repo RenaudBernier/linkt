@@ -1,5 +1,6 @@
 import type { Event } from "../types/event.interface";
-import eventImg from "../assets/event1.png";
+import eventImg1 from "../assets/event1.png";
+import eventImg2 from "../assets/event2.png";
 
 const events: Event[] = [
     {
@@ -7,7 +8,7 @@ const events: Event[] = [
         title: "Event 1",
         description: "event 1 description",
         category: "------",
-        image: [eventImg],
+        image: [eventImg1],
         price: 10,
         startDate: new Date("2025-10-15T17:00:00"),
         endDate: new Date("2025-10-15T20:00:00"),
@@ -19,7 +20,7 @@ const events: Event[] = [
         title: "Event 2",
         description: "event 2 description",
         category: "------",
-        image: [eventImg],
+        image: [eventImg2],
         price: 20,
         startDate: new Date("2025-10-22T14:00:00"),
         endDate: new Date("2025-10-22T18:00:00"),
@@ -51,7 +52,6 @@ function TicketDetails({ eventId }: { eventId?: string }) {
                     alt={event.title}
                 />
                 <h3 className="checkoutPage-eventName">{event.title}</h3>
-                <p className="checkoutPage-eventDescription">{event.description}</p>
                 <p className="checkoutPage-price">
                     {event.price === 0 ? "Free" : "$" + event.price}
                 </p>
