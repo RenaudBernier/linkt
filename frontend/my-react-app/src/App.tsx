@@ -20,8 +20,8 @@ import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
 import EventsPage from "./pages/EventsPage.tsx";
+import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
-
 function MainLayout() {
     return (
         <>
@@ -123,6 +123,7 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                 </Route>
 
