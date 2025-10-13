@@ -3,7 +3,7 @@ package com.linkt.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "saved_events")
+@Table(name = "saved_event")
 public class SavedEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

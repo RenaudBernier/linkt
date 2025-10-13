@@ -19,6 +19,7 @@ import Login from './Login';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
+import EventsPage from "./pages/EventsPage.tsx";
 import MyTickets from './mytickets.tsx';
 import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
@@ -110,6 +111,9 @@ function Home() {
                 <button onClick={() => navigate('/savedtickets')}>
                     Saved tickets
                  </button>
+                <button onClick={() => navigate('/events')}>
+                    Browse events
+                </button>
       </Box>
         </>
     );
@@ -122,6 +126,7 @@ function App() {
             <Routes>
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
+                    <Route path="/events" element={<EventsPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />

@@ -1,7 +1,7 @@
 package com.linkt.service;
 
 import com.linkt.repository.UserRepository;
-import com.model.User;
+import com.linkt.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
