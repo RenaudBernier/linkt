@@ -72,11 +72,17 @@ const Header: React.FC = () => {
       <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
         {/* Logo */}
         {/* sx = applies CUSTOM STYLES to stuff */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <a href = "https://github.com/RenaudBernier/linkt">
+        <Box
+            sx={{ display: "flex",
+                alignItems: "center",
+                cursor: "pointer"
+        }}
+            onClick={() => navigate("/")
+
+        }
+        >
           <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
           />
-          </a>
         </Box>
 
         {/* Search Bar */}
