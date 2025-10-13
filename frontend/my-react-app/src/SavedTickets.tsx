@@ -1,7 +1,8 @@
 import type {Event} from "./types/event.interface.ts";
 import {useNavigate} from 'react-router-dom';
-import eventImg1 from "./assets/event1.png";
-import eventImg2 from "./assets/event2.png";
+import { useState, useEffect } from 'react';
+import { getSavedEvents, unsaveEvent } from './api/savedEvents.api';
+import { useSnackbar } from 'notistack';
 
 import {
     Box,
@@ -9,38 +10,103 @@ import {
     CardContent,
     CardMedia,
     Typography,
-    Button
+    Button,
+    IconButton
 } from '@mui/material';
-
-const events: Event[] = [
-    {
-        eventID: 1,
-        title: "Event 1",
-        description: "------",
-        category: "------",
-        image: [eventImg1],
-        price: 10,
-        startDate: new Date("2025-10-15T17:00:00"),
-        endDate: new Date("2025-10-15T20:00:00"),
-        location: "Hall Building (H-110), Concordia University, Montreal, QC",
-        capacity: 120
-    },
-    {
-        eventID: 2,
-        title: "Event 2",
-        description: "------",
-        category: "------",
-        image: [eventImg2],
-        price: 20,
-        startDate: new Date("2025-10-22T14:00:00"),
-        endDate: new Date("2025-10-22T18:00:00"),
-        location: "Engineering and Computer Science (EV-3.309), Concordia University, Montreal, QC",
-        capacity: 100
-    }
-];
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function SavedTickets() {
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const [events, setEvents] = useState<Event[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [removingId, setRemovingId] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchSavedEvents = async () => {
+            if (!localStorage.getItem('token')) {
+                navigate('/login');
+                return;
+            }
+
+            try {
+                const savedEvents = await getSavedEvents();
+                setEvents(savedEvents);
+                setLoading(false);
+            } catch (error: any) {
+                if (error.response?.status === 401) {
+                    navigate('/login');
+                } else {
+                    console.error('Error fetching saved events:', error);
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchSavedEvents();
+    }, [navigate]);
+
+    const handleUnsaveEvent = async (eventId: number) => {
+        setRemovingId(eventId);
+        try {
+            await unsaveEvent(eventId);
+            setEvents(events.filter(e => e.eventID !== eventId));
+            enqueueSnackbar('Event removed from saved events', { variant: 'success' });
+        } catch (error: any) {
+            if (error.response?.status === 401) {
+                navigate('/login');
+            } else {
+                console.error('Error removing event:', error);
+                enqueueSnackbar('Failed to remove event from saved events', { variant: 'error' });
+            }
+        } finally {
+            setRemovingId(null);
+        }
+    };
+
+    if (loading) {
+        return (
+            <Box
+                sx={{
+                    width: "100vw", minHeight: "100vh",
+                    display: "flex", justifyContent: "center", alignItems: "center"
+                }}
+            >
+                <Typography>Loading saved events...</Typography>
+            </Box>
+        );
+    }
+
+    if (events.length === 0) {
+        return (
+            <Box
+                sx={{
+                    width: "100vw", minHeight: "100vh",
+                    display: "flex", flexDirection: "column",
+                    justifyContent: "center", alignItems: "center",
+                    padding: "20px"
+                }}
+            >
+                <Typography variant="h5" sx={{ marginBottom: "20px" }}>
+                    No saved events yet
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: "20px", color: "#555" }}>
+                    Browse events and save the ones you like!
+                </Typography>
+                <Button
+                    onClick={() => navigate('/events')}
+                    sx={{
+                        backgroundColor: "#2563eb",
+                        color: "white",
+                        padding: "10px 20px",
+                        '&:hover': { backgroundColor: "#1d4ed8" }
+                    }}
+                >
+                    Browse Events
+                </Button>
+            </Box>
+        );
+    }
 
     function Ticket({mockEvent}: { mockEvent: Event }) {
         return (
@@ -104,23 +170,37 @@ function SavedTickets() {
                     </CardContent>
                 </Box>
 
-                <Button
-                    onClick={() => navigate(`/checkout/${mockEvent.eventID}`)}
-                    sx={{
-                        backgroundColor: "#2563eb",
-                        color: "white",
-                        borderRadius: "6px",
-                        padding: "8px 12px",
-                        cursor: "pointer",
-                        fontSize: "14px",
-                        flexShrink: 0,
-                        '&:hover': {
-                            backgroundColor: "#1d4ed8"
-                        }
-                    }}
-                >
-                    Buy Ticket
-                </Button>
+                <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                    <Button
+                        onClick={() => navigate(`/checkout/${mockEvent.eventID}`)}
+                        sx={{
+                            backgroundColor: "#2563eb",
+                            color: "white",
+                            borderRadius: "6px",
+                            padding: "8px 12px",
+                            cursor: "pointer",
+                            fontSize: "14px",
+                            flexShrink: 0,
+                            '&:hover': {
+                                backgroundColor: "#1d4ed8"
+                            }
+                        }}
+                    >
+                        Buy Ticket
+                    </Button>
+                    <IconButton
+                        onClick={() => handleUnsaveEvent(mockEvent.eventID)}
+                        disabled={removingId === mockEvent.eventID}
+                        sx={{
+                            color: "#ef4444",
+                            '&:hover': {
+                                backgroundColor: "#fee2e2"
+                            }
+                        }}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                </Box>
             </Card>
         );
     }

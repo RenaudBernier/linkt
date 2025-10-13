@@ -1,5 +1,6 @@
 import type { User } from '../types/user.interfaces';
 import authService, { type AuthResponse } from '../services/authService';
+import axiosInstance from './axiosInstance';
 
 export interface SignUpData extends User {
     password: string;
@@ -37,4 +38,18 @@ export const signUp = async (data: SignUpData): Promise<AuthResponse> => {
     }));
 
     return response;
+};
+
+export interface CurrentUser {
+    userId: number;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phoneNumber?: string;
+    userType: 'student' | 'organizer' | 'administrator';
+}
+
+export const getCurrentUser = async (): Promise<CurrentUser> => {
+    const response = await axiosInstance.get('/users/me');
+    return response.data;
 };

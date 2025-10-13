@@ -1,10 +1,16 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { buyTicket } from "../api/tickets.api";
+import { useSnackbar } from 'notistack';
 
 
 function CheckoutDetails() {
+    const navigate = useNavigate();
+    const { ticketId } = useParams();
+    const { enqueueSnackbar } = useSnackbar();
     const [expirationDate, setExpirationDate] = useState("");
     const [error, setError] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Preventing the user from writing characters in the input box
     const preventCharacter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -59,7 +65,35 @@ function CheckoutDetails() {
             setError("");
         }
     };
-    const navigate = useNavigate();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+            return;
+        }
+
+        if (error) {
+            alert("Please fix form errors before submitting");
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            await buyTicket(Number(ticketId));
+            enqueueSnackbar('Ticket purchased successfully!', { variant: 'success' });
+            navigate('/mytickets');
+        } catch (err: any) {
+            if (err.response?.status === 401) {
+                navigate('/login');
+            } else {
+                enqueueSnackbar('Failed to purchase ticket. Please try again.', { variant: 'error' });
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
 
@@ -67,7 +101,7 @@ function CheckoutDetails() {
         <div className="checkoutPage-form">
             <h2>Checkout Information</h2>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label className="checkoutPage-label">Name on Card</label>
                 <input
                     className="checkoutPage-input"
@@ -127,8 +161,19 @@ function CheckoutDetails() {
 
                 {/* Action buttons */}
                 <div className="checkoutPage-actions">
-                    <button className="checkoutPage-submit" type="submit">Submit</button>
-                    <button className="checkoutPage-cancel" type="button" onClick={()=>{navigate("/")}}>
+                    <button
+                        className="checkoutPage-submit"
+                        type="submit"
+                        disabled={isSubmitting || !!error}
+                    >
+                        {isSubmitting ? 'Processing...' : 'Submit'}
+                    </button>
+                    <button
+                        className="checkoutPage-cancel"
+                        type="button"
+                        onClick={()=>{navigate("/")}}
+                        disabled={isSubmitting}
+                    >
                         Cancel
                     </button>
                 </div>

@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -24,11 +25,17 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import type { SelectChangeEvent } from '@mui/material';
 import type { Event } from '../types/event.interface';
+import { saveEvent, checkIfSaved } from '../api/savedEvents.api';
+import { useSnackbar } from 'notistack';
 
 function EventsPage() {
+  const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [savingEventId, setSavingEventId] = useState<number | null>(null);
+  const [savedEventIds, setSavedEventIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -63,6 +70,54 @@ function EventsPage() {
 
     fetchEvents();
   }, []);
+
+  useEffect(() => {
+    const checkSavedEvents = async () => {
+      if (!localStorage.getItem('token')) return;
+
+      const savedIds = new Set<number>();
+      for (const event of events) {
+        try {
+          const isSaved = await checkIfSaved(event.eventID);
+          if (isSaved) {
+            savedIds.add(event.eventID);
+          }
+        } catch (error) {
+          // Ignore errors for individual checks
+        }
+      }
+      setSavedEventIds(savedIds);
+    };
+
+    if (events.length > 0) {
+      checkSavedEvents();
+    }
+  }, [events]);
+
+  const handleAddToFavorites = async (eventId: number) => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
+      return;
+    }
+
+    setSavingEventId(eventId);
+    try {
+      await saveEvent(eventId);
+      setSavedEventIds(prev => new Set(prev).add(eventId));
+      enqueueSnackbar('Event saved!', { variant: 'success' });
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        navigate('/login');
+      } else if (error.response?.status === 409) {
+        enqueueSnackbar('Event already saved', { variant: 'info' });
+      } else {
+        console.error('Error saving event:', error);
+        enqueueSnackbar('Failed to save event. Please try again.', { variant: 'error' });
+      }
+    } finally {
+      setSavingEventId(null);
+    }
+  };
 
   const [sortBy, setSortBy] = useState<string>('date');
   const [filterCategory, setFilterCategory] = useState<string>('all');
@@ -137,7 +192,7 @@ function EventsPage() {
     setFilterCategory(event.target.value);
   };
 
-  const handlePriceChange = (_event: Event, newValue: number | number[], _activeThumb: number) => {
+  const handlePriceChange = (_event: any, newValue: number | number[]) => {
     setPriceRange(newValue as number[]);
   };
 
@@ -398,11 +453,20 @@ function EventsPage() {
                   </Stack>
               </CardContent>
               <CardActions sx={{ px: 2.5, pb: 2.5, pt: 0, gap: 1 }}>
-                <Button component="a" href="#" variant="contained" size="small">
+                <Button
+                  onClick={() => navigate(`/checkout/${event.eventID}`)}
+                  variant="contained"
+                  size="small"
+                >
                   Buy ticket
                 </Button>
-                <Button component="a" href="#" variant="outlined" size="small">
-                  Add to favorites
+                <Button
+                  onClick={() => handleAddToFavorites(event.eventID)}
+                  variant={savedEventIds.has(event.eventID) ? "contained" : "outlined"}
+                  size="small"
+                  disabled={savingEventId === event.eventID}
+                >
+                  {savedEventIds.has(event.eventID) ? 'Saved' : 'Save event'}
                 </Button>
               </CardActions>
             </Card>
