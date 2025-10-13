@@ -1,7 +1,6 @@
 // src/App.tsx
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import {
-
   AppBar,
   Toolbar,
   Box,
@@ -21,7 +20,8 @@ import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
 import MyTickets from './mytickets.tsx';
-
+import Settings from "./components/Settings";
+import SavedTickets from "./SavedTickets.tsx";
 function MainLayout() {
     return (
         <>
@@ -104,9 +104,12 @@ function Home() {
                 <button onClick={() => navigate('/login')}>
                     Go to Login
                 </button>
-                <button onClick={() => navigate('/checkoutpage')}>
+                <button onClick={() => navigate('/checkout/1')}>
                     Go to Checkout
                 </button>
+                <button onClick={() => navigate('/savedtickets')}>
+                    Saved tickets
+                 </button>
       </Box>
         </>
     );
@@ -120,12 +123,14 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/mytickets" element={<MyTickets />} />
+                    <Route path="/settings" element={<Settings/>}></Route>
+                    <Route path="/savedtickets" element={<SavedTickets/>} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
-                    <Route path="/checkoutpage" element={<CheckoutPage/>}/>
+                    <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>
             </Routes>
     );
