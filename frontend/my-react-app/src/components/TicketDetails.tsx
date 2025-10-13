@@ -1,42 +1,47 @@
 import type { Event } from "../types/event.interface";
-import eventImg1 from "../assets/event1.png";
-import eventImg2 from "../assets/event2.png";
-
-const events: Event[] = [
-    {
-        eventID: 1,
-        title: "Event 1",
-        description: "event 1 description",
-        category: "------",
-        image: [eventImg1],
-        price: 10,
-        startDate: new Date("2025-10-15T17:00:00"),
-        endDate: new Date("2025-10-15T20:00:00"),
-        location: "Hall Building (H-110), Concordia University, Montreal, QC",
-        capacity: 120
-    },
-    {
-        eventID: 2,
-        title: "Event 2",
-        description: "event 2 description",
-        category: "------",
-        image: [eventImg2],
-        price: 20,
-        startDate: new Date("2025-10-22T14:00:00"),
-        endDate: new Date("2025-10-22T18:00:00"),
-        location: "EV Building, Concordia University, Montreal, QC",
-        capacity: 100
-    }
-];
+import { useState, useEffect } from "react";
+import { getEventById } from "../api/events.api";
 
 function TicketDetails({ eventId }: { eventId?: string }) {
-    const event = events.find(e => e.eventID === Number(eventId));
+    const [event, setEvent] = useState<Event | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    if (!event) {
+    useEffect(() => {
+        const fetchEvent = async () => {
+            if (!eventId) {
+                setError("No event ID provided");
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const eventData = await getEventById(Number(eventId));
+                setEvent(eventData);
+                setLoading(false);
+            } catch (err) {
+                setError("Failed to load event");
+                setLoading(false);
+            }
+        };
+
+        fetchEvent();
+    }, [eventId]);
+
+    if (loading) {
         return (
             <div className="checkoutPage-ticket">
                 <h2>Ticket Details</h2>
-                <p>Event not found</p>
+                <p>Loading...</p>
+            </div>
+        );
+    }
+
+    if (error || !event) {
+        return (
+            <div className="checkoutPage-ticket">
+                <h2>Ticket Details</h2>
+                <p>{error || "Event not found"}</p>
             </div>
         );
     }

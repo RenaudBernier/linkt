@@ -41,6 +41,11 @@ const Header: React.FC = () => {
     handleClose();
   };
 
+  const handleSavedEvents = () => {
+    navigate('/savedtickets');
+    handleClose();
+  };
+
   const handleLogout = () => {
     logout();
     handleClose();
@@ -171,6 +176,17 @@ const Header: React.FC = () => {
                 }}
               >
                 My Tickets
+              </MenuItem>,
+              <MenuItem
+                key="saved-events"
+                onClick={handleSavedEvents}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Saved Events
               </MenuItem>,
               <MenuItem
                 key="logout"
