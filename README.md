@@ -71,15 +71,99 @@ This platform enables students to browse events, save them to their personal cal
 
 ## Technical Stack
 
-*[Technical details to be added based on implementation choices]*
+### Frontend
+- **Framework**: React 19.1.1 with TypeScript
+- **Build Tool**: Vite 7.1.2
+- **UI Library**: Material-UI (MUI) 7.3.2
+- **Styling**: Emotion (CSS-in-JS)
+- **Routing**: React Router DOM 7.9.3
+- **HTTP Client**: Axios 1.12.2
+- **Notifications**: Notistack 3.0.2
+- **QR Code Generation**: qrcode.react 4.2.0
+
+### Backend
+- **Framework**: Spring Boot 3.5.5
+- **Language**: Java 25
+- **Build Tool**: Maven
+- **Database**: SQLite 3.47.1.0 with Hibernate ORM
+- **Authentication**: JWT (JSON Web Tokens) with Spring Security
+- **API**: RESTful API with Spring Web
+- **Validation**: Spring Boot Starter Validation
+
+### Database
+- **SQLite**: Lightweight, file-based relational database
+- **Schema Management**: Python script for database initialization and seeding
 
 ## Getting Started
 
-*[Installation and setup instructions to be added]*
+### Prerequisites
+- Java 25 or higher
+- Python 3.x
+- Node.js and npm
+- Maven
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd linkt
+   ```
+
+2. **Install frontend dependencies**
+   ```bash
+   cd frontend/my-react-app
+   npm install
+   cd ../..
+   ```
+
+3. **Backend dependencies** (Maven will handle this automatically)
 
 ## Usage
 
-*[User guide and documentation to be added]*
+### 1. Create and Initialize Database
+
+Navigate to the database directory and run the Python script to create the SQLite database with seed data:
+
+```bash
+python3 backend/database/create_database.py
+```
+
+This will:
+- Create a new `linkt.db` file in the database directory
+- Set up all required tables (user, event, ticket, saved_event)
+- Populate the database with sample data including:
+  - 3 organizers (2 approved, 1 pending)
+  - 3 students
+  - 1 administrator
+  - 3 sample events
+  - Sample tickets and saved events
+
+### 2. Start the Backend Server
+
+From the root directory:
+
+```bash
+cd backend/springboot-app
+mvn spring-boot:run
+```
+
+The backend server will start on `http://localhost:8080`
+
+### 3. Start the Frontend Development Server
+
+In a new terminal, from the root directory:
+
+```bash
+cd frontend/my-react-app
+npm run dev
+```
+
+The frontend application will be available at `http://localhost:5173` (or the next available port)
+
+### 4. Access the Application
+
+Open your browser and navigate to the frontend URL.
 
 ## Contributing
 
