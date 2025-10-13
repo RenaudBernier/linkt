@@ -10,7 +10,7 @@ import './index.css'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
       <BrowserRouter>
-          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}>
               <AuthProvider>
                   <App />
               </AuthProvider>
