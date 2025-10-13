@@ -1,5 +1,6 @@
 package com.linkt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import com.linkt.model.Student;
 import com.linkt.model.Organizer;
@@ -26,6 +27,7 @@ public abstract class User
     private String phoneNumber;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
 

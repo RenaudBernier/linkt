@@ -1,5 +1,6 @@
 package com.linkt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,9 +13,11 @@ import java.util.List;
 public class Student extends User
 {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<SavedEvent> savedEvents = new ArrayList<>();
 
     public Student() { super();}

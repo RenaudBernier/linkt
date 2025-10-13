@@ -1,4 +1,5 @@
 package com.linkt.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +42,11 @@ public class Event {
     private Organizer organizer;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Ticket> tickets = new ArrayList<>();
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<SavedEvent> savedByStudents = new ArrayList<>();
 
     public Event() {}
