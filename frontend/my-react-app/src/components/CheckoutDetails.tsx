@@ -1,14 +1,10 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
 
 
 function CheckoutDetails() {
     const [expirationDate, setExpirationDate] = useState("");
     const [error, setError] = useState("");
-
-    // Reset all inputs
-    const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.form?.reset();
-    };
 
     // Preventing the user from writing characters in the input box
     const preventCharacter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -16,7 +12,7 @@ function CheckoutDetails() {
     };
 
     const preventNumeric = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (!/^[a-zA-Z]$/.test(e.key)) e.preventDefault();
+        if (!/^[a-z A-Z]$/.test(e.key)) e.preventDefault();
     };
 
     // handling the date format and validation
@@ -34,8 +30,10 @@ function CheckoutDetails() {
             const expDate = new Date(year, month - 1, 1);
             expDate.setMonth(expDate.getMonth() + 1);
 
-            if (month < 1 || month > 12 && (year > (today.getFullYear() + 6) )) {
-                setError("Invalid month and Year");
+            if (month < 1 || month > 12 ||
+                year < today.getFullYear() || year > today.getFullYear() + 6
+            ) {
+                setError("Invalid month or year");
                 return;
             }
 
@@ -61,9 +59,11 @@ function CheckoutDetails() {
             setError("");
         }
     };
+    const navigate = useNavigate();
 
     return (
-        // Checkout Info
+
+    // Checkout Info
         <div className="checkoutPage-form">
             <h2>Checkout Information</h2>
 
@@ -128,7 +128,7 @@ function CheckoutDetails() {
                 {/* Action buttons */}
                 <div className="checkoutPage-actions">
                     <button className="checkoutPage-submit" type="submit">Submit</button>
-                    <button className="checkoutPage-cancel" type="button" onClick={handleCancel}>
+                    <button className="checkoutPage-cancel" type="button" onClick={()=>{navigate("/")}}>
                         Cancel
                     </button>
                 </div>
