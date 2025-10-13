@@ -6,7 +6,7 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActionArea,
+  CardActions,
   Grid,
   FormControl,
   InputLabel,
@@ -17,6 +17,7 @@ import {
   Stack,
   Divider,
   Slider,
+  Button,
 } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -285,25 +286,14 @@ function EventsPage() {
                 },
               }}
             >
-              <CardActionArea
-                component="a"
-                href="https://google.com"
-                sx={{
-                  flexGrow: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'stretch',
-                  height: '100%',
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="220"
-                  image={event.image[0]}
-                  alt={event.title}
-                  sx={{ objectFit: 'cover' }}
-                />
-                <CardContent sx={{ flexGrow: 1, p: 2.5 }}>
+              <CardMedia
+                component="img"
+                height="220"
+                image={event.image[0]}
+                alt={event.title}
+                sx={{ objectFit: 'cover' }}
+              />
+              <CardContent sx={{ flexGrow: 1, p: 2.5 }}>
                   <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                     <Chip
                       label={event.category}
@@ -406,8 +396,15 @@ function EventsPage() {
                       </Typography>
                     </Box>
                   </Stack>
-                </CardContent>
-              </CardActionArea>
+              </CardContent>
+              <CardActions sx={{ px: 2.5, pb: 2.5, pt: 0, gap: 1 }}>
+                <Button component="a" href="#" variant="contained" size="small">
+                  Buy ticket
+                </Button>
+                <Button component="a" href="#" variant="outlined" size="small">
+                  Add to favorites
+                </Button>
+              </CardActions>
             </Card>
           </Grid>
         ))}
