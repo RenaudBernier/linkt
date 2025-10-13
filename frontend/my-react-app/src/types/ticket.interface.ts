@@ -1,8 +1,5 @@
-export interface Ticket{
-    ticketID : number;
-    eventID : number;
-    qrCode : string;
-
-    generateQRCode() : string;
-    validateQRCode() : boolean;
+export interface Ticket {
+    ticketId: number;
+    eventId: number;
+    qrCode: string;
 }
