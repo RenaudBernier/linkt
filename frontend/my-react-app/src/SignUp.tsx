@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from './api/users.api';
 import { useAuth } from './contexts/AuthContext';
+//hello
 
 export default function SignUp() {
     const [name, setName] = useState('');
