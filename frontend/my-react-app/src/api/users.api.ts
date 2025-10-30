@@ -1,5 +1,5 @@
 import type { User } from '../types/user.interfaces';
-export type { User };
+
 import authService, { type AuthResponse } from '../services/authService';
 import axiosInstance from './axiosInstance';
 

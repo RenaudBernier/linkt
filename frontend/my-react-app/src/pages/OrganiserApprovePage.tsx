@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getPendingOrganizers, approveOrganizer } from '../api/users.api';
-import { User } from '../types/user.interfaces';
+import type { User } from '../types/user.interfaces';
 import {
     Container,
     Typography,
