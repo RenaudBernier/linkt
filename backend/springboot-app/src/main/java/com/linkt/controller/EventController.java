@@ -28,4 +28,11 @@ public class EventController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    /*@PostMapping("/add")
+    public ResponseEntity<Event> addEvent(@PathVariable Event givenEvent)
+    {
+        List<Event> events = eventRepository
+        return givenEvent;
+    } */
 }
