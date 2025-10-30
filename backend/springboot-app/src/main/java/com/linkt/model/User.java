@@ -79,6 +79,8 @@ public abstract class User
             return "student";
         } else if (this instanceof Organizer) {
             return "organizer";
+        } else if (this instanceof Administrator) {
+            return "administrator";
         }
         return null;
     }

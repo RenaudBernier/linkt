@@ -6,6 +6,7 @@ export interface User {
     lastName : string;
     email : string;
     phoneNumber : string;
+    userType?: string;
 }
 
 export interface Student extends User {
