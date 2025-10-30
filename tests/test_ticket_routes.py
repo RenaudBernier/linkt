@@ -104,11 +104,14 @@ def test_get_my_tickets():
         for field in required_fields:
             assert field in ticket, f"Missing required field: {field}"
 
-        # Validate QR code is a valid UUID format
+        # Validate QR code format: LINKT-{eventId}-{ticketId}
         qr_code = ticket["qrCode"]
         assert isinstance(qr_code, str), "qrCode should be string"
-        assert len(qr_code) == 36, f"qrCode should be UUID format (36 chars), got {len(qr_code)}"
-        assert qr_code.count('-') == 4, "qrCode should have UUID format with 4 dashes"
+        assert qr_code.startswith("LINKT-"), f"qrCode should start with 'LINKT-', got: {qr_code}"
+        qr_parts = qr_code.split("-")
+        assert len(qr_parts) == 3, f"qrCode should have format LINKT-eventId-ticketId, got: {qr_code}"
+        assert qr_parts[1].isdigit(), f"Event ID should be numeric, got: {qr_parts[1]}"
+        assert qr_parts[2].isdigit(), f"Ticket ID should be numeric, got: {qr_parts[2]}"
 
         print(f"✅ Found {len(data)} tickets")
 

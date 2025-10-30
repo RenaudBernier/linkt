@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict
 
+# BCrypt hash for password: "password123"
 BCRYPT_PASSWORD = "$2a$10$Ag0P81IIDefnGTk8cED4ee4z3G4tELoM2SX7R2/S7MEFu/m1BT0hy"
 
 
@@ -56,11 +57,15 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
         """
         CREATE TABLE IF NOT EXISTS ticket (
             ticket_id INTEGER PRIMARY KEY AUTOINCREMENT,
-            qr_code TEXT NOT NULL UNIQUE,
+            qr_code TEXT UNIQUE,
             user_id INTEGER NOT NULL,
             event_id INTEGER NOT NULL,
+            is_scanned INTEGER DEFAULT 0,
+            scanned_at TEXT,
+            scanned_by INTEGER,
             FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE,
-            FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE
+            FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE,
+            FOREIGN KEY (scanned_by) REFERENCES user (user_id) ON DELETE SET NULL
         );
         """
     )
@@ -81,6 +86,7 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_event_organizer ON event (organizer_id);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_ticket_user ON ticket (user_id);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_ticket_event ON ticket (event_id);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_ticket_scanned ON ticket (is_scanned);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_saved_event_user ON saved_event (user_id);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_saved_event_event ON saved_event (event_id);")
 

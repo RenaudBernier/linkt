@@ -12,4 +12,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByStudent_UserId(Long userId);
     Optional<Ticket> findByQrCode(String qrCode);
     List<Ticket> findByEvent_EventId(Long eventId);
+    Long countByEvent_EventIdAndIsScanned(Long eventId, Boolean isScanned);
+    List<Ticket> findByEvent_EventIdAndIsScanned(Long eventId, Boolean isScanned);
 }
