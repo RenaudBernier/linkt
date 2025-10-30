@@ -38,3 +38,8 @@ export const getEventById = async (eventId: number): Promise<Event> => {
     capacity: event.capacity,
   };
 };
+
+export const addEvent = async (givenEvent: Event) => {
+    const response = await axiosInstance.post('/events', givenEvent);
+    return response.data;
+};

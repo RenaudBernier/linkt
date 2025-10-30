@@ -16,6 +16,7 @@ import {
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
+import CreateData from './CreateData';
 import CheckoutPage from "./components/CheckoutPage.tsx";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer";
@@ -114,6 +115,9 @@ function Home() {
                 <button onClick={() => navigate('/events')}>
                     Browse events
                 </button>
+                <button onClick={() => navigate('/CreateData')}>
+                    Create an Event?
+                </button>
       </Box>
         </>
     );
@@ -135,6 +139,7 @@ function App() {
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/CreateData" element={<CreateData/>}/>
                     <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>
             </Routes>
