@@ -23,7 +23,9 @@ const OrganiserApprovePage: React.FC = () => {
         const fetchPendingOrganizers = async () => {
             try {
                 const response = await getPendingOrganizers();
-                setOrganizers(response.data);
+                if (Array.isArray(response.data)) {
+                    setOrganizers(response.data);
+                }
             } catch (err) {
                 setError('There was an error fetching the pending organizers.');
             }
@@ -32,10 +34,10 @@ const OrganiserApprovePage: React.FC = () => {
         fetchPendingOrganizers();
     }, []);
 
-    const handleApprove = async (userId: string) => {
+    const handleApprove = async (userId: number) => {
         try {
             await approveOrganizer(userId);
-            setOrganizers(organizers.filter(org => org.id !== userId));
+            setOrganizers(organizers.filter(org => org.userId !== userId));
         } catch (err) {
             setError('There was an error approving the organizer.');
         }
@@ -57,12 +59,12 @@ const OrganiserApprovePage: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {organizers.map(organizer => (
-                            <TableRow key={organizer.id}>
-                                <TableCell>{organizer.name}</TableCell>
+                        {organizers.filter(org => org.userId !== undefined).map(organizer => (
+                            <TableRow key={organizer.userId}>
+                                <TableCell>{organizer.firstName} {organizer.lastName}</TableCell>
                                 <TableCell>{organizer.email}</TableCell>
                                 <TableCell>
-                                    <Button variant="contained" color="primary" onClick={() => handleApprove(organizer.id)}>
+                                    <Button variant="contained" color="primary" onClick={() => organizer.userId && handleApprove(organizer.userId)}>
                                         Approve
                                     </Button>
                                 </TableCell>

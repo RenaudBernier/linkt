@@ -59,6 +59,6 @@ export const getPendingOrganizers = async () => {
     return await axiosInstance.get('/users/pending-organizers');
 }
 
-export const approveOrganizer = async (userId: string) => {
+export const approveOrganizer = async (userId: number) => {
     return await axiosInstance.put(`/users/approve-organizer/${userId}`);
 }
