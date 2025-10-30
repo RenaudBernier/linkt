@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { getPendingOrganizers, approveOrganizer } from '../api/users.api';
 import { User } from '../types/user.interfaces';
+import {
+    Container,
+    Typography,
+    Alert,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Button,
+    Paper
+} from '@mui/material';
 
 const OrganiserApprovePage: React.FC = () => {
     const [organizers, setOrganizers] = useState<User[]>([]);
@@ -29,32 +42,36 @@ const OrganiserApprovePage: React.FC = () => {
     };
 
     return (
-        <div className="container mt-5">
-            <h2>Pending Organizer Approvals</h2>
-            {error && <div className="alert alert-danger">{error}</div>}
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {organizers.map(organizer => (
-                        <tr key={organizer.id}>
-                            <td>{organizer.name}</td>
-                            <td>{organizer.email}</td>
-                            <td>
-                                <button className="btn btn-primary" onClick={() => handleApprove(organizer.id)}>
-                                    Approve
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <Container sx={{ mt: 5 }}>
+            <Typography variant="h4" component="h2" gutterBottom>
+                Pending Organizer Approvals
+            </Typography>
+            {error && <Alert severity="error">{error}</Alert>}
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Email</TableCell>
+                            <TableCell>Action</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {organizers.map(organizer => (
+                            <TableRow key={organizer.id}>
+                                <TableCell>{organizer.name}</TableCell>
+                                <TableCell>{organizer.email}</TableCell>
+                                <TableCell>
+                                    <Button variant="contained" color="primary" onClick={() => handleApprove(organizer.id)}>
+                                        Approve
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Container>
     );
 };
 

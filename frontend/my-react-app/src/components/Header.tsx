@@ -209,7 +209,7 @@ const Header: React.FC = () => {
                     },
                   }}
                 >
-                  Admin
+                  Approve Organizers
                 </MenuItem>
               ),
               <MenuItem
