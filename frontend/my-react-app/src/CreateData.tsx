@@ -7,6 +7,7 @@ export default function AddEvent() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [eventType, setEventType] = useState('');
+    const [image, setImage] = useState<File | null>(null);
     const [price, setPrice] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
@@ -19,23 +20,27 @@ export default function AddEvent() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('eventType', eventType);
+        formData.append('price', price);
+        formData.append('startDateTime', startTime);
+        formData.append('endDateTime', endTime);
+        formData.append('location', location);
+        formData.append('capacity', capacity);
+        if (image)
+        {
+            formData.append('image', image);
+        }
+        
         try {
-            const response = await addEvent({
-                eventID: null,
-                title: title,
-                description: description,
-                category: eventType,
-                image: [],
-                price: Number(price),
-                startDate: new Date(startTime),
-                endDate: new Date (endTime),
-                location: location,
-                capacity: Number(capacity)
-            });
-
-
+            await addEvent(formData);
             navigate('/');
-        } catch (error) {
+
+        }
+        
+        catch (error) {
             console.error('New Event Creation failed!', error);
             // TODO: Show error message to user
         }
@@ -72,12 +77,36 @@ export default function AddEvent() {
                     />
                 </div>
                 <div style={{marginTop: 10}}>
+                    <label>Location: </label><br/>
+                    <input
+                        type="text"
+                        value={location}
+                        onChange={e => setLocation(e.target.value)}
+                        required
+                    />
+                </div>
+                <div style={{marginTop: 10}}>
                     <label>Price: </label><br/>
                     <input
                         type="number"
                         value={price}
                         onChange={e => setPrice(e.target.value)}
                         required
+                    />
+                </div>
+                <div style={{marginTop: 10}}>
+                    <label>Image: </label><br/>
+                    <input
+                        type="file"
+                        accept = "image/*"
+                        ///value={image}
+                        onChange={e => {
+                            if (e.target.files)
+                            {
+                                setImage(e.target.files[0]);
+                            }
+                            }
+                        }
                     />
                 </div>
                 <div style={{marginTop: 10}}>
@@ -109,6 +138,7 @@ export default function AddEvent() {
                 </div>
                 <button type="submit" style={{marginTop: 20}}>Add Event!</button>
             </form>
+            
             <button style={{marginTop: 20}} onClick={() => navigate('/')}>
                 Back To Home
             </button>

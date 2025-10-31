@@ -39,7 +39,11 @@ export const getEventById = async (eventId: number): Promise<Event> => {
   };
 };
 
-export const addEvent = async (givenEvent: Event) => {
-    const response = await axiosInstance.post('/events', givenEvent);
-    return response.data;
-};
+export const addEvent = async (formData: FormData) => {
+  const response = await axiosInstance.post('/events/add', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+} 

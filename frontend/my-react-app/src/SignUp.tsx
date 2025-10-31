@@ -10,6 +10,7 @@ export default function SignUp() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
+    const [organizationName, setOrganizationName] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -24,7 +25,7 @@ export default function SignUp() {
                 password: password,
                 phoneNumber: phoneNumber,
                 userType: userType,
-                organizationName: userType === 'org' ? '' : undefined // TODO: Add org name field
+                organizationName: userType === 'org' ? organizationName : undefined
             });
 
             // Log the user in with token and redirect to homepage
@@ -91,6 +92,17 @@ export default function SignUp() {
                         required
                     />
                 </div>
+                {userType === 'org' && (
+                    <div style={{marginTop: 10}}>
+                        <label>Organization Name:</label><br/>
+                        <input
+                            type="text"
+                            value={organizationName}
+                            onChange={e => setOrganizationName(e.target.value)}
+                            required
+                        />
+                    </div>
+                )}
                 <div style={{
                     position: 'relative',
                     width: '100%',
