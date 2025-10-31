@@ -4,7 +4,7 @@ import axiosInstance from './axiosInstance';
 
 export interface SignUpData extends User {
     password: string;
-    userType: 'student' | 'org';
+    userType: 'student' | 'organizer';
     organizationName?: string;
 }
 
@@ -20,7 +20,7 @@ export const signUp = async (data: SignUpData): Promise<AuthResponse> => {
         lastName: data.lastName,
         phoneNumber: data.phoneNumber,
         password: data.password,
-        userType: (data.userType === 'org' ? 'organizer' : 'student') as 'student' | 'organizer',
+        userType: data.userType,
         organizationName: data.organizationName
     };
 

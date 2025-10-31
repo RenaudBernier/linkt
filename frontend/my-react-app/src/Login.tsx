@@ -18,14 +18,13 @@ export default function Login() {
             const response = await authService.login({ email, password });
 
             // Update auth context with user data and token
-            login({
+                login({
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber || ''  // Default to empty string if undefined
-            }, response.token);
-
-            navigate('/');
+                phoneNumber: response.phoneNumber || '',  // Default to empty string if undefined
+                userType: response.userType
+            }, response.token);            navigate('/');
         } catch (err) {
             console.error('Login error:', err);
             setError('Login failed. Please check your credentials.');

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { signUp } from './api/users.api';
 import { useAuth } from './contexts/AuthContext';
 
@@ -9,35 +10,64 @@ export default function SignUp() {
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
-    const [userType, setUserType] = useState<'student' | 'org'>('student');
+    const [userType, setUserType] = useState<'student' | 'organizer'>('student');
     const navigate = useNavigate();
     const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Log the request data
+        const signUpData = {
+            firstName: name,
+            lastName: lastName,
+            email: email,
+            password: password,
+            phoneNumber: phoneNumber,
+            userType: userType,
+            organizationName: userType === 'organizer' ? 'OrgName' : undefined
+        };
+        console.log('Sending signup request with data:', signUpData);
+
         try {
-            const response = await signUp({
+            const signUpData = {
                 firstName: name,
                 lastName: lastName,
                 email: email,
                 password: password,
                 phoneNumber: phoneNumber,
                 userType: userType,
-                organizationName: userType === 'org' ? '' : undefined // TODO: Add org name field
-            });
+                organizationName: userType === 'organizer' ? 'OrgName' : undefined
+            };
+            
+            console.log('Sending signup request with data:', signUpData);
+            
+            const response = await signUp(signUpData);
+
+            // Log successful response
+            console.log('Signup response:', response);
 
             // Log the user in with token and redirect to homepage
             login({
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber || ''
+                phoneNumber: response.phoneNumber || '',
+                userType: response.userType
             }, response.token);
 
             navigate('/');
         } catch (error) {
-            console.error('Signup failed!', error);
+            if (axios.isAxiosError(error)) {
+                console.error('Signup failed!', {
+                    status: error.response?.status,
+                    statusText: error.response?.statusText,
+                    data: error.response?.data,
+                    message: error.message
+                });
+            } else {
+                console.error('Signup failed!', error);
+            }
             // TODO: Show error message to user
         }
     };
@@ -134,13 +164,13 @@ export default function SignUp() {
                     </button>
                     <button
                         type="button"
-                        onClick={() => setUserType('org')}
+                        onClick={() => setUserType('organizer')}
                         style={{
                             flex: 1,
                             zIndex: 1,
                             background: 'none',
                             border: 'none',
-                            color: userType === 'org' ? '#fff' : '#000',
+                            color: userType === 'organizer' ? '#fff' : '#000',
                             fontWeight: 'bold',
                             cursor: 'pointer',
                             outline: 'none'

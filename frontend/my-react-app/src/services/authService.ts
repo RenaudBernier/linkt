@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from '../api/axiosInstance';
 
 export interface RegisterData {
@@ -22,13 +23,22 @@ export interface AuthResponse {
     firstName: string;
     lastName: string;
     phoneNumber?: string;
-    userType: string;
+    userType: 'student' | 'organizer' | 'admin';
 }
 
 class AuthService {
     async register(data: RegisterData): Promise<AuthResponse> {
-        const response = await axiosInstance.post<AuthResponse>('/auth/register', data);
-        return response.data;
+        try {
+            const response = await axiosInstance.post<AuthResponse>('/auth/register', data);
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                console.error('Registration error:', error.response?.data || error.message);
+            } else {
+                console.error('Registration error:', error);
+            }
+            throw error;
+        }
     }
 
     async login(data: LoginData): Promise<AuthResponse> {

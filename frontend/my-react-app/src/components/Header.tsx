@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
 
   {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -161,6 +161,22 @@ const Header: React.FC = () => {
             }}
           >
             {isAuthenticated ? [
+              ...(user?.userType === 'organizer' ? [
+                <MenuItem
+                  key="my-events"
+                  onClick={() => {
+                    navigate('/my-events');
+                    handleClose();
+                  }}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  My Events
+                </MenuItem>
+              ] : []),
               <MenuItem
                 key="settings"
                 onClick={handleSettings}
