@@ -1,2 +1,4 @@
 *.db
 **/.idea/
+.vite/
+**/.vite/
