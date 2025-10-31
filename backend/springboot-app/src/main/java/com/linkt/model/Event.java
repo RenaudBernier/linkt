@@ -1,8 +1,21 @@
 package com.linkt.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "event")
@@ -36,6 +49,10 @@ public class Event {
     private String imageUrl;
 
     private double price;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private EventStatus status = EventStatus.PUBLISHED;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
@@ -169,5 +186,26 @@ public Long getEventId() {
     
     public void setSavedByStudents(List<SavedEvent> savedByStudents) {
         this.savedByStudents = savedByStudents;
-    }    
+    }
+
+    public EventStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EventStatus status) {
+        this.status = status;
+    }
+
+    // Statistics methods
+    public int getTicketsSold() {
+        return tickets.size();
+    }
+
+    public double getRevenue() {
+        return getTicketsSold() * price;
+    }
+
+    public double getCapacityUtilization() {
+        return capacity > 0 ? (double) getTicketsSold() / capacity * 100 : 0;
+    }
 }

@@ -1,5 +1,4 @@
 import axiosInstance from '../api/axiosInstance';
-import type { User } from '../types/user.interfaces';
 
 export interface RegisterData {
     email: string;

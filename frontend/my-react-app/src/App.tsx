@@ -1,17 +1,11 @@
 // src/App.tsx
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
 import {
-  AppBar,
   Toolbar,
   Box,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Menu,
-  MenuItem,
-  Avatar,
   Typography,
 } from "@mui/material";
+import MyEventsPage from './pages/MyEventsPage';
 //import '@fontsource-variable/cabin';
 import './App.css';
 import SignUp from './SignUp';
@@ -127,6 +121,7 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/my-events" element={<MyEventsPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
