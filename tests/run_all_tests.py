@@ -9,7 +9,8 @@ TEST_FILES = [
     "test_event_routes.py",
     "test_user_routes.py",
     "test_ticket_routes.py",
-    "test_saved_events_routes.py"
+    "test_saved_events_routes.py",
+    "test_registered_students.py"
 ]
 
 def run_test(test_file):
