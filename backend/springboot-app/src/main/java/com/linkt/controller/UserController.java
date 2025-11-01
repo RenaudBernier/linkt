@@ -1,7 +1,10 @@
 package com.linkt.controller;
 
 import com.linkt.model.User;
+import com.linkt.model.Organizer;
 import com.linkt.repository.UserRepository;
+import com.linkt.service.UserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,22 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    // This endpoint should be secured to be only accessible by administrators
+    @GetMapping("/pending-organizers")
+    public ResponseEntity<List<Organizer>> getPendingOrganizers() {
+        return ResponseEntity.ok(userService.getPendingOrganizers());
+    }
+
+    // This endpoint should be secured to be only accessible by administrators
+    @PutMapping("/approve-organizer/{userId}")
+    public ResponseEntity<?> approveOrganizer(@PathVariable Long userId) {
+        userService.approveOrganizer(userId);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {

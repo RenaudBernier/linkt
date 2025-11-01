@@ -1,11 +1,12 @@
 import type {Ticket} from "./ticket.interface";
 
 export interface User {
-    userID? : number;
+    userId? : number;
     firstName : string;
     lastName : string;
     email : string;
     phoneNumber : string;
+    userType?: string;
 }
 
 export interface Student extends User {

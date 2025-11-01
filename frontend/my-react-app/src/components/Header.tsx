@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
 
   {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -43,6 +43,11 @@ const Header: React.FC = () => {
 
   const handleSavedEvents = () => {
     navigate('/savedtickets');
+    handleClose();
+  };
+
+  const handleAdmin = () => {
+    navigate('/admin/approve-organizer');
     handleClose();
   };
 
@@ -194,6 +199,19 @@ const Header: React.FC = () => {
               >
                 Saved Events
               </MenuItem>,
+              user && user.userType === 'administrator' && (
+                <MenuItem
+                  key="admin"
+                  onClick={handleAdmin}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Approve Organizers
+                </MenuItem>
+              ),
               <MenuItem
                 key="logout"
                 onClick={handleLogout}

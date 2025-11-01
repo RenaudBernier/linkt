@@ -1,4 +1,5 @@
 import type { User } from '../types/user.interfaces';
+
 import authService, { type AuthResponse } from '../services/authService';
 import axiosInstance from './axiosInstance';
 
@@ -53,3 +54,11 @@ export const getCurrentUser = async (): Promise<CurrentUser> => {
     const response = await axiosInstance.get('/users/me');
     return response.data;
 };
+
+export const getPendingOrganizers = async () => {
+    return await axiosInstance.get('/users/pending-organizers');
+}
+
+export const approveOrganizer = async (userId: number) => {
+    return await axiosInstance.put(`/users/approve-organizer/${userId}`);
+}

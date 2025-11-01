@@ -23,6 +23,7 @@ import EventsPage from "./pages/EventsPage.tsx";
 import MyTickets from './mytickets.tsx';
 import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
+import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
 function MainLayout() {
     return (
         <>
@@ -130,6 +131,7 @@ function App() {
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
+                    <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>

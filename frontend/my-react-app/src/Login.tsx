@@ -22,7 +22,8 @@ export default function Login() {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber
+                phoneNumber: response.phoneNumber,
+                userType: response.userType
             }, response.token);
 
             navigate('/');
