@@ -88,13 +88,14 @@ const Header: React.FC = () => {
         {/* Logo */}
         {/* sx = applies CUSTOM STYLES to stuff */}
         <Box
-            sx={{ display: "flex",
-                alignItems: "center",
-                cursor: "pointer"
-        }}
-            onClick={() => navigate("/")
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer"
+          }}
+          onClick={() => navigate("/")
 
-        }
+          }
         >
           <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
           />
@@ -211,6 +212,20 @@ const Header: React.FC = () => {
 
               user && user.userType === 'administrator' && (
                 <MenuItem
+                  key="admin-dashboard"
+                  onClick={handleAdminDashboard}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Admin Dashboard
+                </MenuItem>
+              ),
+
+              user && user.userType === 'administrator' && (
+                <MenuItem
                   key="admin"
                   onClick={handleAdmin}
                   sx={{
@@ -226,17 +241,17 @@ const Header: React.FC = () => {
 
 
 
-                <MenuItem
-                    key="settings"
-                    onClick={handleSettings}
-                    sx={{
-                        "&:hover": {
-                            backgroundColor: "var(--fluorescent-cyan-10)",
-                        },
-                    }}
-                >
-                    Settings
-                </MenuItem>,
+              <MenuItem
+                key="settings"
+                onClick={handleSettings}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Settings
+              </MenuItem>,
 
 
               <MenuItem
