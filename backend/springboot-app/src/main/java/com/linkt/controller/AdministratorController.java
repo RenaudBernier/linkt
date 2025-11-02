@@ -1,7 +1,9 @@
 package com.linkt.controller;
 
 import com.linkt.dto.AdministratorDTO;
+import com.linkt.dto.GlobalStatsResponse;
 import com.linkt.service.AdministratorService;
+import com.linkt.service.GlobalStatsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,20 @@ public class AdministratorController {
 
     @Autowired
     private AdministratorService administratorService;
+
+    @Autowired
+    private GlobalStatsService globalStatsService;
+
+    // Get global statistics (admin only)
+    @GetMapping("/stats/global")
+    public ResponseEntity<GlobalStatsResponse> getGlobalStatistics() {
+        try {
+            GlobalStatsResponse stats = globalStatsService.getGlobalStatistics();
+            return new ResponseEntity<>(stats, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // Create administrator (promote user to admin)
     @PostMapping
