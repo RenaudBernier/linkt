@@ -55,7 +55,7 @@ export const getOrganizerEvents = async (): Promise<Event[]> => {
     endDate: new Date(event.endDateTime),
     location: event.location,
     capacity: event.capacity,
-    ticketsSold: event.tickets?.length || 0,
+    ticketsSold: event.ticketCount || 0,
   }));
 };
 

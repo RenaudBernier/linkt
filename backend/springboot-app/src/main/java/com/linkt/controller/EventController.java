@@ -41,7 +41,7 @@ public class EventController {
 
     @GetMapping("/organizer")
     @PreAuthorize("hasRole('ORGANIZER')")
-    public ResponseEntity<List<Event>> getOrganizerEvents() {
+    public ResponseEntity<List<java.util.Map<String, Object>>> getOrganizerEvents() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         
@@ -49,7 +49,27 @@ public class EventController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Event> events = eventRepository.findByOrganizerUserId(user.getUserId());
-        return ResponseEntity.ok(events);
+        
+        // Transform events to include ticket count
+        List<java.util.Map<String, Object>> eventsWithTicketCount = events.stream()
+            .map(event -> {
+                java.util.Map<String, Object> eventMap = new java.util.HashMap<>();
+                eventMap.put("eventId", event.getEventId());
+                eventMap.put("title", event.getTitle());
+                eventMap.put("description", event.getDescription());
+                eventMap.put("eventType", event.getEventType());
+                eventMap.put("startDateTime", event.getStartDateTime());
+                eventMap.put("endDateTime", event.getEndDateTime());
+                eventMap.put("location", event.getLocation());
+                eventMap.put("capacity", event.getCapacity());
+                eventMap.put("imageUrl", event.getImageUrl());
+                eventMap.put("price", event.getPrice());
+                eventMap.put("ticketCount", event.getTickets().size());
+                return eventMap;
+            })
+            .collect(java.util.stream.Collectors.toList());
+        
+        return ResponseEntity.ok(eventsWithTicketCount);
     }
 
     @PostMapping("/add")

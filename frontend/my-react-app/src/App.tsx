@@ -72,7 +72,7 @@ function Home() {
         </Typography>)}
 
       {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/CreateData')}>
+        <button onClick={() => navigate('/events/create')}>
         Create an Event!
         </button>)}
         
@@ -147,6 +147,7 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/events/create" element={<CreateData />} />
                     <Route path="/my-events" element={<MyEventsPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
