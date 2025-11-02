@@ -135,6 +135,10 @@ function EventsPage() {
 
   const [priceRange, setPriceRange] = useState<number[]>([minPrice, maxPrice]);
 
+  useEffect(() => {
+    setPriceRange([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
+
   // Get unique categories
   const categories = useMemo(() => {
     const cats = new Set(events.map(event => event.category));

@@ -94,6 +94,7 @@ export default function AddEvent() {
                 </div>
                 <div style={{marginTop: 10}}>
                     <label>Image: </label><br/>
+                    <p> Please enter an image link online for your event! </p>
                     <input
                         type="text"
                         value={image}

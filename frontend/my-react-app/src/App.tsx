@@ -1,5 +1,6 @@
 // src/App.tsx
 import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
+import { useAuth } from './contexts/AuthContext';
 import {
   AppBar,
   Toolbar,
@@ -47,6 +48,7 @@ function BlankLayout() {
 
 function Home() {
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     return (
         <>
@@ -60,7 +62,22 @@ function Home() {
           and track attendance for their events. They can also gain valuable insights for their events via our analytics dashboards. We are also welcoming 
           campus administrators, who can oversee organizations and moderate all content. Linkt is our brand-new system that connects students with campus life 
           while providing essential tools for hosting and administrating events! </Typography> 
+        {user?.userType == 'organizer' && ( <br></br> )}
+        {user?.userType == 'organizer' && ( <br></br> )}
+
+        {user?.userType == 'organizer' && (
+        <Typography variant = "h5"> 
+            Hey! We noticed that you're an organizer! Feel free to add your event to our page! 
+        </Typography>)}
+
+      {user?.userType == 'organizer' && (
+        <button onClick={() => navigate('/CreateData')}>
+        Create an Event!
+        </button>)}
+        
       </Box>
+
+     
 
       
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#373f51', color: 'white', border: '5px white'}}>
@@ -115,9 +132,6 @@ function Home() {
                  </button>
                 <button onClick={() => navigate('/events')}>
                     Browse events
-                </button>
-                <button onClick={() => navigate('/CreateData')}>
-                    Create an Event?
                 </button>
       </Box>
         </>
