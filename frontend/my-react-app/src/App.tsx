@@ -166,7 +166,6 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
                     <Route path="/CreateData" element={<CreateData/>}/>
-                    <Route path="/CreateData" element={<CreateData/>}/>
                     <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>
             </Routes>
