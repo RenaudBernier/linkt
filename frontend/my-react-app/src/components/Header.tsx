@@ -56,6 +56,11 @@ const Header: React.FC = () => {
     handleClose();
   };
 
+  const handleAdminDashboard = () => {
+    navigate('/admin/dashboard');
+    handleClose();
+  };
+
   const handleLogout = () => {
     logout();
     handleClose();
@@ -204,19 +209,6 @@ const Header: React.FC = () => {
               >
                 Saved Events
               </MenuItem>,
-              user && user.userType === 'organizer' && (
-                <MenuItem
-                  key="my-events"
-                  onClick={handleMyEvents}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "var(--fluorescent-cyan-10)",
-                    },
-                  }}
-                >
-                  My Events
-                </MenuItem>
-              ),
               user && user.userType === 'administrator' && (
                 <MenuItem
                   key="admin"
