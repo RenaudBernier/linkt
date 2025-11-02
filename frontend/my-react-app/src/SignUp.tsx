@@ -93,6 +93,7 @@ export default function SignUp() {
                 </div>
                 <div style={{marginTop: 10, marginBottom: 20}}>
                     <label>Password:</label><br/>
+                    <label> (Must be longer than 7 characters!) </label>
                     <input
                         type="password"
                         value={password}
