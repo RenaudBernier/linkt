@@ -11,11 +11,18 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
     const [organizationName, setOrganizationName] = useState('');
+    const [error, setError] = useState(''); // Added error state
     const navigate = useNavigate();
     const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(''); // Clear previous errors
+
+        if (password.length < 7) {
+            alert('ERROR: Password must be at least 7 characters long. Please enter a longer password.'); //setError does not work here, make it an alert!
+            return;
+        }
 
         try {
             const response = await signUp({
