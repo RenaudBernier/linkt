@@ -152,11 +152,11 @@ function App() {
                     <Route path="/events/create" element={<CreateData />} />
                     <Route path="/events/:eventId/edit" element={<EditEventPage />} />
                     <Route path="/my-events" element={<MyEventsPage />} />
+                    <Route path="/my-events/scan/:eventId" element={<ScanTicketPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
-                    <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>
