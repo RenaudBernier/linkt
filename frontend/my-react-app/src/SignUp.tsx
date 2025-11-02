@@ -11,7 +11,6 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
     const [organizationName, setOrganizationName] = useState('');
-    const [organizationName, setOrganizationName] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -26,7 +25,6 @@ export default function SignUp() {
                 password: password,
                 phoneNumber: phoneNumber,
                 userType: userType,
-                organizationName: userType === 'org' ? organizationName : undefined
                 organizationName: userType === 'org' ? organizationName : undefined
             });
 
