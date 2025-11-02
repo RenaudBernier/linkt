@@ -52,7 +52,7 @@ function EventsPage() {
           title: event.title,
           description: event.description,
           category: event.eventType,
-          image: event.imageUrl ? [event.imageUrl] : ['/src/images/samantha-gades-fIHozNWfcvs-unsplash.jpg'],
+          image: event.imageUrl ? (event.imageUrl.startsWith('http') || event.imageUrl.startsWith('https') ? [event.imageUrl] : [`http://localhost:8080${event.imageUrl}`]) : [],
           price: event.price || 0,
           startDate: new Date(event.startDateTime),
           endDate: new Date(event.endDateTime),
@@ -134,6 +134,10 @@ function EventsPage() {
   }, [events]);
 
   const [priceRange, setPriceRange] = useState<number[]>([minPrice, maxPrice]);
+
+  useEffect(() => {
+    setPriceRange([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -250,7 +254,7 @@ function EventsPage() {
       {/* Filters and Search */}
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12, md: 6 }}>
+          <Grid item xs={12} md={6}>
             <TextField
               fullWidth
               label="Search events"
@@ -260,7 +264,7 @@ function EventsPage() {
               placeholder="Search by title, description, or location..."
             />
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               <Select
@@ -276,7 +280,7 @@ function EventsPage() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Grid item xs={12} sm={6} md={3}>
             <FormControl fullWidth>
               <InputLabel>Sort By</InputLabel>
               <Select
@@ -291,7 +295,7 @@ function EventsPage() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid size={{ xs: 12 }}>
+          <Grid item xs={12}>
             <Box sx={{ px: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Price Range: {priceRange[0] === 0 ? 'Free' : `$${priceRange[0]}`} - {priceRange[1] === 0 ? 'Free' : `$${priceRange[1]}`}
@@ -326,7 +330,7 @@ function EventsPage() {
       {/* Events Grid */}
       <Grid container spacing={3}>
         {filteredAndSortedEvents.map((event) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={event.eventID}>
+          <Grid item xs={12} sm={6} md={4} key={event.eventID}>
             <Card
               sx={{
                 height: '100%',
