@@ -77,21 +77,7 @@ function Home() {
       {user?.userType == 'organizer' && (
         <button onClick={() => navigate('/CreateData')}>
         Create an Event!
-        </button>)}
-        
-        {user?.userType == 'organizer' && ( <br></br> )}
-        {user?.userType == 'organizer' && ( <br></br> )}
-
-        {user?.userType == 'organizer' && (
-        <Typography variant = "h5"> 
-            Hey! We noticed that you're an organizer! Feel free to add your event to our page! 
-        </Typography>)}
-
-      {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/events/create')}>
-        Create an Event!
-        </button>)}
-        
+        </button>)}    
       </Box>
 
      
