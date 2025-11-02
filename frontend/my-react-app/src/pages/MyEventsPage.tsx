@@ -26,6 +26,7 @@ import {
   Cancel as CancelIcon,
   ContentCopy as DuplicateIcon,
   Search as SearchIcon,
+  QrCodeScanner as QrCodeScannerIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { getOrganizerEvents } from '../api/events.api';
@@ -130,6 +131,10 @@ const MyEventsPage: React.FC = () => {
 
   const handleViewAttendees = (eventId: number) => {
     navigate(`/events/${eventId}/attendees`);
+  };
+
+  const handleScanTickets = (eventId: number) => {
+    navigate(`/my-events/scan/${eventId}`);
   };
 
   const handleShowAnalytics = (event: Event) => {
@@ -329,6 +334,13 @@ const MyEventsPage: React.FC = () => {
                   onClick={() => handleEditEvent(event.eventID)}
                 >
                   Edit
+                </Button>
+                <Button
+                  size="small"
+                  startIcon={<QrCodeScannerIcon />}
+                  onClick={() => handleScanTickets(event.eventID)}
+                >
+                  Scan
                 </Button>
                 <Button
                   size="small"
