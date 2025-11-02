@@ -7,7 +7,7 @@ export default function AddEvent() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [eventType, setEventType] = useState('');
-    const [image, setImage] = useState<File | null>(null);
+    const [image, setImage] = useState('');
     const [price, setPrice] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
@@ -20,22 +20,20 @@ export default function AddEvent() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('eventType', eventType);
-        formData.append('price', price);
-        formData.append('startDateTime', startTime);
-        formData.append('endDateTime', endTime);
-        formData.append('location', location);
-        formData.append('capacity', capacity);
-        if (image)
-        {
-            formData.append('image', image);
-        }
-        
+        const eventData = {
+            title,
+            description,
+            eventType,
+            price,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            location,
+            capacity,
+            image
+        };
+
         try {
-            await addEvent(formData);
+            await addEvent(eventData);
             navigate('/');
 
         }
@@ -97,16 +95,9 @@ export default function AddEvent() {
                 <div style={{marginTop: 10}}>
                     <label>Image: </label><br/>
                     <input
-                        type="file"
-                        accept = "image/*"
-                        ///value={image}
-                        onChange={e => {
-                            if (e.target.files)
-                            {
-                                setImage(e.target.files[0]);
-                            }
-                            }
-                        }
+                        type="text"
+                        value={image}
+                        onChange={e => setImage(e.target.value)}
                     />
                 </div>
                 <div style={{marginTop: 10}}>

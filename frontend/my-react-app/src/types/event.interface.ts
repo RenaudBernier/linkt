@@ -1,5 +1,5 @@
 export interface Event {
-    eventID: number | null; //the "| null might cause errors in the future heads up"
+    eventID: number; //the "| null might cause errors in the future heads up"
     title: string;
     description: string;
     category: string;
