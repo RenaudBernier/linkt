@@ -56,6 +56,11 @@ const Header: React.FC = () => {
     handleClose();
   };
 
+  const handleAdminDashboard = () => {
+    navigate('/admin/dashboard');
+    handleClose();
+  };
+
   const handleLogout = () => {
     logout();
     handleClose();
@@ -84,13 +89,14 @@ const Header: React.FC = () => {
         {/* Logo */}
         {/* sx = applies CUSTOM STYLES to stuff */}
         <Box
-            sx={{ display: "flex",
-                alignItems: "center",
-                cursor: "pointer"
-        }}
-            onClick={() => navigate("/")
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer"
+          }}
+          onClick={() => navigate("/")
 
-        }
+          }
         >
           <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
           />
@@ -172,52 +178,53 @@ const Header: React.FC = () => {
             }}
           >
             {isAuthenticated ? [
-              <MenuItem
-                key="settings"
-                onClick={handleSettings}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "var(--fluorescent-cyan-10)",
-                  },
-                }}
-              >
-                Settings
-              </MenuItem>,
-              <MenuItem
-                key="tickets"
-                onClick={handleMyTickets}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "var(--fluorescent-cyan-10)",
-                  },
-                }}
-              >
-                My Tickets
-              </MenuItem>,
-              <MenuItem
-                key="saved-events"
-                onClick={handleSavedEvents}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "var(--fluorescent-cyan-10)",
-                  },
-                }}
-              >
-                Saved Events
-              </MenuItem>,
-              user && user.userType === 'organizer' && (
+
+
+              user && (user.userType === 'student' || user.userType === 'organizer') && (
                 <MenuItem
-                  key="my-events"
-                  onClick={handleMyEvents}
+                  key="tickets"
+                  onClick={handleMyTickets}
                   sx={{
                     "&:hover": {
                       backgroundColor: "var(--fluorescent-cyan-10)",
                     },
                   }}
                 >
-                  My Events
+                  My Tickets
                 </MenuItem>
               ),
+
+
+              user && (user.userType === 'student' || user.userType === 'organizer') && (
+                <MenuItem
+                  key="saved-events"
+                  onClick={handleSavedEvents}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Saved Events
+                </MenuItem>
+              ),
+
+
+
+              user && user.userType === 'administrator' && (
+                <MenuItem
+                  key="admin-dashboard"
+                  onClick={handleAdminDashboard}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Admin Dashboard
+                </MenuItem>
+              ),
+
               user && user.userType === 'administrator' && (
                 <MenuItem
                   key="admin"
@@ -231,6 +238,23 @@ const Header: React.FC = () => {
                   Approve Organizers
                 </MenuItem>
               ),
+
+
+
+
+              <MenuItem
+                key="settings"
+                onClick={handleSettings}
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "var(--fluorescent-cyan-10)",
+                  },
+                }}
+              >
+                Settings
+              </MenuItem>,
+
+
               <MenuItem
                 key="logout"
                 onClick={handleLogout}
@@ -243,6 +267,10 @@ const Header: React.FC = () => {
                 Log Out
               </MenuItem>
             ] : [
+
+
+
+              // No user logged in
               <MenuItem
                 key="login"
                 onClick={handleLogin}
