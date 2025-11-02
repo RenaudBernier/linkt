@@ -29,7 +29,7 @@ import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
 import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
-import ScanTicketPage from "./pages/ScanTicketPage.tsx";
+
 function MainLayout() {
     return (
         <>
@@ -75,11 +75,12 @@ function Home() {
         </Typography>)}
 
       {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/events/create')}>
+        <button onClick={() => navigate('/CreateData')}>
         Create an Event!
-        </button>)}
-        
+        </button>)}    
       </Box>
+
+     
 
      
 

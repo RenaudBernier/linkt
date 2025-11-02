@@ -59,6 +59,7 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     logout();
     handleClose();
+    navigate('/');
   };
 
   const handleLogin = () => {
