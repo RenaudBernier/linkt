@@ -20,7 +20,7 @@ export const getSavedEvents = async (): Promise<Event[]> => {
     title: event.title,
     description: event.description,
     category: event.eventType,
-    image: event.imageUrl ? [event.imageUrl] : ['/src/images/samantha-gades-fIHozNWfcvs-unsplash.jpg'],
+    image: event.imageUrl ? [`http://localhost:8080${event.imageUrl}`] : [],
     price: event.price || 0,
     startDate: new Date(event.startDateTime),
     endDate: new Date(event.endDateTime),
