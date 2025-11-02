@@ -26,6 +26,9 @@ import MyTickets from './mytickets.tsx';
 import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
 import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
+import MyEventsPage from "./pages/MyEventsPage.tsx";
+import EditEventPage from "./pages/EditEventPage.tsx";
+import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 function MainLayout() {
     return (
@@ -72,7 +75,7 @@ function Home() {
         </Typography>)}
 
       {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/CreateData')}>
+        <button onClick={() => navigate('/events/create')}>
         Create an Event!
         </button>)}
         
@@ -147,6 +150,10 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/events/create" element={<CreateData />} />
+                    <Route path="/events/:eventId/edit" element={<EditEventPage />} />
+                    <Route path="/my-events" element={<MyEventsPage />} />
+                    <Route path="/my-events/scan/:eventId" element={<ScanTicketPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />

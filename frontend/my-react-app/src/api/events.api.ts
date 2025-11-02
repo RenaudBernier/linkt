@@ -39,6 +39,26 @@ export const getEventById = async (eventId: number): Promise<Event> => {
   };
 };
 
+export const getOrganizerEvents = async (): Promise<Event[]> => {
+  const response = await axiosInstance.get('/events/organizer');
+  
+  return response.data.map((event: any) => ({
+    eventID: event.eventId,
+    title: event.title,
+    description: event.description,
+    status: event.status || 'published',
+    category: event.eventType,
+    image: [event.imageUrl || '/src/images/samantha-gades-fIHozNWfcvs-unsplash.jpg'],
+    imageUrl: event.imageUrl || '/src/images/samantha-gades-fIHozNWfcvs-unsplash.jpg',
+    price: event.price || 0,
+    startDate: new Date(event.startDateTime),
+    endDate: new Date(event.endDateTime),
+    location: event.location,
+    capacity: event.capacity,
+    ticketsSold: event.ticketCount || 0,
+  }));
+};
+
 export const addEvent = async (eventData: any) => {
   const response = await axiosInstance.post('/events/add', eventData, {
     headers: {
@@ -46,4 +66,13 @@ export const addEvent = async (eventData: any) => {
     },
   });
   return response.data;
-} 
+};
+
+export const updateEvent = async (eventId: number, eventData: any) => {
+  const response = await axiosInstance.put(`/events/${eventId}`, eventData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+};
