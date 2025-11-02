@@ -30,6 +30,7 @@ import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
+import AdminDashboard from "./pages/AdminDashboard.tsx";
 function MainLayout() {
     return (
         <>
@@ -70,20 +71,20 @@ function Home() {
         {user?.userType == 'organizer' && ( <br></br> )}
 
         {user?.userType == 'organizer' && (
-        <Typography variant = "h5"> 
-            Hey! We noticed that you're an organizer! Feel free to add your event to our page! 
+        <Typography variant = "h5">
+            Hey! We noticed that you're an organizer! Feel free to add your event to our page!
         </Typography>)}
 
       {user?.userType == 'organizer' && (
         <button onClick={() => navigate('/events/create')}>
         Create an Event!
         </button>)}
-        
+
       </Box>
 
-     
 
-      
+
+
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#373f51', color: 'white', border: '5px white'}}>
         {/* 
         Former Logo
@@ -157,6 +158,7 @@ function App() {
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
+                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
                     <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
