@@ -33,7 +33,8 @@ export default function SignUp() {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber || ''
+                phoneNumber: response.phoneNumber || '',
+                userType: response.userType
             }, response.token);
 
             navigate('/');
@@ -93,7 +94,7 @@ export default function SignUp() {
                     />
                 </div>
                 {userType === 'org' && (
-                    <div style={{marginTop: 10}}>
+                    <div style={{marginBottom: 20}}>
                         <label>Organization Name:</label><br/>
                         <input
                             type="text"

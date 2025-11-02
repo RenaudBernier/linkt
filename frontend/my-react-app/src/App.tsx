@@ -26,6 +26,10 @@ import MyTickets from './mytickets.tsx';
 import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
 import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
+import MyEventsPage from "./pages/MyEventsPage.tsx";
+import EditEventPage from "./pages/EditEventPage.tsx";
+import ScanTicketPage from "./pages/ScanTicketPage.tsx";
+
 function MainLayout() {
     return (
         <>
@@ -75,7 +79,22 @@ function Home() {
         Create an Event!
         </button>)}
         
+        {user?.userType == 'organizer' && ( <br></br> )}
+        {user?.userType == 'organizer' && ( <br></br> )}
+
+        {user?.userType == 'organizer' && (
+        <Typography variant = "h5"> 
+            Hey! We noticed that you're an organizer! Feel free to add your event to our page! 
+        </Typography>)}
+
+      {user?.userType == 'organizer' && (
+        <button onClick={() => navigate('/events/create')}>
+        Create an Event!
+        </button>)}
+        
       </Box>
+
+     
 
      
 
@@ -146,15 +165,21 @@ function App() {
                 <Route element={<MainLayout />}>
                     <Route path="/" element={<Home />} />
                     <Route path="/events" element={<EventsPage />} />
+                    <Route path="/events/create" element={<CreateData />} />
+                    <Route path="/events/:eventId/edit" element={<EditEventPage />} />
+                    <Route path="/my-events" element={<MyEventsPage />} />
+                    <Route path="/my-events/scan/:eventId" element={<ScanTicketPage />} />
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
+                    <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/CreateData" element={<CreateData/>}/>
                     <Route path="/CreateData" element={<CreateData/>}/>
                     <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>
