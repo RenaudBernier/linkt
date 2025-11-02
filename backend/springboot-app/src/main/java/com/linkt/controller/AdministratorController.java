@@ -1,7 +1,15 @@
 package com.linkt.controller;
 
 import com.linkt.dto.AdministratorDTO;
+import com.linkt.dto.EventResponseDTO;
+import com.linkt.dto.GlobalStatsResponse;
+import com.linkt.dto.OrganizerResponseDTO;
+import com.linkt.model.Event;
+import com.linkt.model.Organizer;
+import com.linkt.repository.EventRepository;
+import com.linkt.repository.OrganizerRepository;
 import com.linkt.service.AdministratorService;
+import com.linkt.service.GlobalStatsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/administrators")
@@ -17,6 +26,26 @@ public class AdministratorController {
 
     @Autowired
     private AdministratorService administratorService;
+
+    @Autowired
+    private GlobalStatsService globalStatsService;
+
+    @Autowired
+    private OrganizerRepository organizerRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
+
+    // Get global statistics (admin only)
+    @GetMapping("/stats/global")
+    public ResponseEntity<GlobalStatsResponse> getGlobalStatistics() {
+        try {
+            GlobalStatsResponse stats = globalStatsService.getGlobalStatistics();
+            return new ResponseEntity<>(stats, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // Create administrator (promote user to admin)
     @PostMapping
@@ -73,6 +102,62 @@ public class AdministratorController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Get all organizers
+    @GetMapping("/organizers")
+    public ResponseEntity<List<OrganizerResponseDTO>> getAllOrganizers() {
+        try {
+            List<Organizer> organizers = organizerRepository.findAll();
+            List<OrganizerResponseDTO> response = organizers.stream()
+                    .map(organizer -> new OrganizerResponseDTO(
+                            organizer.getUserId(),
+                            organizer.getFirstName(),
+                            organizer.getLastName(),
+                            organizer.getEmail(),
+                            organizer.getOrganizationName(),
+                            organizer.getPhoneNumber(),
+                            organizer.isApproved() ? "approved" : "pending"
+                    ))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Get all events
+    @GetMapping("/events")
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents() {
+        try {
+            List<Event> events = eventRepository.findAll();
+            List<EventResponseDTO> response = events.stream()
+                    .map(event -> {
+                        int ticketCount = event.getTickets() != null ? event.getTickets().size() : 0;
+                        int scannedCount = event.getTickets() != null
+                            ? (int) event.getTickets().stream().filter(ticket -> ticket.getIsScanned() != null && ticket.getIsScanned()).count()
+                            : 0;
+
+                        return new EventResponseDTO(
+                            event.getEventId(),
+                            event.getTitle(),
+                            event.getDescription(),
+                            event.getEventType(),
+                            event.getLocation(),
+                            event.getStartDateTime(),
+                            event.getEndDateTime(),
+                            event.getCapacity(),
+                            event.getPrice(),
+                            ticketCount,
+                            scannedCount,
+                            event.getOrganizer() != null ? event.getOrganizer().getUserId() : null
+                        );
+                    })
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
