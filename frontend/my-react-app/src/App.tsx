@@ -75,7 +75,7 @@ function Home() {
         </Typography>)}
 
       {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/events/create')}>
+        <button onClick={() => navigate('/CreateData')}>
         Create an Event!
         </button>)}
 
