@@ -22,10 +22,10 @@ public class Event {
     @Column(name = "event_type")
     private String eventType;
 
-    @Column(name = "start_date_time")
+    @Column(name = "start_date_time", nullable = false)
     private String startDateTime;
 
-    @Column(name = "end_date_time")
+    @Column(name = "end_date_time", nullable = false)
     private String endDateTime;
 
     private String location;

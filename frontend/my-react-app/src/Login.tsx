@@ -17,14 +17,23 @@ export default function Login() {
         try {
             const response = await authService.login({ email, password });
 
-            // Update auth context with user data and token
-            login({
+            console.log('Login response:', response);
+            console.log('User type from response:', response.userType);
+
+            const userData = {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
                 phoneNumber: response.phoneNumber,
                 userType: response.userType
-            }, response.token);
+            };
+
+            console.log('User data being passed to login():', userData);
+
+            // Update auth context with user data and token
+            login(userData, response.token);
+
+            console.log('After login, localStorage user:', localStorage.getItem('user'));
 
             navigate('/');
         } catch (err) {

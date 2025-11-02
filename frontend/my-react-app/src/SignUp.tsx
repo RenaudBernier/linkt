@@ -10,11 +10,19 @@ export default function SignUp() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
+    const [organizationName, setOrganizationName] = useState('');
+    const [error, setError] = useState(''); // Added error state
     const navigate = useNavigate();
     const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(''); // Clear previous errors
+
+        if (password.length < 7) {
+            alert('ERROR: Password must be at least 7 characters long. Please enter a longer password.'); //setError does not work here, make it an alert!
+            return;
+        }
 
         try {
             const response = await signUp({
@@ -24,7 +32,7 @@ export default function SignUp() {
                 password: password,
                 phoneNumber: phoneNumber,
                 userType: userType,
-                organizationName: userType === 'org' ? '' : undefined // TODO: Add org name field
+                organizationName: userType === 'org' ? organizationName : undefined
             });
 
             // Log the user in with token and redirect to homepage
@@ -32,7 +40,8 @@ export default function SignUp() {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber || ''
+                phoneNumber: response.phoneNumber || '',
+                userType: response.userType
             }, response.token);
 
             navigate('/');
@@ -84,6 +93,7 @@ export default function SignUp() {
                 </div>
                 <div style={{marginTop: 10, marginBottom: 20}}>
                     <label>Password:</label><br/>
+                    <label> (Must be longer than 7 characters!) </label>
                     <input
                         type="password"
                         value={password}
@@ -91,6 +101,17 @@ export default function SignUp() {
                         required
                     />
                 </div>
+                {userType === 'org' && (
+                    <div style={{marginBottom: 20}}>
+                        <label>Organization Name:</label><br/>
+                        <input
+                            type="text"
+                            value={organizationName}
+                            onChange={e => setOrganizationName(e.target.value)}
+                            required
+                        />
+                    </div>
+                )}
                 <div style={{
                     position: 'relative',
                     width: '100%',
