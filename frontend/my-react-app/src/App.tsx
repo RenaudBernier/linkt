@@ -28,6 +28,7 @@ import SavedTickets from "./SavedTickets.tsx";
 import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
 import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
+import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 function MainLayout() {
     return (
         <>
@@ -155,6 +156,7 @@ function App() {
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
+                    <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
 
                 <Route element={<BlankLayout/>}>

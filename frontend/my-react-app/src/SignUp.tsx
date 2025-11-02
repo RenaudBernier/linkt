@@ -11,6 +11,7 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
     const [organizationName, setOrganizationName] = useState('');
+    const [organizationName, setOrganizationName] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -26,6 +27,7 @@ export default function SignUp() {
                 phoneNumber: phoneNumber,
                 userType: userType,
                 organizationName: userType === 'org' ? organizationName : undefined
+                organizationName: userType === 'org' ? organizationName : undefined
             });
 
             // Log the user in with token and redirect to homepage
@@ -33,7 +35,8 @@ export default function SignUp() {
                 firstName: response.firstName,
                 lastName: response.lastName,
                 email: response.email,
-                phoneNumber: response.phoneNumber || ''
+                phoneNumber: response.phoneNumber || '',
+                userType: response.userType
             }, response.token);
 
             navigate('/');
@@ -93,7 +96,7 @@ export default function SignUp() {
                     />
                 </div>
                 {userType === 'org' && (
-                    <div style={{marginTop: 10}}>
+                    <div style={{marginBottom: 20}}>
                         <label>Organization Name:</label><br/>
                         <input
                             type="text"
