@@ -1,7 +1,6 @@
 package com.linkt.controller;
 
 import com.linkt.model.Event;
-import com.linkt.model.Organizer;
 import com.linkt.model.User;
 import com.linkt.repository.EventRepository;
 import com.linkt.repository.UserRepository;
@@ -9,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,6 +39,19 @@ public class EventController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/organizer")
+    @PreAuthorize("hasRole('ORGANIZER')")
+    public ResponseEntity<List<Event>> getOrganizerEvents() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        List<Event> events = eventRepository.findByOrganizerUserId(user.getUserId());
+        return ResponseEntity.ok(events);
+    }
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('ORGANIZER')")
     public ResponseEntity<Event> addEvent(@RequestBody com.linkt.dto.EventDTO eventDTO, Authentication authentication)
@@ -48,10 +60,10 @@ public class EventController {
         User currentUser = userRepository.findByEmail(username)
                                         .orElseThrow(() -> new RuntimeException("Organizer not found"));
 
-        if (!(currentUser instanceof Organizer)) {
+        if (!(currentUser instanceof com.linkt.model.Organizer)) {
             throw new RuntimeException("Authenticated user is not an Organizer");
         }
-        Organizer organizer = (Organizer) currentUser;
+        com.linkt.model.Organizer organizer = (com.linkt.model.Organizer) currentUser;
 
         Event event = new Event();
         event.setTitle(eventDTO.getTitle());  
@@ -63,9 +75,9 @@ public class EventController {
         event.setLocation(eventDTO.getLocation()); 
         event.setCapacity(eventDTO.getCapacity());
         event.setImageUrl(eventDTO.getImage());
-        event.setOrganizer(organizer); // Set the organizer here
+        event.setOrganizer(organizer);
         
         Event savedEvent = eventRepository.save(event);
         return ResponseEntity.status(201).body(savedEvent);
-    }                                                                                                                                                                        
-}                 
+    }
+}
