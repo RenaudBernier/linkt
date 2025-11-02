@@ -100,4 +100,50 @@ public class EventController {
         Event savedEvent = eventRepository.save(event);
         return ResponseEntity.status(201).body(savedEvent);
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ORGANIZER')")
+    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody com.linkt.dto.EventDTO eventDTO, Authentication authentication) {
+        // Get the authenticated organizer
+        String username = authentication.getName();
+        User currentUser = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("Organizer not found"));
+
+        if (!(currentUser instanceof com.linkt.model.Organizer)) {
+            return ResponseEntity.status(403).body("Authenticated user is not an Organizer");
+        }
+        com.linkt.model.Organizer organizer = (com.linkt.model.Organizer) currentUser;
+
+        // Fetch the existing event
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        // Verify ownership - only the event owner can edit
+        if (!event.getOrganizer().getUserId().equals(organizer.getUserId())) {
+            return ResponseEntity.status(403).body("You don't have permission to edit this event");
+        }
+
+        // Validate capacity against existing ticket count
+        int ticketCount = event.getTickets().size();
+        if (eventDTO.getCapacity() < ticketCount) {
+            return ResponseEntity.status(400).body("Capacity cannot be reduced below " + ticketCount + " (current number of sold tickets)");
+        }
+
+        // Update event fields
+        event.setTitle(eventDTO.getTitle());
+        event.setDescription(eventDTO.getDescription());
+        event.setEventType(eventDTO.getEventType());
+        event.setPrice(eventDTO.getPrice());
+        event.setStartDateTime(eventDTO.getStartDateTime());
+        event.setEndDateTime(eventDTO.getEndDateTime());
+        event.setLocation(eventDTO.getLocation());
+        event.setCapacity(eventDTO.getCapacity());
+        if (eventDTO.getImage() != null && !eventDTO.getImage().isEmpty()) {
+            event.setImageUrl(eventDTO.getImage());
+        }
+
+        // Save updated event
+        Event updatedEvent = eventRepository.save(event);
+        return ResponseEntity.ok(updatedEvent);
+    }
 }

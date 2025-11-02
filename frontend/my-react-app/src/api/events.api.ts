@@ -67,3 +67,12 @@ export const addEvent = async (eventData: any) => {
   });
   return response.data;
 };
+
+export const updateEvent = async (eventId: number, eventData: any) => {
+  const response = await axiosInstance.put(`/events/${eventId}`, eventData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response.data;
+};
