@@ -48,6 +48,7 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
             image_url TEXT,
             price REAL DEFAULT 0.0,
             organizer_id INTEGER NOT NULL,
+            status TEXT NOT NULL DEFAULT 'pending',
             FOREIGN KEY (organizer_id) REFERENCES user (user_id) ON DELETE CASCADE
         );
         """

@@ -3,6 +3,8 @@ import {
     getGlobalStatistics,
     getAllOrganizers,
     getAllEventsAdmin,
+    approveEvent,
+    rejectEvent,
     type GlobalStatsResponse,
     type Organizer,
     type EventData
@@ -103,6 +105,24 @@ const AdminDashboard: React.FC = () => {
             </Container>
         );
     }
+
+    const handleApprove = async (eventId: number) => {
+        try {
+            await approveEvent(eventId);
+            setEvents((prev) => prev.map(ev => ev.eventId === eventId ? { ...ev, status: 'approved' } : ev));
+        } catch (err) {
+            alert('Failed to approve event.');
+        }
+    };
+
+    const handleReject = async (eventId: number) => {
+        try {
+            await rejectEvent(eventId);
+            setEvents((prev) => prev.map(ev => ev.eventId === eventId ? { ...ev, status: 'rejected' } : ev));
+        } catch (err) {
+            alert('Failed to reject event.');
+        }
+    };
 
     return (
         <Container maxWidth="xl" sx={{ mt: 5, mb: 5 }}>
@@ -279,7 +299,9 @@ const AdminDashboard: React.FC = () => {
                                     <TableCell align="right"><strong>Tickets Sold</strong></TableCell>
                                     <TableCell align="right"><strong>Scanned</strong></TableCell>
                                     <TableCell align="right"><strong>Scan Rate</strong></TableCell>
+                                    <TableCell><strong>Status</strong></TableCell>
                                     <TableCell><strong>Start Date</strong></TableCell>
+                                    <TableCell><strong>Moderation</strong></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -305,8 +327,15 @@ const AdminDashboard: React.FC = () => {
                                                 <TableCell align="right">
                                                     <strong>{scanRate}%</strong>
                                                 </TableCell>
+                                                <TableCell>{event.status || 'pending'}</TableCell>
+                                                <TableCell>{new Date(event.startDateTime).toLocaleDateString()}</TableCell>
                                                 <TableCell>
-                                                    {new Date(event.startDateTime).toLocaleDateString()}
+                                                    {event.status !== 'approved' && (
+                                                        <button style={{marginRight: 8}} onClick={() => handleApprove(event.eventId)}>Approve</button>
+                                                    )}
+                                                    {event.status !== 'rejected' && (
+                                                        <button style={{marginRight: 8}} onClick={() => handleReject(event.eventId)}>Reject</button>
+                                                    )}
                                                 </TableCell>
                                             </TableRow>
                                         );
