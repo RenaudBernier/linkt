@@ -1,3 +1,4 @@
+
 package com.linkt.controller;
 
 import com.linkt.dto.AdministratorDTO;
@@ -23,6 +24,30 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/administrators")
 @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:3000"})
 public class AdministratorController {
+
+    // Approve an event
+    @PostMapping("/events/{eventId}/approve")
+    public ResponseEntity<String> approveEvent(@PathVariable Long eventId) {
+        Event event = eventRepository.findById(eventId).orElse(null);
+        if (event == null) {
+            return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
+        }
+        event.setStatus("approved");
+        eventRepository.save(event);
+        return new ResponseEntity<>("Event approved", HttpStatus.OK);
+    }
+
+    // Reject an event
+    @PostMapping("/events/{eventId}/reject")
+    public ResponseEntity<String> rejectEvent(@PathVariable Long eventId) {
+        Event event = eventRepository.findById(eventId).orElse(null);
+        if (event == null) {
+            return new ResponseEntity<>("Event not found", HttpStatus.NOT_FOUND);
+        }
+        event.setStatus("rejected");
+        eventRepository.save(event);
+        return new ResponseEntity<>("Event rejected", HttpStatus.OK);
+    }
 
     @Autowired
     private AdministratorService administratorService;

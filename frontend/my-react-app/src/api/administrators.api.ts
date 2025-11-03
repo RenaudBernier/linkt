@@ -1,3 +1,18 @@
+/**
+ * Approve an event (admin only)
+ * @param eventId - ID of the event to approve
+ */
+export const approveEvent = async (eventId: number): Promise<void> => {
+    await axiosInstance.post(`/administrators/events/${eventId}/approve`);
+};
+
+/**
+ * Reject an event (admin only)
+ * @param eventId - ID of the event to reject
+ */
+export const rejectEvent = async (eventId: number): Promise<void> => {
+    await axiosInstance.post(`/administrators/events/${eventId}/reject`);
+};
 import axiosInstance from './axiosInstance';
 
 export interface EventStats {
@@ -57,6 +72,7 @@ export interface EventData {
     ticketCount: number;
     scannedTicketCount: number;
     organizerId: number;
+    status: 'pending' | 'approved' | 'rejected';
 }
 
 /**
