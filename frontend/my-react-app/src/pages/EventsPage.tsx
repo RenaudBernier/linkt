@@ -472,6 +472,13 @@ function EventsPage() {
                 >
                   {savedEventIds.has(event.eventID) ? 'Saved' : 'Save event'}
                 </Button>
+                <Button
+                  onClick={() => navigate(`/event/${event.eventID}/registered-students`)}
+                  variant="outlined"
+                  size="small"
+                >
+                  View Attendees
+                </Button>
               </CardActions>
             </Card>
           </Grid>

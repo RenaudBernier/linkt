@@ -26,6 +26,7 @@ import MyTickets from './mytickets.tsx';
 import Settings from "./components/Settings";
 import SavedTickets from "./SavedTickets.tsx";
 import OrganiserApprovePage from "./pages/OrganiserApprovePage.tsx";
+import RegisteredStudentsPage from "./pages/RegisteredStudentsPage.tsx";
 import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
@@ -159,6 +160,7 @@ function App() {
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
+                    <Route path="/events/:eventId/attendees" element={<RegisteredStudentsPage />} />
                     <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
 
