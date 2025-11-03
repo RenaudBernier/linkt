@@ -96,7 +96,7 @@ function RegisteredStudentsPage() {
       <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
         <Button
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate('/events')}
+          onClick={() => navigate('/my-events')}
           sx={{ textTransform: 'none' }}
         >
           Back to Events

@@ -160,7 +160,7 @@ function App() {
                     <Route path="/savedtickets" element={<SavedTickets/>} />
                     <Route path="/admin/dashboard" element={<AdminDashboard />} />
                     <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
-                    <Route path="/event/:eventId/registered-students" element={<RegisteredStudentsPage />} />
+                    <Route path="/events/:eventId/attendees" element={<RegisteredStudentsPage />} />
                     <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>
 

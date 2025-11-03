@@ -63,8 +63,12 @@ public class EventController {
                         .body("User not authenticated");
             }
 
-            // Get authenticated user
-            User user = (User) authentication.getPrincipal();
+            // Get authenticated user email
+            String email = authentication.getName();
+
+            // Look up the user from database
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
             // Check if user is an organizer
             if (!(user instanceof Organizer)) {
