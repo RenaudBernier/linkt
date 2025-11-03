@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Dict
 
 # BCrypt hash for password: "password123"
-BCRYPT_PASSWORD = "$2a$10$Ag0P81IIDefnGTk8cED4ee4z3G4tELoM2SX7R2/S7MEFu/m1BT0hy"
+BCRYPT_PASSWORD = "$2b$10$xBw2R3M/vwQcgNbA58VbDuZ1J4tTx/RBxdtrciiS67UVGr8atCQwC"
 
 
 def resolve_db_path(db_path: str) -> Path:
