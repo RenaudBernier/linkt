@@ -36,6 +36,7 @@ function MainLayout() {
         <>
             <Header/>
             <Toolbar/>
+
             <Outlet />
             <Footer />
         </>

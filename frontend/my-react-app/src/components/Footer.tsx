@@ -11,7 +11,7 @@ const sections: Array<{ title: string; links: string[] }> = [
 
 export default function Footer() {
   return (
-    <Box component="footer" sx={{ bgcolor: 'grey.100', color: 'text.primary', mt: 6 }}>
+    <Box component="footer" sx={{ bgcolor: 'grey.100', color: 'text.primary' }}>
       <Container sx={{ py: { xs: 4, sm: 6 } }}>
         {/* Columns with CSS Grid */}
         <Box
