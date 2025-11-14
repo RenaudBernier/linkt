@@ -9,6 +9,7 @@ import {
   Card,
   CardMedia,
   CardContent,
+  CardActions,
   Button,
   CircularProgress,
 } from "@mui/material";
@@ -31,7 +32,9 @@ import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import { getTopEvents } from './api/events.api';
+import { saveEvent, checkIfSaved } from './api/savedEvents.api';
 import type { Event } from './types/event.interface';
+import { useSnackbar } from 'notistack';
 function MainLayout() {
     return (
         <>
@@ -56,8 +59,11 @@ function BlankLayout() {
 function Home() {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { enqueueSnackbar } = useSnackbar();
     const [topEvents, setTopEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
+    const [savedEventIds, setSavedEventIds] = useState<Set<number>>(new Set());
+    const [savingEventId, setSavingEventId] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchTopEvents = async () => {
@@ -73,6 +79,51 @@ function Home() {
         
         fetchTopEvents();
     }, []);
+
+    useEffect(() => {
+        const checkSavedEvents = async () => {
+            if (!localStorage.getItem('token')) return;
+
+            const savedIds = new Set<number>();
+            for (const event of topEvents) {
+                try {
+                    const isSaved = await checkIfSaved(event.eventID);
+                    if (isSaved) {
+                        savedIds.add(event.eventID);
+                    }
+                } catch (error) {
+                    // Ignore errors for individual checks
+                }
+            }
+            setSavedEventIds(savedIds);
+        };
+
+        if (topEvents.length > 0) {
+            checkSavedEvents();
+        }
+    }, [topEvents]);
+
+    const handleAddToFavorites = async (eventId: number) => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+            return;
+        }
+
+        setSavingEventId(eventId);
+        try {
+            await saveEvent(eventId);
+            setSavedEventIds(prev => new Set(prev).add(eventId));
+            enqueueSnackbar('Event saved!', { variant: 'success' });
+        } catch (error: any) {
+            if (error.response?.status === 401) {
+                navigate('/login');
+            } else {
+                enqueueSnackbar('Failed to save event', { variant: 'error' });
+            }
+        } finally {
+            setSavingEventId(null);
+        }
+    };
 
     const handleEventClick = (eventId: number) => {
         if (!user) {
@@ -143,7 +194,6 @@ function Home() {
                     height: '100%', 
                     display: 'flex', 
                     flexDirection: 'column',
-                    cursor: 'pointer',
                     transition: 'all 0.3s ease-in-out',
                     borderRadius: 3,
                     overflow: 'hidden',
@@ -152,7 +202,6 @@ function Home() {
                       boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
                     }
                   }}
-                  onClick={() => handleEventClick(event.eventID)}
                 >
                   {event.image && event.image.length > 0 && event.image[0] && (
                     <CardMedia
@@ -191,6 +240,25 @@ function Home() {
                   {event.price === 0 ? 'Free' : `$${event.price}`}
                 </Typography>
               </CardContent>
+              <CardActions sx={{ p: 2.5, pt: 0, gap: 1 }}>
+                <Button
+                  onClick={() => handleEventClick(event.eventID)}
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                >
+                  Buy Ticket
+                </Button>
+                <Button
+                  onClick={() => handleAddToFavorites(event.eventID)}
+                  variant={savedEventIds.has(event.eventID) ? "contained" : "outlined"}
+                  size="medium"
+                  disabled={savingEventId === event.eventID}
+                  fullWidth
+                >
+                  {savedEventIds.has(event.eventID) ? 'Saved' : 'Save Event'}
+                </Button>
+              </CardActions>
             </Card>
           ))}
         </Box>
