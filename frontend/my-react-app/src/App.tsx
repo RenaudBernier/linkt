@@ -11,7 +11,6 @@ import {
   CardContent,
   Button,
   CircularProgress,
-  Container,
 } from "@mui/material";
 //import '@fontsource-variable/cabin';
 import './App.css';
@@ -105,8 +104,8 @@ function Home() {
 
 
 
-      <Box component = "section" sx = {{py: 6, width: '100%', bgcolor: '#373f51', color: 'white'}}>
-        <Container maxWidth="lg">
+      <Box component = "section" sx = {{py: 6, px: 3, width: '100%', bgcolor: '#373f51', color: 'white'}}>
+        <Box sx={{ maxWidth: '1600px', mx: 'auto' }}>
           <Typography variant = "h2" sx={{ mb: 4 }}> Top Events </Typography>
           
           {loading ? (
@@ -200,7 +199,7 @@ function Home() {
           View All Events
         </Button>
       </Box>
-      </Container>
+      </Box>
       </Box>
 
 
