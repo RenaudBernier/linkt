@@ -76,3 +76,24 @@ export const updateEvent = async (eventId: number, eventData: any) => {
   });
   return response.data;
 };
+
+export const getTopEvents = async (): Promise<Event[]> => {
+  const response = await axiosInstance.get('/events/top');
+
+  // Transform backend data to match frontend interface
+  const transformedEvents: Event[] = response.data.map((event: any) => ({
+    eventID: event.eventId,
+    title: event.title,
+    description: event.description,
+    category: event.eventType,
+    image: event.imageUrl ? (event.imageUrl.startsWith('http') || event.imageUrl.startsWith('https') ? [event.imageUrl] : [`http://localhost:8080${event.imageUrl}`]) : [],
+    price: event.price || 0,
+    startDate: new Date(event.startDateTime),
+    endDate: new Date(event.endDateTime),
+    location: event.location,
+    capacity: event.capacity,
+    ticketsSold: event.ticketsSold || 0,
+  }));
+
+  return transformedEvents;
+};

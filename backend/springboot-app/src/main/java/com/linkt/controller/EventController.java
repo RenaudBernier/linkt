@@ -40,6 +40,38 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/top")
+    public ResponseEntity<List<java.util.Map<String, Object>>> getTopEvents() {
+        // Get all events
+        List<Event> allEvents = eventRepository.findAll();
+        
+        // Sort by ticket count (descending) and limit to top 5
+        List<java.util.Map<String, Object>> topEvents = allEvents.stream()
+            .map(event -> {
+                java.util.Map<String, Object> eventMap = new java.util.HashMap<>();
+                eventMap.put("eventId", event.getEventId());
+                eventMap.put("title", event.getTitle());
+                eventMap.put("description", event.getDescription());
+                eventMap.put("eventType", event.getEventType());
+                eventMap.put("startDateTime", event.getStartDateTime());
+                eventMap.put("endDateTime", event.getEndDateTime());
+                eventMap.put("location", event.getLocation());
+                eventMap.put("capacity", event.getCapacity());
+                eventMap.put("imageUrl", event.getImageUrl());
+                eventMap.put("price", event.getPrice());
+                eventMap.put("ticketsSold", event.getTickets().size());
+                return eventMap;
+            })
+            .sorted((e1, e2) -> Integer.compare(
+                (Integer) e2.get("ticketsSold"), 
+                (Integer) e1.get("ticketsSold")
+            ))
+            .limit(5)
+            .collect(java.util.stream.Collectors.toList());
+        
+        return ResponseEntity.ok(topEvents);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
         return eventRepository.findById(id)
