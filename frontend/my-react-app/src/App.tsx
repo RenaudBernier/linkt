@@ -74,6 +74,16 @@ function Home() {
         fetchTopEvents();
     }, []);
 
+    const handleEventClick = (eventId: number) => {
+        if (!user) {
+            // User not logged in, redirect to login
+            navigate('/login');
+        } else {
+            // User is logged in, proceed to checkout
+            navigate(`/checkout/${eventId}`);
+        }
+    };
+
     return (
         <>
             
@@ -142,7 +152,7 @@ function Home() {
                       boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
                     }
                   }}
-                  onClick={() => navigate(`/checkout/${event.eventID}`)}
+                  onClick={() => handleEventClick(event.eventID)}
                 >
                   {event.image && event.image.length > 0 && event.image[0] && (
                     <CardMedia
