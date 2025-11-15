@@ -1,18 +1,7 @@
 // src/App.tsx
-import {Routes, Route, useNavigate, Outlet} from 'react-router-dom';
+import {Routes, Route, useNavigate, Outlet, Navigate} from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
-import {
-  AppBar,
-  Toolbar,
-  Box,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Menu,
-  MenuItem,
-  Avatar,
-  Typography,
-} from "@mui/material";
+import { Toolbar, Box, Typography } from "@mui/material";
 //import '@fontsource-variable/cabin';
 import './App.css';
 import SignUp from './SignUp';
@@ -31,6 +20,7 @@ import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import ApproveEventsPage from "./pages/ApproveEventsPage.tsx";
 function MainLayout() {
     return (
         <>
@@ -145,6 +135,14 @@ function Home() {
 }
 
 
+const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+    const { user, isAuthenticated } = useAuth();
+    if (!isAuthenticated || user?.userType !== 'administrator') {
+        return <Navigate to="/" replace />;
+    }
+    return children;
+};
+
 function App() {
     return (
 
@@ -159,8 +157,9 @@ function App() {
                     <Route path="/mytickets" element={<MyTickets />} />
                     <Route path="/settings" element={<Settings/>}></Route>
                     <Route path="/savedtickets" element={<SavedTickets/>} />
-                    <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                    <Route path="/admin/approve-organizer" element={<OrganiserApprovePage />} />
+                    <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+                    <Route path="/admin/approve-organizer" element={<AdminRoute><OrganiserApprovePage /></AdminRoute>} />
+                    <Route path="/admin/approve-events" element={<AdminRoute><ApproveEventsPage /></AdminRoute>} />
                     <Route path="/events/:eventId/attendees" element={<RegisteredStudentsPage />} />
                     <Route path="/myevents/scan/:eventId" element={<ScanTicketPage />} />
                 </Route>

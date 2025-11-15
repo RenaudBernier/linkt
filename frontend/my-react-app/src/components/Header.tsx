@@ -56,6 +56,11 @@ const Header: React.FC = () => {
     handleClose();
   };
 
+  const handleAdminApproveEvents = () => {
+    navigate('/admin/approve-events');
+    handleClose();
+  };
+
   const handleAdminDashboard = () => {
     navigate('/admin/dashboard');
     handleClose();
@@ -248,6 +253,20 @@ const Header: React.FC = () => {
                   }}
                 >
                   Approve Organizers
+                </MenuItem>
+              ),
+
+              user && user.userType === 'administrator' && (
+                <MenuItem
+                  key="approve-events"
+                  onClick={handleAdminApproveEvents}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "var(--fluorescent-cyan-10)",
+                    },
+                  }}
+                >
+                  Approve Events
                 </MenuItem>
               ),
 

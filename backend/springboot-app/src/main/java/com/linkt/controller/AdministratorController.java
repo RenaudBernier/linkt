@@ -13,6 +13,7 @@ import com.linkt.service.AdministratorService;
 import com.linkt.service.GlobalStatsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class AdministratorController {
 
     // Approve an event
     @PostMapping("/events/{eventId}/approve")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<String> approveEvent(@PathVariable Long eventId) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) {
@@ -39,6 +41,7 @@ public class AdministratorController {
 
     // Reject an event
     @PostMapping("/events/{eventId}/reject")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<String> rejectEvent(@PathVariable Long eventId) {
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null) {
@@ -63,6 +66,7 @@ public class AdministratorController {
 
     // Get global statistics (admin only)
     @GetMapping("/stats/global")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<GlobalStatsResponse> getGlobalStatistics() {
         try {
             GlobalStatsResponse stats = globalStatsService.getGlobalStatistics();
@@ -85,6 +89,7 @@ public class AdministratorController {
 
     // Get all administrators
     @GetMapping
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<AdministratorDTO>> getAllAdministrators() {
         List<AdministratorDTO> admins = administratorService.getAllAdministrators();
         return new ResponseEntity<>(admins, HttpStatus.OK);
@@ -92,6 +97,7 @@ public class AdministratorController {
 
     // Get administrator by ID
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<AdministratorDTO> getAdministratorById(@PathVariable Long id) {
         try {
             AdministratorDTO admin = administratorService.getAdministratorById(id);
@@ -103,6 +109,7 @@ public class AdministratorController {
 
     // Get administrator by user ID
     @GetMapping("/user/{userId}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<AdministratorDTO> getAdministratorByUserId(@PathVariable Long userId) {
         try {
             AdministratorDTO admin = administratorService.getAdministratorByUserId(userId);
@@ -114,6 +121,7 @@ public class AdministratorController {
 
     // Check if user is an administrator
     @GetMapping("/check/{userId}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Boolean> isAdministrator(@PathVariable Long userId) {
         boolean isAdmin = administratorService.isAdministrator(userId);
         return new ResponseEntity<>(isAdmin, HttpStatus.OK);
@@ -121,6 +129,7 @@ public class AdministratorController {
 
     // Delete administrator (remove admin privileges)
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Void> deleteAdministrator(@PathVariable Long id) {
         try {
             administratorService.deleteAdministrator(id);
@@ -132,6 +141,7 @@ public class AdministratorController {
 
     // Get all organizers
     @GetMapping("/organizers")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<OrganizerResponseDTO>> getAllOrganizers() {
         try {
             List<Organizer> organizers = organizerRepository.findAll();
@@ -154,6 +164,7 @@ public class AdministratorController {
 
     // Get all events
     @GetMapping("/events")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<List<EventResponseDTO>> getAllEvents() {
         try {
             List<Event> events = eventRepository.findAll();
@@ -176,7 +187,8 @@ public class AdministratorController {
                             event.getPrice(),
                             ticketCount,
                             scannedCount,
-                            event.getOrganizer() != null ? event.getOrganizer().getUserId() : null
+                            event.getOrganizer() != null ? event.getOrganizer().getUserId() : null,
+                            event.getStatus()
                         );
                     })
                     .collect(Collectors.toList());
