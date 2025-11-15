@@ -135,14 +135,15 @@ function Home() {
 }
 
 
+const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+    const { user, isAuthenticated } = useAuth();
+    if (!isAuthenticated || user?.userType !== 'administrator') {
+        return <Navigate to="/" replace />;
+    }
+    return children;
+};
+
 function App() {
-    const AdminRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
-        const { user, isAuthenticated } = useAuth();
-        if (!isAuthenticated || user?.userType !== 'administrator') {
-            return <Navigate to="/" replace />;
-        }
-        return children;
-    };
     return (
 
             <Routes>
