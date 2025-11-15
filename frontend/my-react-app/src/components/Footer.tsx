@@ -1,17 +1,24 @@
 
+import { Link as RouterLink } from 'react-router-dom';
 import { Box, Container, Divider, Link, Stack, Typography } from '@mui/material';
-
-const sections: Array<{ title: string; links: string[] }> = [
-  { title: 'Product',       links: ['Features', 'Pricing', 'Integrations', 'Documentation'] },
-  { title: 'Company',       links: ['About Us', 'Careers', 'News', 'Contact'] },
-  { title: 'For Organizers',links: ['Create Events', 'Manage Tickets', 'Check-in App', 'Analytics'] },
-  { title: 'For Students',  links: ['Browse Events', 'My Tickets', 'Calendar', 'Support'] },
-  { title: 'Resources',     links: ['Help Center', 'Community Forum', 'System Status', 'Report an Issue'] },
-];
+import { useAuth } from '../contexts/AuthContext';
+import { studentLinks, organizerLinks, adminLinks, defaultLinks, baseLinks } from './links';
 
 export default function Footer() {
+  const { user } = useAuth();
+
+  let userSpecificLinks = [];
+  if (user?.userType === 'student') {
+    userSpecificLinks = studentLinks;
+  } else if (user?.userType === 'organizer') {
+    userSpecificLinks = organizerLinks;
+  } else if (user?.userType === 'admin') {
+    userSpecificLinks = adminLinks;
+  }
+
+  const sections = user ? [...baseLinks, ...userSpecificLinks] : defaultLinks;
   return (
-    <Box component="footer" sx={{ bgcolor: 'grey.100', color: 'text.primary', mt: 6 }}>
+    <Box component="footer" sx={{ bgcolor: 'grey.100', color: 'text.primary' }}>
       <Container sx={{ py: { xs: 4, sm: 6 } }}>
         {/* Columns with CSS Grid */}
         <Box
@@ -33,15 +40,16 @@ export default function Footer() {
                 {sec.title}
               </Typography>
               <Stack spacing={1}>
-                {sec.links.map((label) => (
+                {sec.links.map((link) => (
                   <Link
-                    key={label}
-                    href="#"
+                    key={link.label}
+                    component={RouterLink}
+                    to={link.path}
                     underline="hover"
                     color="text.secondary"
                     sx={{ display: 'inline-block', lineHeight: 1.75, '&:hover': { color: 'text.primary' } }}
                   >
-                    {label}
+                    {link.label}
                   </Link>
                 ))}
               </Stack>

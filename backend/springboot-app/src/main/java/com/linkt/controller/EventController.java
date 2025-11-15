@@ -1,11 +1,16 @@
 package com.linkt.controller;
 
+import com.linkt.dto.StudentRegistrationDTO;
 import com.linkt.model.Event;
+import com.linkt.model.Organizer;
 import com.linkt.model.User;
 import com.linkt.repository.EventRepository;
+import com.linkt.service.EventService;
 import com.linkt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +29,9 @@ public class EventController {
     private EventRepository eventRepository;
 
     @Autowired
+    private EventService eventService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @GetMapping
@@ -37,6 +45,54 @@ public class EventController {
         return eventRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Get all registered students for a specific event
+     * Only the organizer who created the event can view this
+     */
+    @GetMapping("/{eventId}/registered-students")
+    public ResponseEntity<?> getRegisteredStudents(
+            @PathVariable Long eventId,
+            Authentication authentication) {
+
+        try {
+            // Check if user is authenticated
+            if (authentication == null || !authentication.isAuthenticated()) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("User not authenticated");
+            }
+
+            // Get authenticated user email
+            String email = authentication.getName();
+
+            // Look up the user from database
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            // Check if user is an organizer
+            if (!(user instanceof Organizer)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("Only organizers can access this resource");
+            }
+
+            Organizer organizer = (Organizer) user;
+
+            // Get registered students
+            List<StudentRegistrationDTO> students = eventService.getRegisteredStudentsForEvent(eventId, organizer);
+            return ResponseEntity.ok(students);
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("Event not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Event not found");
+            } else if (e.getMessage().contains("permission")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("You don't have permission to view this event's students");
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred: " + e.getMessage());
+        }
     }
 
     @GetMapping("/organizer")

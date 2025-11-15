@@ -49,7 +49,7 @@
   --primary: var(--fluorescent-cyan);
   --secondary: var(--celestial-blue);
   --accent: var(--amaranth-purple);
-  --background: var(--light-orange);
+  --background: #ffffff;
   --text: var(--charcoal);
   --surface: var(--light-orange-10);
 }

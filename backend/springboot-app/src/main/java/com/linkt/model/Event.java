@@ -8,6 +8,8 @@ import java.util.List;
 @Table(name = "event")
 public class Event {
 
+    @Column(name = "status", nullable = false)
+    private String status = "pending"; // possible values: pending, approved, rejected
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -58,6 +60,14 @@ public class Event {
         this.endDateTime = endDateTime;
         this.location = location;
         this.capacity = capacity;
+        this.status = "pending";
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 public Long getEventId() {
         return eventId;

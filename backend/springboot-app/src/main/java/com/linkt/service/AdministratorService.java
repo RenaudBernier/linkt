@@ -26,11 +26,13 @@ public class AdministratorService {
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + dto.getUserId()));
 
-        if (administratorRepository.findByUserId(dto.getUserId()).isPresent()) {
-            throw new RuntimeException("User is already an administrator");
-        }
-
-        Administrator admin = new Administrator();
+        Administrator admin = new Administrator(
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhoneNumber(),
+                user.getPassword()
+        );
         Administrator savedAdmin = administratorRepository.save(admin);
         return convertToDTO(savedAdmin);
     }
@@ -45,12 +47,12 @@ public class AdministratorService {
         return convertToDTO(admin);
     }
     public AdministratorDTO getAdministratorByUserId(Long userId) {
-        Administrator admin = administratorRepository.findByUserId(userId)
+        Administrator admin = administratorRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Administrator not found for user id: " + userId));
         return convertToDTO(admin);
     }
     public boolean isAdministrator(Long userId) {
-        return administratorRepository.existsByUserId(userId);
+        return administratorRepository.existsById(userId);
     }
     public void deleteAdministrator(Long id) {
         Administrator admin = administratorRepository.findById(id)
