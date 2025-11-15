@@ -48,12 +48,8 @@ const AdminDashboard: React.FC = () => {
             try {
                 setLoading(true);
                 // Fetch stats for dashboard
-                try {
-                    const statsData = await getGlobalStatistics();
-                    setStats(statsData);
-                } catch (e) {
-                    throw e;
-                }
+                const statsData = await getGlobalStatistics();
+                setStats(statsData);
                 setError(null);
 
                 // Fetch organizers
