@@ -109,7 +109,7 @@ const AdminDashboard: React.FC = () => {
                 <Alert severity="info">No statistics available.</Alert>
             </Container>
         );
-   }
+    }
 
     const displayedEvents = events;
 
