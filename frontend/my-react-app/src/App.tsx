@@ -21,6 +21,8 @@ import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
 import ApproveEventsPage from "./pages/ApproveEventsPage.tsx";
+import EmailVerificationPage from "./pages/EmailVerificationPage.tsx";
+import TwoFactorAuthPage from "./pages/TwoFactorAuthPage.tsx";
 function MainLayout() {
     return (
         <>
@@ -167,6 +169,8 @@ function App() {
                 <Route element={<BlankLayout/>}>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/verify-email" element={<EmailVerificationPage/>}/>
+                    <Route path="/verify-2fa" element={<TwoFactorAuthPage/>}/>
                     <Route path="/CreateData" element={<CreateData/>}/>
                     <Route path="/checkout/:ticketId" element={<CheckoutPage/>}/>
                 </Route>

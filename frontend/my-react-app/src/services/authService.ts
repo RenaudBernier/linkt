@@ -17,13 +17,18 @@ export interface LoginData {
 }
 
 export interface AuthResponse {
-    token: string;
+    token: string | null;
     userId: number;
     email: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
     phoneNumber?: string;
     userType: string;
+}
+
+export interface VerifyCodeData {
+    email: string;
+    code: string;
 }
 
 class AuthService {
@@ -37,9 +42,20 @@ class AuthService {
         return response.data;
     }
 
+    async verifyEmail(data: VerifyCodeData): Promise<AuthResponse> {
+        const response = await axiosInstance.post<AuthResponse>('/auth/verify-email', data);
+        return response.data;
+    }
+
+    async verify2FA(data: VerifyCodeData): Promise<AuthResponse> {
+        const response = await axiosInstance.post<AuthResponse>('/auth/verify-2fa', data);
+        return response.data;
+    }
+
     logout(): void {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('pendingAuth');
     }
 
     getToken(): string | null {

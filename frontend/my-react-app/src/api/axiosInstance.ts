@@ -28,10 +28,17 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         if (error.response?.status === 401) {
-            // Token expired or invalid - clear local storage and redirect to login
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '/login';
+            // Don't redirect for auth endpoints (user not authenticated yet)
+            const requestUrl = error.config?.url || '';
+            const authEndpoints = ['/auth/verify-2fa', '/auth/verify-email', '/auth/login', '/auth/register'];
+            const isAuthEndpoint = authEndpoints.some(endpoint => requestUrl.includes(endpoint));
+
+            if (!isAuthEndpoint) {
+                // Token expired or invalid - clear local storage and redirect to login
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
+            }
         }
         return Promise.reject(error);
     }
