@@ -30,6 +30,21 @@ public abstract class User
     @JsonIgnore
     private String password;
 
+    @Column(name = "email_verified")
+    private Boolean emailVerified = false;
+
+    @Column(name = "verification_code")
+    private String verificationCode;
+
+    @Column(name = "verification_code_expiry")
+    private java.time.LocalDateTime verificationCodeExpiry;
+
+    @Column(name = "two_factor_code")
+    private String twoFactorCode;
+
+    @Column(name = "two_factor_code_expiry")
+    private java.time.LocalDateTime twoFactorCodeExpiry;
+
 
     public User() {}
 
@@ -107,6 +122,46 @@ public abstract class User
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public boolean isEmailVerified() {
+        return emailVerified != null && emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public java.time.LocalDateTime getVerificationCodeExpiry() {
+        return verificationCodeExpiry;
+    }
+
+    public void setVerificationCodeExpiry(java.time.LocalDateTime verificationCodeExpiry) {
+        this.verificationCodeExpiry = verificationCodeExpiry;
+    }
+
+    public String getTwoFactorCode() {
+        return twoFactorCode;
+    }
+
+    public void setTwoFactorCode(String twoFactorCode) {
+        this.twoFactorCode = twoFactorCode;
+    }
+
+    public java.time.LocalDateTime getTwoFactorCodeExpiry() {
+        return twoFactorCodeExpiry;
+    }
+
+    public void setTwoFactorCodeExpiry(java.time.LocalDateTime twoFactorCodeExpiry) {
+        this.twoFactorCodeExpiry = twoFactorCodeExpiry;
     }
 
 }
