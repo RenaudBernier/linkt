@@ -40,6 +40,7 @@ export const adminLinks = [
   { title: 'For Administrators', links: [
     { label: 'Dashboard', path: '/admin/dashboard' },
     { label: 'Approve Organizers', path: '/admin/approve-organizer' },
+    { label: 'Approve Events', path: '/admin/approve-events' },
   ]},
 ];
 

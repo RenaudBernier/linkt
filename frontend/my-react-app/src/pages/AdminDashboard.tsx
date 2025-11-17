@@ -3,8 +3,6 @@ import {
     getGlobalStatistics,
     getAllOrganizers,
     getAllEventsAdmin,
-    approveEvent,
-    rejectEvent,
     type GlobalStatsResponse,
     type Organizer,
     type EventData
@@ -13,7 +11,6 @@ import {
     Container,
     Typography,
     Alert,
-    Grid,
     Card,
     CardContent,
     Table,
@@ -35,6 +32,7 @@ import {
     CheckCircle as CheckCircleIcon,
     Cancel as CancelIcon
 } from '@mui/icons-material';
+ 
 
 const AdminDashboard: React.FC = () => {
     const [stats, setStats] = useState<GlobalStatsResponse | null>(null);
@@ -43,17 +41,18 @@ const AdminDashboard: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Dashboard is read-only for events (status only)
+
     useEffect(() => {
         const fetchAdminData = async () => {
             try {
                 setLoading(true);
-
-                // Fetch stats (required)
+                // Fetch stats for dashboard
                 const statsData = await getGlobalStatistics();
                 setStats(statsData);
                 setError(null);
 
-                // Fetch organizers (optional - won't break if endpoint doesn't exist)
+                // Fetch organizers
                 try {
                     const organizersData = await getAllOrganizers();
                     setOrganizers(organizersData);
@@ -62,7 +61,7 @@ const AdminDashboard: React.FC = () => {
                     console.error('Failed to fetch organizers:', err);
                 }
 
-                // Fetch events (optional - won't break if endpoint doesn't exist)
+                // Fetch events
                 try {
                     const eventsData = await getAllEventsAdmin();
                     setEvents(eventsData);
@@ -80,6 +79,7 @@ const AdminDashboard: React.FC = () => {
         };
 
         fetchAdminData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (loading) {
@@ -98,6 +98,7 @@ const AdminDashboard: React.FC = () => {
         );
     }
 
+    // No statistics
     if (!stats) {
         return (
             <Container sx={{ mt: 5 }}>
@@ -106,23 +107,7 @@ const AdminDashboard: React.FC = () => {
         );
     }
 
-    const handleApprove = async (eventId: number) => {
-        try {
-            await approveEvent(eventId);
-            setEvents((prev) => prev.map(ev => ev.eventId === eventId ? { ...ev, status: 'approved' } : ev));
-        } catch (err) {
-            alert('Failed to approve event.');
-        }
-    };
-
-    const handleReject = async (eventId: number) => {
-        try {
-            await rejectEvent(eventId);
-            setEvents((prev) => prev.map(ev => ev.eventId === eventId ? { ...ev, status: 'rejected' } : ev));
-        } catch (err) {
-            alert('Failed to reject event.');
-        }
-    };
+    const displayedEvents = events;
 
     return (
         <Container maxWidth="xl" sx={{ mt: 5, mb: 5 }}>
@@ -133,155 +118,143 @@ const AdminDashboard: React.FC = () => {
                 Global statistics and participation trends for Linkt
             </Typography>
 
-            {/* Overview Stats Cards */}
-            <Grid container spacing={3} sx={{ mb: 4 }}>
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#1976d2', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalEvents}
-                                    </Typography>
-                                    <Typography variant="body2">Total Events</Typography>
-                                </Box>
-                                <EventIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+            {/* Overview Stats Cards - dashboard only */}
+            <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(6, 1fr)' },
+                gap: 3,
+                mb: 4
+            }}>
+                <Card elevation={3} sx={{ backgroundColor: '#1976d2', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats!.totalEvents}
+                                </Typography>
+                                <Typography variant="body2">Total Events</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#9c27b0', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalTickets}
-                                    </Typography>
-                                    <Typography variant="body2">Total Tickets</Typography>
-                                </Box>
-                                <TicketIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                            <EventIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card elevation={3} sx={{ backgroundColor: '#9c27b0', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats.totalTickets}
+                                </Typography>
+                                <Typography variant="body2">Total Tickets</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#2e7d32', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalScannedTickets}
-                                    </Typography>
-                                    <Typography variant="body2">Scanned Tickets</Typography>
-                                </Box>
-                                <CheckCircleIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                            <TicketIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card elevation={3} sx={{ backgroundColor: '#2e7d32', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats.totalScannedTickets}
+                                </Typography>
+                                <Typography variant="body2">Scanned Tickets</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#d32f2f', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalUnscannedTickets}
-                                    </Typography>
-                                    <Typography variant="body2">Unscanned Tickets</Typography>
-                                </Box>
-                                <CancelIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                            <CheckCircleIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card elevation={3} sx={{ backgroundColor: '#d32f2f', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats.totalUnscannedTickets}
+                                </Typography>
+                                <Typography variant="body2">Unscanned Tickets</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#ed6c02', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalStudents}
-                                    </Typography>
-                                    <Typography variant="body2">Students</Typography>
-                                </Box>
-                                <PeopleIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                            <CancelIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card elevation={3} sx={{ backgroundColor: '#ed6c02', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats.totalStudents}
+                                </Typography>
+                                <Typography variant="body2">Students</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={2}>
-                    <Card elevation={3} sx={{ backgroundColor: '#0288d1', color: 'white' }}>
-                        <CardContent>
-                            <Box display="flex" alignItems="center" justifyContent="space-between">
-                                <Box>
-                                    <Typography variant="h4" fontWeight="bold">
-                                        {stats.totalOrganizers}
-                                    </Typography>
-                                    <Typography variant="body2">Organizers</Typography>
-                                </Box>
-                                <BusinessIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                            <PeopleIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+                <Card elevation={3} sx={{ backgroundColor: '#0288d1', color: 'white' }}>
+                    <CardContent>
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                            <Box>
+                                <Typography variant="h4" fontWeight="bold">
+                                    {stats.totalOrganizers}
+                                </Typography>
+                                <Typography variant="body2">Organizers</Typography>
                             </Box>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Grid>
+                            <BusinessIcon sx={{ fontSize: 48, opacity: 0.7 }} />
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Box>
 
-            {/* All Organizers Table */}
+            {/* All Organizers Table - dashboard only */}
             <Card elevation={3} sx={{ mb: 4 }}>
-                <CardContent>
-                    <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 2 }}>
-                        All Organizers
-                    </Typography>
-                    <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 440 }}>
-                        <Table stickyHeader>
-                            <TableHead>
-                                <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
-                                    <TableCell><strong>Name</strong></TableCell>
-                                    <TableCell><strong>Email</strong></TableCell>
-                                    <TableCell><strong>Organization</strong></TableCell>
-                                    <TableCell><strong>Phone</strong></TableCell>
-                                    <TableCell><strong>Status</strong></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {organizers.length > 0 ? (
-                                    organizers.map((organizer) => (
-                                        <TableRow key={organizer.userId} hover>
-                                            <TableCell>
-                                                {organizer.firstName} {organizer.lastName}
-                                            </TableCell>
-                                            <TableCell>{organizer.email}</TableCell>
-                                            <TableCell>{organizer.organizationName || 'N/A'}</TableCell>
-                                            <TableCell>{organizer.phoneNumber || 'N/A'}</TableCell>
-                                            <TableCell>
-                                                <Chip
-                                                    label={organizer.approvalStatus}
-                                                    color={organizer.approvalStatus === 'approved' ? 'success' : 'warning'}
-                                                    size="small"
-                                                />
+                    <CardContent>
+                        <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 2 }}>
+                            All Organizers
+                        </Typography>
+                        <TableContainer component={Paper} variant="outlined" sx={{ maxHeight: 440 }}>
+                            <Table stickyHeader>
+                                <TableHead>
+                                    <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                                        <TableCell><strong>Name</strong></TableCell>
+                                        <TableCell><strong>Email</strong></TableCell>
+                                        <TableCell><strong>Organization</strong></TableCell>
+                                        <TableCell><strong>Phone</strong></TableCell>
+                                        <TableCell><strong>Status</strong></TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {organizers.length > 0 ? (
+                                        organizers.map((organizer) => (
+                                            <TableRow key={organizer.userId} hover>
+                                                <TableCell>
+                                                    {organizer.firstName} {organizer.lastName}
+                                                </TableCell>
+                                                <TableCell>{organizer.email}</TableCell>
+                                                <TableCell>{organizer.organizationName || 'N/A'}</TableCell>
+                                                <TableCell>{organizer.phoneNumber || 'N/A'}</TableCell>
+                                                <TableCell>
+                                                    <Chip
+                                                        label={organizer.approvalStatus}
+                                                        color={organizer.approvalStatus === 'approved' ? 'success' : 'warning'}
+                                                        size="small"
+                                                    />
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell colSpan={5} align="center">
+                                                No organizers found
                                             </TableCell>
                                         </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={5} align="center">
-                                            No organizers found
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </CardContent>
-            </Card>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </CardContent>
+                </Card>
 
-            {/* All Events Table */}
+            {/* Events Table - simplified, dashboard shows status only; approve page shows moderation */}
             <Card elevation={3} sx={{ mb: 4 }}>
                 <CardContent>
                     <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 2 }}>
@@ -294,55 +267,33 @@ const AdminDashboard: React.FC = () => {
                                     <TableCell><strong>Event Name</strong></TableCell>
                                     <TableCell><strong>Type</strong></TableCell>
                                     <TableCell><strong>Location</strong></TableCell>
-                                    <TableCell align="right"><strong>Capacity</strong></TableCell>
-                                    <TableCell align="right"><strong>Price</strong></TableCell>
-                                    <TableCell align="right"><strong>Tickets Sold</strong></TableCell>
-                                    <TableCell align="right"><strong>Scanned</strong></TableCell>
-                                    <TableCell align="right"><strong>Scan Rate</strong></TableCell>
-                                    <TableCell><strong>Status</strong></TableCell>
                                     <TableCell><strong>Start Date</strong></TableCell>
-                                    <TableCell><strong>Moderation</strong></TableCell>
+                                    <TableCell><strong>Status</strong></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {events.length > 0 ? (
-                                    events.map((event) => {
-                                        const scanRate = event.ticketCount > 0
-                                            ? ((event.scannedTicketCount / event.ticketCount) * 100).toFixed(2)
-                                            : '0.00';
-
+                                {displayedEvents.length > 0 ? (
+                                    displayedEvents.map((event) => {
+                                        const status = event.status || 'pending';
+                                        // EXACTLY like organizers: approved => success, anything else => warning
+                                        const color: 'success' | 'warning' =
+                                            status === 'approved' ? 'success' : 'warning';
                                         return (
                                             <TableRow key={event.eventId} hover>
                                                 <TableCell>{event.title}</TableCell>
                                                 <TableCell>{event.eventType}</TableCell>
                                                 <TableCell>{event.location}</TableCell>
-                                                <TableCell align="right">{event.capacity}</TableCell>
-                                                <TableCell align="right">
-                                                    ${event.price.toFixed(2)}
-                                                </TableCell>
-                                                <TableCell align="right">{event.ticketCount}</TableCell>
-                                                <TableCell align="right" sx={{ color: '#2e7d32', fontWeight: 'bold' }}>
-                                                    {event.scannedTicketCount}
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <strong>{scanRate}%</strong>
-                                                </TableCell>
-                                                <TableCell>{event.status || 'pending'}</TableCell>
                                                 <TableCell>{new Date(event.startDateTime).toLocaleDateString()}</TableCell>
                                                 <TableCell>
-                                                    {event.status !== 'approved' && (
-                                                        <button style={{marginRight: 8}} onClick={() => handleApprove(event.eventId)}>Approve</button>
-                                                    )}
-                                                    {event.status !== 'rejected' && (
-                                                        <button style={{marginRight: 8}} onClick={() => handleReject(event.eventId)}>Reject</button>
-                                                    )}
+                                                    <Chip label={status} color={color} size="small" />
                                                 </TableCell>
+                                                
                                             </TableRow>
                                         );
                                     })
                                 ) : (
                                     <TableRow>
-                                        <TableCell colSpan={9} align="center">
+                                        <TableCell colSpan={5} align="center">
                                             No events found
                                         </TableCell>
                                     </TableRow>
@@ -353,8 +304,8 @@ const AdminDashboard: React.FC = () => {
                 </CardContent>
             </Card>
 
-            {/* Top 5 Events by Attendance (Scanned Tickets) */}
-            {stats.topEvents && stats.topEvents.length > 0 && (
+            {/* Top 5 Events - dashboard only */}
+            {stats?.topEvents && stats.topEvents.length > 0 && (
                 <Card elevation={3}>
                     <CardContent>
                         <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 2 }}>
