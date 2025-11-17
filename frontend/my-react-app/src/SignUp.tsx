@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from './api/users.api';
 import { useAuth } from './contexts/AuthContext';
+import { Toolbar, Box, Typography } from "@mui/material";
+import './SignUp.css';
 
 export default function SignUp() {
     const [name, setName] = useState('');
@@ -11,13 +13,18 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState<'student' | 'org'>('student');
     const [organizationName, setOrganizationName] = useState('');
-    const [error, setError] = useState(''); // Added error state
     const navigate = useNavigate();
     const { login } = useAuth();
 
+    useEffect(() => {
+        document.body.classList.add('signup-page-background');
+        return () => {
+            document.body.classList.remove('signup-page-background');
+        };
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(''); // Clear previous errors
 
         if (password.length < 7) {
             alert('ERROR: Password must be at least 7 characters long. Please enter a longer password.'); //setError does not work here, make it an alert!
@@ -52,11 +59,11 @@ export default function SignUp() {
     };
 
     return (
-        <div style={{maxWidth: 400, margin: 'auto', padding: 20}}>
-            <h2>Sign Up</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="signup-container">
+                <h2 className="signuptitle">SIGN UP</h2>
+                <form onSubmit={handleSubmit} className="signup-form">
                 <div>
-                    <label>Name:</label><br/>
+                    <label>Name:</label>
                     <input
                         type="text"
                         value={name}
@@ -64,8 +71,8 @@ export default function SignUp() {
                         required
                     />
                 </div>
-                <div style={{marginTop: 10}}>
-                    <label>Last Name:</label><br/>
+                <div>
+                    <label>Last Name:</label>
                     <input
                         type="text"
                         value={lastName}
@@ -73,8 +80,8 @@ export default function SignUp() {
                         required
                     />
                 </div>
-                <div style={{marginTop: 10}}>
-                    <label>Email:</label><br/>
+                <div>
+                    <label>Email:</label>
                     <input
                         type="email"
                         value={email}
@@ -82,8 +89,8 @@ export default function SignUp() {
                         required
                     />
                 </div>
-                <div style={{marginTop: 10}}>
-                    <label>Phone Number:</label><br/>
+                <div>
+                    <label>Phone Number:</label>
                     <input
                         type="tel"
                         value={phoneNumber}
@@ -91,9 +98,9 @@ export default function SignUp() {
                         required
                     />
                 </div>
-                <div style={{marginTop: 10, marginBottom: 20}}>
-                    <label>Password:</label><br/>
-                    <label> (Must be longer than 7 characters!) </label>
+                <div>
+                    <label>Password:</label>
+                    <label className="password-note"> (Must be longer than 7 characters!) </label>
                     <input
                         type="password"
                         value={password}
@@ -102,8 +109,8 @@ export default function SignUp() {
                     />
                 </div>
                 {userType === 'org' && (
-                    <div style={{marginBottom: 20}}>
-                        <label>Organization Name:</label><br/>
+                    <div>
+                        <label>Organization Name:</label>
                         <input
                             type="text"
                             value={organizationName}
@@ -112,72 +119,28 @@ export default function SignUp() {
                         />
                     </div>
                 )}
-                <div style={{
-                    position: 'relative',
-                    width: '100%',
-                    maxWidth: 300,
-                    margin: '0 auto 20px',
-                    height: 40,
-                    borderRadius: 20,
-                    backgroundColor: '#e0e0e0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: 4
-                }}>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: 4,
-                            left: userType === 'student' ? 4 : 'calc(50% - 5px)',
-                            width: 'calc(52% - 8px)',
-                            height: 'calc(100% - 8px)',
-                            backgroundColor: '#288af3',
-                            borderRadius: 14,
-                            transition: 'left 0.3s ease'
-                        }}
-                    />
+                <div className="user-type-toggle">
+                    <div className={`user-type-slider ${userType}`} />
                     <button
                         type="button"
                         onClick={() => setUserType('student')}
-                        style={{
-                            flex: 1,
-                            zIndex: 1,
-                            background: 'none',
-                            border: 'none',
-                            color: userType === 'student' ? '#fff' : '#000',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            outline: 'none'
-                        }}
+                        className={`user-type-button ${userType === 'student' ? 'active' : ''}`}
                     >
                         Student
                     </button>
                     <button
                         type="button"
                         onClick={() => setUserType('org')}
-                        style={{
-                            flex: 1,
-                            zIndex: 1,
-                            background: 'none',
-                            border: 'none',
-                            color: userType === 'org' ? '#fff' : '#000',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            outline: 'none'
-                        }}
+                        className={`user-type-button ${userType === 'org' ? 'active' : ''}`}
                     >
                         Organization
                     </button>
                 </div>
-                <button type="submit" style={{marginTop: 20}}>Create Account</button>
+                <button type="submit" className="submit-button">Create Account</button>
             </form>
-            <button style={{marginTop: 20}} onClick={() => navigate('/')}>
+            <button className="back-button" onClick={() => navigate('/')}>
                 Back To Home
             </button>
         </div>
-
     );
-
-
 }

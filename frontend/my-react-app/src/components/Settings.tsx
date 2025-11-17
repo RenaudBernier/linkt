@@ -180,8 +180,9 @@ const Settings = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
+    <Container maxWidth={false} sx = {{backgroundColor: '#a63a50', width: '100%'}}>
+    <Container sx={{ py: 4, backgroundColor: 'white' }}>
+      <Typography padding = '9' variant="h3" gutterBottom fontWeight="800" fontFamily={'Montserrat'} >
         Settings
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
@@ -379,6 +380,7 @@ const Settings = () => {
           </Box>
         </Box>
       </Paper>
+    </Container>
     </Container>
   );
 };

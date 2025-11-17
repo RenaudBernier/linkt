@@ -6,6 +6,32 @@
   min-height: 100vh;
 }
 
+
+
+@keyframes titleAnimation {
+  50% {transform: scale(1.4);
+}
+}
+
+h2.title
+{
+  font-family: 'Montserrat';
+  font-weight: 800;
+  animation-name: titleAnimation;
+  animation-duration: 3s;
+  animation-direction: reverse;
+  animation-iteration-count: infinite;
+  display: inline-block; /* makes it ONLY dynamically move! */
+  transform-origin: center;
+}
+
+h3.smallertitle
+{
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-style: italic;
+}
+
 body {
   margin: 0;
   padding: 0;

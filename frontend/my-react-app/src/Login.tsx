@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import authService from './services/authService';
 
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -43,23 +44,26 @@ export default function Login() {
     };
 
     return (
-        <div style={{maxWidth: 400, margin: 'auto', padding: 20}}>
-            <h2>Log In</h2>
+        <div style = {{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
+        <div className = 'loginDiv' style={{maxWidth: 500, fontSize: '25px', margin: 'auto', padding: 20, border: '1px solid #ccc', borderRadius: 8, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', backgroundColor: '#a63a50'}}>
+            <h2 style = {{fontSize: '60px', fontFamily: 'Montserrat', fontStyle: 'italic', color: 'white'}}>Log In</h2>
             {error && <div style={{color: 'red', marginBottom: 10}}>{error}</div>}
             <form onSubmit={handleSubmit}>
-                <div>
+                <div style = {{fontSize: '25px', height: '100px'}}>
                     <label>Email:</label><br/>
                     <input
                         type="email"
+                        size={40}
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required
                     />
                 </div>
-                <div style={{marginTop: 10}}>
+                <div>
                     <label>Password:</label><br/>
                     <input
                         type="password"
+                        size={40}
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         required
@@ -70,6 +74,7 @@ export default function Login() {
             <button style={{marginTop: 20}} onClick={() => navigate('/')}>
                 Back To Home
             </button>
+        </div>
         </div>
     );
 }

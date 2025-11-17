@@ -2,7 +2,7 @@
 import {Routes, Route, useNavigate, Outlet, Navigate} from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import { Toolbar, Box, Typography } from "@mui/material";
-//import '@fontsource-variable/cabin';
+
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
@@ -51,28 +51,52 @@ function Home() {
             
       <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#008dd5', color: 'white', border: '5px white'}}>
         <br></br>
-        <Typography variant = "h2"> Linkt </Typography>
-        <Typography variant = "body1"> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
+        <Typography variant = "h2" className='title'> Linkt </Typography>
+        <br></br>
+        <br></br>
+        <Typography variant = "body1" margin={2}> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
           We allow students to easily discover and search for events using comprehensive filters, save them to their personal calendar, and claim digital, QR-coded
           tickets (free or mock paid) for check-in! If you are an organizer, then you are welcome too! Organizers benefit from the ability to create, manage, 
           and track attendance for their events. They can also gain valuable insights for their events via our analytics dashboards. We are also welcoming 
           campus administrators, who can oversee organizations and moderate all content. Linkt is our brand-new system that connects students with campus life 
           while providing essential tools for hosting and administrating events! </Typography> 
-        {user?.userType == 'organizer' && ( <br></br> )}
-        {user?.userType == 'organizer' && ( <br></br> )}
-
-        {user?.userType == 'organizer' && (
-        <Typography variant = "h5">
-            Hey! We noticed that you're an organizer! Feel free to add your event to our page!
-        </Typography>)}
-
-      {user?.userType == 'organizer' && (
-        <button onClick={() => navigate('/CreateData')}>
-        Create an Event!
-        </button>)}
 
       </Box>
 
+        <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#a63a50', color: 'white', border: '5px white'}}>
+        <Typography variant = "h3" className='smallertitle'> Ready To Interact? </Typography><br></br>
+            {user?.userType == 'organizer' && (
+            <Typography variant = "h5">
+                Hey! We noticed that you're an organizer! Feel free to add your event to our page!
+            </Typography>)}
+
+            {user?.userType == 'organizer' && (
+            <button onClick={() => navigate('/CreateData')}>
+            Create an Event!
+            </button>)} 
+            {user?.userType == 'organizer' && (<br></br>)}
+            {user?.userType == 'organizer' && (<br></br>)}
+
+            <button onClick={() => navigate('/events')}>
+                Browse Events
+            </button> <br></br> <br></br>
+
+            <button onClick={() => navigate('/savedtickets')}>
+                Saved Tickets
+                </button> <br></br> <br></br>
+            
+            
+            <button onClick={() => navigate('/checkout/1')}>
+                Go to Checkout
+            </button> <br></br><br></br>
+            
+            <button onClick={() => navigate('/signup')}>
+                Go to Sign Up
+            </button> <br></br><br></br>
+            <button onClick={() => navigate('/login')}>
+                Go to Login
+            </button>
+      </Box>
 
 
 
@@ -86,7 +110,7 @@ function Home() {
                 <img src={reactLogo} className="logo react" alt="React logo" />
       </a>
         */}
-      <Typography variant = "h2"> Top Events </Typography>
+      <Typography variant = "h3" className='smallertitle'> Top Events </Typography>
       <Typography variant = "h4"> Backend for this hasn't been implemented yet! </Typography>
       <img src = "src\images\samantha-gades-fIHozNWfcvs-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
       <Typography variant = "h3"> Frosh Night </Typography>
@@ -103,33 +127,6 @@ function Home() {
       <Box sx={{ clear: 'both' }}></Box>
       </Box>
 
-
-      <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#a63a50', color: 'white', border: '5px white'}}>
-        <Typography variant = "h3"> Ready To Interact? </Typography>
-        {/*
-        <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-        <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-        */}
-                <button onClick={() => navigate('/signup')}>
-                    Go to Sign Up
-                </button>
-                <button onClick={() => navigate('/login')}>
-                    Go to Login
-                </button>
-                <button onClick={() => navigate('/checkout/1')}>
-                    Go to Checkout
-                </button>
-                <button onClick={() => navigate('/savedtickets')}>
-                    Saved tickets
-                 </button>
-                <button onClick={() => navigate('/events')}>
-                    Browse events
-                </button>
-      </Box>
         </>
     );
 }

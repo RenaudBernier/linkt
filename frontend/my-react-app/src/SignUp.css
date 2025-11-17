@@ -1,0 +1,136 @@
+@keyframes dissolveIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* source that helped me realize how to do this animation: https://blog.hubspot.com/website/css-fade-in */
+
+.signuptitle {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  font-style: italic;
+  font-size: 60px;
+  animation: dissolveIn 2s;
+} 
+
+.signup-container {
+    color: black;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.signup-form div {
+    margin-bottom: 15px;
+}
+
+.signup-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.signup-form input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.password-note {
+    font-size: 0.8em;
+    color: #666;
+}
+
+.user-type-toggle {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 20px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #0072c6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+}
+
+.user-type-slider {
+    position: absolute;
+    top: 4px;
+    width: calc(50% - 8px);
+    height: calc(100% - 8px);
+    background-color: #61dafbaa;
+    border-radius: 14px;
+    transition: left 0.2s ease;
+}
+
+.user-type-slider.student {
+    left: 4px;
+}
+
+.user-type-slider.org {
+    left: calc(50% + 4px);
+}
+
+.user-type-button {
+    flex: 1;
+    z-index: 1;
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.user-type-button.active {
+    color: #fff;
+}
+
+.user-type-button:not(.active) {
+    color: #000;
+}
+
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #288af3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #0072c6;
+}
+
+.back-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+body.signup-page-background {
+    background-color: var(--background);
+}

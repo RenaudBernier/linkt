@@ -169,13 +169,14 @@ const MyEventsPage: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth={false} sx = {{backgroundColor: '#a63a50', width: '100%'}}> 
+    <Container maxWidth = 'lg' sx={{ py: 4, backgroundColor: 'white' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
         <div>
-          <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom>
+          <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom fontFamily={'Montserrat'}>
             My Events
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary">
+          <Typography variant="subtitle1" color="text.secondary" fontFamily={'Montserrat'} fontWeight="bold">
             Manage and monitor all your events in one place
           </Typography>
         </div>
@@ -232,10 +233,10 @@ const MyEventsPage: React.FC = () => {
             borderColor: 'divider'
           }}
         >
-          <Typography variant="h5" gutterBottom fontWeight="medium">
+          <Typography variant="h5" gutterBottom fontWeight="medium" fontFamily={'Montserrat'}>
             You haven't created any events yet
           </Typography>
-          <Typography variant="body1" color="text.secondary" paragraph sx={{ mt: 2 }}>
+          <Typography variant="body1" fontFamily={'Montserrat'} color="text.secondary" paragraph sx={{ mt: 2 }}>
             Get started by creating your first event!
           </Typography>
           <Button
@@ -386,6 +387,7 @@ const MyEventsPage: React.FC = () => {
           event={selectedEvent}
         />
       )}
+    </Container>
     </Container>
   );
 };
