@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from './api/users.api';
 import { useAuth } from './contexts/AuthContext';
-import { Toolbar, Box, Typography } from "@mui/material";
+import { Toolbar, Box, Container, Typography } from "@mui/material";
 import './SignUp.css';
 
 export default function SignUp() {
@@ -76,8 +76,8 @@ export default function SignUp() {
     };
 
     return (
-        <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
-            <h2>Sign Up</h2>
+        <div className='signup-container'>
+            <h2 className='signuptitle'>SIGN UP</h2>
             {error && (
                 <div
                     style={{
@@ -93,7 +93,7 @@ export default function SignUp() {
                     {error}
                 </div>
             )}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='signup-form'>
                 <div>
                     <label>Name:</label>
                     <br />
@@ -164,7 +164,7 @@ export default function SignUp() {
                 </div>
                 <div style={{ marginTop: 10, marginBottom: 20 }}>
                     <label>
-                        Password: <span style={{ fontSize: 12, color: '#666' }}>(Min 7 characters)</span>
+                        Password: <span style={{ fontSize: 12}}>(Min 7 characters)</span>
                     </label>
                     <br />
                     <input
@@ -285,8 +285,8 @@ export default function SignUp() {
                     marginTop: 15,
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#f5f5f5',
-                    border: '1px solid #ddd',
+                    backgroundColor: '#288af3',
+                    color: 'white',
                     borderRadius: 4,
                     cursor: 'pointer'
                 }}

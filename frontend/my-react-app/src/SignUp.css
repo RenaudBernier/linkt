@@ -8,13 +8,15 @@
   font-family: 'Montserrat';
   font-weight: 700;
   font-style: italic;
-  font-size: 60px;
+  font-size: 55px;
   animation: dissolveIn 2s;
 } 
 
 .signup-container {
-    color: black;
-    max-width: 400px;
+    color: white;
+    background-color: #373f51;
+    font-weight: 600;
+    max-width: 550px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
