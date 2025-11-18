@@ -46,8 +46,8 @@ const ApproveEventsPage: React.FC = () => {
   const pending = events.filter(e => e.status === 'pending');
 
   return (
-    <Container sx={{ mt: 5 }}>
-      <Typography variant="h4" component="h2" gutterBottom>
+    <Container sx={{ mt: 5, p: 5}}>
+      <Typography variant="h4" component="h2" gutterBottom fontFamily={'Montserrat'} fontWeight={'600'}>
         Pending Event Approvals
       </Typography>
       {error && <Alert severity="error">{error}</Alert>}

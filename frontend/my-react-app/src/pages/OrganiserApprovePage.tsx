@@ -44,8 +44,8 @@ const OrganiserApprovePage: React.FC = () => {
     };
 
     return (
-        <Container sx={{ mt: 5 }}>
-            <Typography variant="h4" component="h2" gutterBottom>
+        <Container sx={{ mt: 5, p: 5}}>
+            <Typography variant="h4" component="h2" gutterBottom fontFamily={'Montserrat'} fontWeight={'600'}>
                 Pending Organizer Approvals
             </Typography>
             {error && <Alert severity="error">{error}</Alert>}

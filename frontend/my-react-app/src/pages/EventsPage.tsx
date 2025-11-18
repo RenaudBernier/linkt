@@ -240,10 +240,12 @@ function EventsPage() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth={false} sx = {{backgroundColor: '#a63a50', width: '100%'}}>
+    <Container sx={{ py: 4, backgroundColor: 'white' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+        <br></br>
+        <Typography variant="h3" component="h1" gutterBottom fontWeight="800" fontFamily={'Montserrat'} fontStyle={'italic'}>
           Browse Events
         </Typography>
         <Typography variant="body1" color="text.secondary">
@@ -297,7 +299,7 @@ function EventsPage() {
           </Grid>
           <Grid size={{ xs: 12 }}>
             <Box sx={{ px: 2 }}>
-              <Typography variant="body2" color="text.secondary" gutterBottom>
+              <Typography variant="body2" color="text.secondary" fontWeight={'Bold'} gutterBottom>
                 Price Range: {priceRange[0] === 0 ? 'Free' : `$${priceRange[0]}`} - {priceRange[1] === 0 ? 'Free' : `$${priceRange[1]}`}
               </Typography>
               <Slider
@@ -322,7 +324,7 @@ function EventsPage() {
 
       {/* Results count */}
       <Box sx={{ mb: 3 }}>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" fontWeight={'Bold'}>
           Showing {filteredAndSortedEvents.length} event{filteredAndSortedEvents.length !== 1 ? 's' : ''}
         </Typography>
       </Box>
@@ -496,6 +498,7 @@ function EventsPage() {
           </Typography>
         </Box>
       )}
+    </Container>
     </Container>
   );
 }

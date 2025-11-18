@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
 import authService from './services/authService';
 
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -68,8 +69,9 @@ export default function Login() {
     };
 
     return (
-        <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
-            <h2>Log In</h2>
+        <div style = {{backgroundColor: '#373f51', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
+        <div className = 'loginDiv' style={{ maxWidth: 500, fontSize: '25px', margin: 'auto', padding: 20 , border: '1px solid #ccc', borderRadius: 8, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', backgroundColor: '#a63a50'}}>
+            <h2 style = {{fontSize: '60px', fontFamily: 'Montserrat', fontStyle: 'italic', color: 'white'}}>LOGIN</h2>
             {error && (
                 <div
                     style={{
@@ -86,11 +88,11 @@ export default function Login() {
                 </div>
             )}
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <br />
+                <div style = {{fontSize: '25px', color: 'white', height: '100px'}}>
+                    <label>Email:</label><br/>
                     <input
                         type="email"
+                        size={40}
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         disabled={loading}
@@ -103,11 +105,12 @@ export default function Login() {
                         }}
                     />
                 </div>
-                <div style={{ marginTop: 15 }}>
+                <div style={{ marginTop: 15, color: 'white' }}>
                     <label>Password:</label>
                     <br />
                     <input
                         type="password"
+                        size={40}
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         disabled={loading}
@@ -132,7 +135,7 @@ export default function Login() {
                         border: 'none',
                         borderRadius: 4,
                         cursor: loading ? 'not-allowed' : 'pointer',
-                        fontSize: 16
+                        fontSize: 20
                     }}
                 >
                     {loading ? 'Logging in...' : 'Log In'}
@@ -140,11 +143,12 @@ export default function Login() {
             </form>
             <button
                 style={{
-                    marginTop: 15,
+                    marginTop: 20,
                     width: '100%',
                     padding: '10px',
-                    backgroundColor: '#f5f5f5',
-                    border: '1px solid #ddd',
+                    backgroundColor: '#288af3',
+                    color: 'white',
+                    fontSize: 20,
                     borderRadius: 4,
                     cursor: 'pointer'
                 }}
@@ -153,6 +157,7 @@ export default function Login() {
             >
                 Back To Home
             </button>
+        </div>
         </div>
     );
 }

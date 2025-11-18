@@ -1,0 +1,18 @@
+@keyframes dissolveIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* source that helped me realize how to do this animation: https://blog.hubspot.com/website/css-fade-in */
+
+h2.createtitle {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  font-style: italic;
+  font-size: 55px;
+  animation: dissolveIn 2s;
+} 
+
+label {
+    font-family: 'Montserrat';
+    font-weight: 600;
+}

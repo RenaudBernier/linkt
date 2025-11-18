@@ -110,8 +110,9 @@ const AdminDashboard: React.FC = () => {
     const displayedEvents = events;
 
     return (
+        
         <Container maxWidth="xl" sx={{ mt: 5, mb: 5 }}>
-            <Typography variant="h3" component="h1" gutterBottom fontWeight="bold">
+            <Typography variant="h3" component="h1" fontFamily={'Montserrat'} gutterBottom fontWeight="bold">
                 Admin Dashboard
             </Typography>
             <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ mb: 4 }}>
