@@ -303,6 +303,7 @@ function Home() {
           View All Events
         </Button>
       </Box>
+        </Box>
       </Box>
 
         </>
