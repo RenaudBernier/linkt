@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { addEvent } from './api/events.api.ts';
 import { useAuth } from './contexts/AuthContext';
 import { useSnackbar } from 'notistack';
+import './CreateData.css';
 
 export default function AddEvent() {
     const [title, setTitle] = useState('');
@@ -54,8 +55,8 @@ export default function AddEvent() {
     };
 
     return (
-        <div style={{maxWidth: 500, margin: 'auto', padding: 20}}>
-            <h2>CREATE EVENT</h2>
+        <div style={{maxWidth: 500, margin: 'auto', padding: 15}}>
+            <h2 className='createtitle'>CREATE EVENT</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name Of Event: <span style={{color: 'red'}}>*</span></label><br/>
@@ -163,10 +164,11 @@ export default function AddEvent() {
                         disabled={loading}
                         style={{
                             padding: '10px 20px',
-                            border: '1px solid #ccc',
-                            background: 'white',
+                            background: 'black',
+                            color: 'white',
                             cursor: loading ? 'not-allowed' : 'pointer',
-                            borderRadius: 4
+                            borderRadius: 4,
+                            fontWeight: 'bold'
                         }}
                     >
                         Cancel

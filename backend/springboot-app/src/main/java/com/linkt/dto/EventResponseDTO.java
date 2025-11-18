@@ -20,4 +20,5 @@ public class EventResponseDTO {
     private int ticketCount;
     private int scannedTicketCount;
     private Long organizerId;
+    private String status;
 }

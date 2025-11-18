@@ -139,7 +139,21 @@ This will:
   - 3 sample events
   - Sample tickets and saved events
 
-### 2. Start the Backend Server
+### 2. Configure Environment Variables
+
+Create a `.env` file in the `backend/springboot-app` directory with your SendGrid API key for email functionality:
+
+```bash
+cd backend/springboot-app
+cat > .env << EOF
+# SendGrid Configuration
+SENDGRID_API_KEY=your_sendgrid_api_key_here
+EOF
+``` 
+
+**Note:** The `.env` file is already included in `.gitignore` to keep your API key secure. Never commit this file to version control.
+
+### 3. Start the Backend Server
 
 From the root directory:
 
@@ -150,7 +164,7 @@ mvn spring-boot:run
 
 The backend server will start on `http://localhost:8080`
 
-### 3. Start the Frontend Development Server
+### 4. Start the Frontend Development Server
 
 In a new terminal, from the root directory:
 
@@ -161,7 +175,7 @@ npm run dev
 
 The frontend application will be available at `http://localhost:5173` (or the next available port)
 
-### 4. Access the Application
+### 5. Access the Application
 
 Open your browser and navigate to the frontend URL.
 
