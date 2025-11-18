@@ -89,11 +89,6 @@ function Home() {
                 Saved Tickets
                 </button> <br></br> <br></br>
             
-            
-            <button onClick={() => navigate('/checkout/1')}>
-                Go to Checkout
-            </button> <br></br><br></br>
-            
             <button onClick={() => navigate('/signup')}>
                 Go to Sign Up
             </button> <br></br><br></br>
