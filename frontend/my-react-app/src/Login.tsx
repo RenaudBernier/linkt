@@ -71,7 +71,7 @@ export default function Login() {
     return (
         <div style = {{backgroundColor: '#373f51', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh'}}>
         <div className = 'loginDiv' style={{ maxWidth: 500, fontSize: '25px', margin: 'auto', padding: 20 , border: '1px solid #ccc', borderRadius: 8, boxShadow: '0 2px 4px rgba(0,0,0,0.1)', backgroundColor: '#a63a50'}}>
-            <h2 style = {{fontSize: '60px', fontFamily: 'Montserrat', fontStyle: 'italic', color: 'white'}}>Log In</h2>
+            <h2 style = {{fontSize: '60px', fontFamily: 'Montserrat', fontStyle: 'italic', color: 'white'}}>LOGIN</h2>
             {error && (
                 <div
                     style={{

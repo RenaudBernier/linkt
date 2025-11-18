@@ -76,6 +76,7 @@ export default function SignUp() {
     };
 
     return (
+        <div style={{backgroundColor: '#a63a50', maxWidth: 'false', width: '100%', height: '100%'}}>
         <div className='signup-container'>
             <h2 className='signuptitle'>SIGN UP</h2>
             {error && (
@@ -295,6 +296,7 @@ export default function SignUp() {
             >
                 Back To Home
             </button>
+        </div>
         </div>
     );
 }

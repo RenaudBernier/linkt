@@ -311,7 +311,7 @@ const Header: React.FC = () => {
                   },
                 }}
               >
-                Log In
+                Login
               </MenuItem>,
               <MenuItem
                 key="signup"
