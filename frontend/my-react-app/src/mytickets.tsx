@@ -98,14 +98,14 @@ END:VCALENDAR`;
   return (
     <div className="card">
       {/* Back button */}
-      <button className="back-btn" onClick={handleGoBack}>
+      <button style = {{fontSize: '20px'}} className="back-btn" onClick={handleGoBack}>
         Back
       </button>
 
-      <h1>My Tickets</h1>
+      <h1 style = {{fontFamily: 'Montserrat', fontWeight: '700', fontStyle: 'italic'}}>My Tickets</h1>
 
       {tickets.length === 0 ? (
-        <p>No tickets found. Browse events to purchase tickets!</p>
+        <p style={{fontFamily: 'Montserrat'}}>No tickets found. Browse events to purchase tickets!</p>
       ) : (
         <div className="tickets-container">
           {tickets.map((ticket) => (

@@ -51,21 +51,23 @@ function Home() {
     return (
         <>
             
-      <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#008dd5', color: 'white', border: '5px white'}}>
+      <Box component = "section" sx = {{width: '100%', bgcolor: '#008dd5', color: 'white'}}>
+        <br></br>
         <br></br>
         <Typography variant = "h2" className='title'> Linkt </Typography>
         <br></br>
         <br></br>
-        <Typography variant = "body1" margin={2}> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
+        <Typography variant = "body1" fontSize = {'19px'} padding={'2px'}> Welcome to our comprehensive campus Events & Ticketing service, designed to streamline event management and boost student engagement for students! 
           We allow students to easily discover and search for events using comprehensive filters, save them to their personal calendar, and claim digital, QR-coded
           tickets (free or mock paid) for check-in! If you are an organizer, then you are welcome too! Organizers benefit from the ability to create, manage, 
           and track attendance for their events. They can also gain valuable insights for their events via our analytics dashboards. We are also welcoming 
           campus administrators, who can oversee organizations and moderate all content. Linkt is our brand-new system that connects students with campus life 
           while providing essential tools for hosting and administrating events! </Typography> 
-
+        <br></br>
       </Box>
 
-        <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#a63a50', color: 'white', border: '5px white'}}>
+        <Box component = "section" sx = {{width: '100%', bgcolor: '#a63a50', color: 'white'}}>
+        <br></br>
         <Typography variant = "h3" className='smallertitle'> Ready To Interact? </Typography><br></br>
             {user?.userType == 'organizer' && (
             <Typography variant = "h5">
@@ -98,11 +100,14 @@ function Home() {
             <button onClick={() => navigate('/login')}>
                 Go to Login
             </button>
+            <br></br>
+            <br></br>
       </Box>
 
 
 
-      <Box component = "section" sx = {{p: 2, width: '100%', bgcolor: '#373f51', color: 'white', border: '5px white'}}>
+      <Box component = "section" sx = {{width: '100%', bgcolor: '#373f51', color: 'white'}}>
+        <br></br>
         {/* 
         Former Logo
               <a href="https://vite.dev" target="_blank">
@@ -127,6 +132,7 @@ function Home() {
       <Typography variant = "body1"> Join us for a tour of the campus museum where you can browse artifacts of some of the school's greatest alumni! </Typography>
       {/* With this, the "Top Events" container is forced to extend its height to contain the floated images*/}
       <Box sx={{ clear: 'both' }}></Box>
+      <br></br>
       </Box>
 
         </>

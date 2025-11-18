@@ -170,10 +170,11 @@ const MyEventsPage: React.FC = () => {
 
   return (
     <Container maxWidth={false} sx = {{backgroundColor: '#a63a50', width: '100%'}}> 
+    <br></br>
     <Container maxWidth = 'lg' sx={{ py: 4, backgroundColor: 'white' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
         <div>
-          <Typography variant="h4" component="h1" fontWeight="bold" gutterBottom fontFamily={'Montserrat'}>
+          <Typography variant="h4" component="h1" fontWeight="600" fontStyle={'italic'} gutterBottom fontFamily={'Montserrat'}>
             My Events
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" fontFamily={'Montserrat'} fontWeight="bold">
