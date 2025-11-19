@@ -1,8 +1,19 @@
 // src/App.tsx
 import {Routes, Route, useNavigate, Outlet, Navigate} from 'react-router-dom';
 import { useAuth } from './contexts/AuthContext';
-import { Toolbar, Box, Typography } from "@mui/material";
-
+import { useState, useEffect } from 'react';
+import {
+  Toolbar,
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  CircularProgress,
+} from "@mui/material";
+//import '@fontsource-variable/cabin';
 import './App.css';
 import SignUp from './SignUp';
 import Login from './Login';
@@ -20,6 +31,10 @@ import MyEventsPage from "./pages/MyEventsPage.tsx";
 import EditEventPage from "./pages/EditEventPage.tsx";
 import ScanTicketPage from "./pages/ScanTicketPage.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import { getTopEvents } from './api/events.api';
+import { saveEvent, checkIfSaved } from './api/savedEvents.api';
+import type { Event } from './types/event.interface';
+import { useSnackbar } from 'notistack';
 import ApproveEventsPage from "./pages/ApproveEventsPage.tsx";
 import EmailVerificationPage from "./pages/EmailVerificationPage.tsx";
 import TwoFactorAuthPage from "./pages/TwoFactorAuthPage.tsx";
@@ -47,6 +62,81 @@ function BlankLayout() {
 function Home() {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { enqueueSnackbar } = useSnackbar();
+    const [topEvents, setTopEvents] = useState<Event[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [savedEventIds, setSavedEventIds] = useState<Set<number>>(new Set());
+    const [savingEventId, setSavingEventId] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchTopEvents = async () => {
+            try {
+                const events = await getTopEvents();
+                setTopEvents(events);
+            } catch (error) {
+                console.error('Failed to fetch top events:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchTopEvents();
+    }, []);
+
+    useEffect(() => {
+        const checkSavedEvents = async () => {
+            if (!localStorage.getItem('token')) return;
+
+            const savedIds = new Set<number>();
+            for (const event of topEvents) {
+                try {
+                    const isSaved = await checkIfSaved(event.eventID);
+                    if (isSaved) {
+                        savedIds.add(event.eventID);
+                    }
+                } catch (error) {
+                    // Ignore errors for individual checks
+                }
+            }
+            setSavedEventIds(savedIds);
+        };
+
+        if (topEvents.length > 0) {
+            checkSavedEvents();
+        }
+    }, [topEvents]);
+
+    const handleAddToFavorites = async (eventId: number) => {
+        if (!localStorage.getItem('token')) {
+            navigate('/login');
+            return;
+        }
+
+        setSavingEventId(eventId);
+        try {
+            await saveEvent(eventId);
+            setSavedEventIds(prev => new Set(prev).add(eventId));
+            enqueueSnackbar('Event saved!', { variant: 'success' });
+        } catch (error: any) {
+            if (error.response?.status === 401) {
+                navigate('/login');
+            } else {
+                enqueueSnackbar('Failed to save event', { variant: 'error' });
+            }
+        } finally {
+            setSavingEventId(null);
+        }
+    };
+
+    const handleEventClick = (eventId: number) => {
+        if (!user) {
+            // User not logged in, redirect to login
+            navigate('/login');
+        } else {
+            // User is logged in, proceed to checkout
+            navigate(`/checkout/${eventId}`);
+        }
+    };
 
     return (
         <>
@@ -101,33 +191,119 @@ function Home() {
 
 
 
-      <Box component = "section" sx = {{width: '100%', bgcolor: '#373f51', color: 'white'}}>
-        <br></br>
-        {/* 
-        Former Logo
-              <a href="https://vite.dev" target="_blank">
-                <img src={viteLogo} className="logo" alt="Vite logo" />
-            </a>
-            <a href="https://react.dev" target="_blank">
-                <img src={reactLogo} className="logo react" alt="React logo" />
-      </a>
-        */}
-      <Typography variant = "h3" className='smallertitle'> Top Events </Typography>
-      <Typography variant = "h4"> Backend for this hasn't been implemented yet! </Typography>
-      <img src = "src\images\samantha-gades-fIHozNWfcvs-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <Typography variant = "h3"> Frosh Night </Typography>
-      <Typography variant = "body1"> New to school and don't know where to start? Have some drinks, play games and meet some new people at the school's frosh night! </Typography> 
-      <br></br>
-      <img src = "src\images\swag-slayer-dd2EOQBycJY-unsplash.jpg"  alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <Typography variant = "h3"> DJ Night </Typography>
-      <Typography variant = "body1"> The EDM Club is organizing an all-night dance festival on the 22nd of October! Click for more details! </Typography>
-      <br></br>
-      <img src = "src\images\willian-justen-de-vasconcellos-_krHI5-8yA4-unsplash.jpg" alt = "neat college photo!" style = {{maxWidth: '33%', maxHeight: '33%'}}></img>
-      <Typography variant = "h3"> Campus Museum Tour</Typography>
-      <Typography variant = "body1"> Join us for a tour of the campus museum where you can browse artifacts of some of the school's greatest alumni! </Typography>
-      {/* With this, the "Top Events" container is forced to extend its height to contain the floated images*/}
-      <Box sx={{ clear: 'both' }}></Box>
-      <br></br>
+      <Box component = "section" sx = {{py: 6, px: 3, width: '100%', bgcolor: '#373f51', color: 'white'}}>
+        <Box sx={{ maxWidth: '1600px', mx: 'auto' }}>
+          <Typography variant = "h2" sx={{ mb: 4 }}> Top Events </Typography>
+          
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+              <CircularProgress sx={{ color: 'white' }} />
+            </Box>
+          ) : topEvents.length === 0 ? (
+            <Typography variant = "h5"> No events available yet. Check back soon! </Typography>
+          ) : (
+            <Box 
+              sx={{ 
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: '1fr',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)'
+                },
+                gap: 3
+              }}
+            >
+              {topEvents.map((event) => (
+                <Card 
+                  key={event.eventID}
+                  sx={{ 
+                    height: '100%', 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    transition: 'all 0.3s ease-in-out',
+                    borderRadius: 3,
+                    overflow: 'hidden',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: '0 12px 24px rgba(0,0,0,0.15)',
+                    }
+                  }}
+                >
+                  {event.image && event.image.length > 0 && event.image[0] && (
+                    <CardMedia
+                      component="img"
+                      height="220"
+                      image={event.image[0]}
+                      alt={event.title}
+                      sx={{ objectFit: 'cover' }}
+                    />
+                  )}
+              <CardContent sx={{ flexGrow: 1, p: 3 }}>
+                <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mb: 2 }}>
+                  {event.title}
+                </Typography>
+                <Typography 
+                  variant="body1" 
+                  color="text.secondary"
+                  sx={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    mb: 2,
+                    minHeight: '4.5em'
+                  }}
+                >
+                  {event.description}
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                  📍 {event.location}
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                  🎫 {event.ticketsSold || 0} tickets sold
+                </Typography>
+                <Typography variant="h6" color="primary.main" fontWeight="bold" sx={{ mt: 2 }}>
+                  {event.price === 0 ? 'Free' : `$${event.price}`}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ p: 2.5, pt: 0, gap: 1 }}>
+                <Button
+                  onClick={() => handleEventClick(event.eventID)}
+                  variant="contained"
+                  size="medium"
+                  fullWidth
+                >
+                  Buy Ticket
+                </Button>
+                <Button
+                  onClick={() => handleAddToFavorites(event.eventID)}
+                  variant={savedEventIds.has(event.eventID) ? "contained" : "outlined"}
+                  size="medium"
+                  disabled={savingEventId === event.eventID}
+                  fullWidth
+                >
+                  {savedEventIds.has(event.eventID) ? 'Saved' : 'Save Event'}
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </Box>
+      )}
+      
+      <Box sx={{ mt: 4, textAlign: 'center' }}>
+        <Button 
+          variant="contained" 
+          size="large"
+          onClick={() => navigate('/events')}
+          sx={{ 
+            bgcolor: '#008dd5',
+            '&:hover': { bgcolor: '#007bbf' }
+          }}
+        >
+          View All Events
+        </Button>
+      </Box>
+        </Box>
       </Box>
 
         </>
