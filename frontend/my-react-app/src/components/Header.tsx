@@ -21,6 +21,7 @@ const Header: React.FC = () => {
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
   const { isAuthenticated, logout, user } = useAuth();
+  const [headerSearch, setHeaderSearch] = useState<string>("");
 
   {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -109,34 +110,60 @@ const Header: React.FC = () => {
 
         {/* Search Bar */}
         <Box sx={{ flexGrow: 1, maxWidth: "600px", mx: 4 }}>
-          <TextField
-            fullWidth
-            placeholder="Search for events..."
-            variant="outlined"
-            size="small"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "white",
-                borderRadius: "25px",
-                "& fieldset": {
-                  borderColor: "var(--charcoal-25)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "var(--fluorescent-cyan)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "var(--fluorescent-cyan)",
-                },
-              },
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const trimmed = headerSearch.trim();
+              if (trimmed.length === 0) {
+                navigate('/events');
+              } else {
+                navigate(`/events?search=${encodeURIComponent(trimmed)}`);
+              }
             }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: "var(--charcoal-50)" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
+          >
+            <TextField
+              fullWidth
+              placeholder="Search for events..."
+              variant="outlined"
+              size="small"
+              value={headerSearch}
+              onChange={(e) => setHeaderSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  setHeaderSearch('');
+                }
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "white",
+                  borderRadius: "25px",
+                  "& fieldset": {
+                    borderColor: "var(--charcoal-25)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "var(--fluorescent-cyan)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "var(--fluorescent-cyan)",
+                  },
+                },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton
+                      type="submit"
+                      size="small"
+                      sx={{ p: 0, mr: 0.5 }}
+                      aria-label="search events"
+                    >
+                      <SearchIcon sx={{ color: "var(--charcoal-50)" }} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </form>
         </Box>
 
         {/* User Menu */}
