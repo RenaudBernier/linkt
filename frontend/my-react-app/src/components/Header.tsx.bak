@@ -9,7 +9,6 @@ import {
   Menu,
   MenuItem,
   Avatar,
-  Button,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
@@ -24,6 +23,7 @@ const Header: React.FC = () => {
   const { isAuthenticated, logout, user } = useAuth();
   const [headerSearch, setHeaderSearch] = useState<string>("");
 
+  {/* Gotta handle functions at the start! */}
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -85,7 +85,6 @@ const Header: React.FC = () => {
 
   return (
     <AppBar
-      position="static"
       sx={{
         backgroundColor: "var(--charcoal)",
         boxShadow: "none",
@@ -94,123 +93,23 @@ const Header: React.FC = () => {
     >
       <Toolbar sx={{ justifyContent: "space-between", px: 3 }}>
         {/* Logo */}
+        {/* sx = applies CUSTOM STYLES to stuff */}
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
             cursor: "pointer"
           }}
-          onClick={() => navigate("/")}
-        >
-          <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }} />
-        </Box>
+          onClick={() => navigate("/")
 
-        {/* Buttons from SubHeader */}
-        <Box sx={{ display: "flex", justifyContent: "flex-start", ml: 2, gap: '8px' }}>
-          {isAuthenticated && user?.userType === 'organizer' && (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/CreateData')}
-              sx={{
-                bgcolor: 'var(--fluorescent-cyan)',
-                color: 'var(--charcoal)',
-                border: '2px solid transparent',
-                '&:hover': {
-                  bgcolor: 'var(--fluorescent-cyan)',
-                  border: '2px solid white',
-                }
-              }}
-            >
-              Create an Event!
-            </Button>
-          )}
-          {isAuthenticated && user?.userType === 'administrator' && (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/admin/dashboard')}
-              sx={{
-                bgcolor: 'var(--fluorescent-cyan)',
-                color: 'var(--charcoal)',
-                border: '2px solid transparent',
-                '&:hover': {
-                  bgcolor: 'var(--fluorescent-cyan)',
-                  border: '2px solid white',
-                }
-              }}
-            >
-              Admin Dashboard
-            </Button>
-          )}
-          <Button
-            variant="contained"
-            onClick={() => navigate('/events')}
-            sx={{
-              bgcolor: 'var(--fluorescent-cyan)',
-              color: 'var(--charcoal)',
-              border: '2px solid transparent',
-              '&:hover': {
-                bgcolor: 'var(--fluorescent-cyan)',
-                border: '2px solid white',
-              }
-            }}
-          >
-            Browse Events
-          </Button>
-          {isAuthenticated && user?.userType === 'student' && (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/savedtickets')}
-              sx={{
-                bgcolor: 'var(--fluorescent-cyan)',
-                color: 'var(--charcoal)',
-                border: '2px solid transparent',
-                '&:hover': {
-                  bgcolor: 'var(--fluorescent-cyan)',
-                  border: '2px solid white',
-                }
-              }}
-            >
-              Saved Tickets
-            </Button>
-          )}
-          {!isAuthenticated && (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/signup')}
-              sx={{
-                bgcolor: 'var(--fluorescent-cyan)',
-                color: 'var(--charcoal)',
-                border: '2px solid transparent',
-                '&:hover': {
-                  bgcolor: 'var(--fluorescent-cyan)',
-                  border: '2px solid white',
-                }
-              }}
-            >
-              Sign Up
-            </Button>
-          )}
-          {!isAuthenticated && (
-            <Button
-              variant="contained"
-              onClick={() => navigate('/login')}
-              sx={{
-                bgcolor: 'var(--fluorescent-cyan)',
-                color: 'var(--charcoal)',
-                border: '2px solid transparent',
-                '&:hover': {
-                  bgcolor: 'var(--fluorescent-cyan)',
-                  border: '2px solid white',
-                }
-              }}
-            >
-              Login
-            </Button>
-          )}
+          }
+        >
+          <img src={logo} alt="Logo" style={{ height: "90px", width: "auto" }}
+          />
         </Box>
 
         {/* Search Bar */}
-        <Box sx={{ flexGrow: 1, maxWidth: "600px", ml: 2, mr: 4 }}>
+        <Box sx={{ flexGrow: 1, maxWidth: "600px", mx: 4 }}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -267,7 +166,7 @@ const Header: React.FC = () => {
           </form>
         </Box>
 
-        {/* User Menu (Dropdown) */}
+        {/* User Menu */}
         <Box>
           <IconButton
             onClick={handleClick}
@@ -311,6 +210,8 @@ const Header: React.FC = () => {
             }}
           >
             {isAuthenticated ? [
+
+
               user && (user.userType === 'student' || user.userType === 'organizer') && (
                 <MenuItem
                   key="tickets"
@@ -324,6 +225,8 @@ const Header: React.FC = () => {
                   My Tickets
                 </MenuItem>
               ),
+
+
               user && (user.userType === 'student' || user.userType === 'organizer') && (
                 <MenuItem
                   key="saved-events"
@@ -337,6 +240,7 @@ const Header: React.FC = () => {
                   Saved Events
                 </MenuItem>
               ),
+
               user && user.userType === 'organizer' && (
                 <MenuItem
                   key="my-events"
@@ -350,6 +254,7 @@ const Header: React.FC = () => {
                   My Events
                 </MenuItem>
               ),
+
               user && user.userType === 'administrator' && (
                 <MenuItem
                   key="admin-dashboard"
@@ -363,6 +268,7 @@ const Header: React.FC = () => {
                   Admin Dashboard
                 </MenuItem>
               ),
+
               user && user.userType === 'administrator' && (
                 <MenuItem
                   key="admin"
@@ -376,6 +282,7 @@ const Header: React.FC = () => {
                   Approve Organizers
                 </MenuItem>
               ),
+
               user && user.userType === 'administrator' && (
                 <MenuItem
                   key="approve-events"
@@ -389,6 +296,10 @@ const Header: React.FC = () => {
                   Approve Events
                 </MenuItem>
               ),
+
+
+
+
               <MenuItem
                 key="settings"
                 onClick={handleSettings}
@@ -400,6 +311,8 @@ const Header: React.FC = () => {
               >
                 Settings
               </MenuItem>,
+
+
               <MenuItem
                 key="logout"
                 onClick={handleLogout}
@@ -412,6 +325,10 @@ const Header: React.FC = () => {
                 Log Out
               </MenuItem>
             ] : [
+
+
+
+              // No user logged in
               <MenuItem
                 key="login"
                 onClick={handleLogin}
