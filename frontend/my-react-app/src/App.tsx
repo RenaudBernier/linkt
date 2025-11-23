@@ -190,9 +190,10 @@ function Home() {
 
 
 
-      <Box component = "section" sx = {{py: 6, px: 3, width: '100%', bgcolor: '#373f51', color: 'white'}}>
+      <Box component = "section" sx = {{width: '100%', bgcolor: '#373f51', color: 'white'}}>
         <Box sx={{ maxWidth: '1600px', mx: 'auto' }}>
-          <Typography variant = "h2" sx={{ mb: 4 }}> Top Events </Typography>
+          <br></br>
+          <Typography variant = "h3" className='smallertitle' sx={{ mb: 4 }}> Top Events </Typography>
           
           {loading ? (
             <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
@@ -303,6 +304,7 @@ function Home() {
         </Button>
       </Box>
         </Box>
+        <br></br>
       </Box>
 
         </>
