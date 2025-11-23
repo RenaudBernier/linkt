@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -122,6 +122,13 @@ function EventsPage() {
   const [sortBy, setSortBy] = useState<string>('date');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Initialize search query from URL param on mount / param change
+  useEffect(() => {
+    const qp = searchParams.get('search') || '';
+    setSearchQuery(qp);
+  }, [searchParams]);
 
   // Get min and max prices from events
   const { minPrice, maxPrice } = useMemo(() => {
@@ -262,7 +269,17 @@ function EventsPage() {
               label="Search events"
               variant="outlined"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSearchQuery(val);
+                if (val.trim().length > 0) {
+                  setSearchParams({ search: val });
+                } else {
+                  // Remove param if empty
+                  searchParams.delete('search');
+                  setSearchParams(searchParams);
+                }
+              }}
               placeholder="Search by title, description, or location..."
             />
           </Grid>
