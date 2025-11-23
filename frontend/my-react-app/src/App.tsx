@@ -42,7 +42,6 @@ function MainLayout() {
     return (
         <>
             <Header/>
-            <Toolbar/>
 
             <Outlet />
             <Footer />
