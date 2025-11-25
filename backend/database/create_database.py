@@ -28,7 +28,8 @@ def create_tables(cursor: sqlite3.Cursor) -> None:
             password TEXT NOT NULL,
             user_type TEXT NOT NULL CHECK (user_type IN ('student', 'organizer', 'administrator')),
             is_approved INTEGER DEFAULT 0,
-            organization_name TEXT
+            organization_name TEXT,
+            email_verified INTEGER DEFAULT 0
         );
         """
     )
@@ -163,8 +164,8 @@ def insert_seed_data(cursor: sqlite3.Cursor) -> None:
     for user in users:
         cursor.execute(
             """
-            INSERT INTO user (email, first_name, last_name, phone_number, password, user_type, is_approved, organization_name)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO user (email, first_name, last_name, phone_number, password, user_type, is_approved, organization_name, email_verified)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
                 user["email"],
@@ -175,6 +176,7 @@ def insert_seed_data(cursor: sqlite3.Cursor) -> None:
                 user["user_type"],
                 user.get("is_approved"),
                 user.get("organization_name"),
+                1,
             ),
         )
         user_ids[user["email"]] = cursor.lastrowid
