@@ -112,7 +112,7 @@ END:VCALENDAR`;
             <div key={ticket.ticketId} className="ticket-card">
               <div className="ticket-content">
                 <img
-                  src={ticket.event.imageUrl || '/src/images/samantha-gades-fIHozNWfcvs-unsplash.jpg'}
+                  src={ticket.event.imageUrl ? (ticket.event.imageUrl.startsWith('http') || ticket.event.imageUrl.startsWith('https') ? ticket.event.imageUrl : `http://localhost:8080${ticket.event.imageUrl}`) : '/images/samantha-gades-fIHozNWfcvs-unsplash.jpg'}
                   alt={ticket.event.title}
                   className="ticket-image"
                 />
