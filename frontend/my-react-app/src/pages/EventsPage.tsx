@@ -480,6 +480,7 @@ function EventsPage() {
                   onClick={() => navigate(`/checkout/${event.eventID}`)}
                   variant="contained"
                   size="small"
+                  fullWidth
                 >
                   Buy ticket
                 </Button>
@@ -487,16 +488,10 @@ function EventsPage() {
                   onClick={() => handleAddToFavorites(event.eventID)}
                   variant={savedEventIds.has(event.eventID) ? "contained" : "outlined"}
                   size="small"
+                  fullWidth
                   disabled={savingEventId === event.eventID}
                 >
                   {savedEventIds.has(event.eventID) ? 'Saved' : 'Save event'}
-                </Button>
-                <Button
-                  onClick={() => navigate(`/event/${event.eventID}/registered-students`)}
-                  variant="outlined"
-                  size="small"
-                >
-                  View Attendees
                 </Button>
               </CardActions>
             </Card>
